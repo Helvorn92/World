@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Archivio — Le Cronache di Gwernia</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#9a7535;
@@ -12,7 +11,7 @@
   --border:rgba(201,168,76,.42);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#06060f;color:var(--cream);font-family:'EB Garamond',serif;font-size:18px;overflow-x:hidden;min-height:100vh}
+body{background:#06060f;color:var(--cream);font-family:Georgia, 'Times New Roman',serif;font-size:18px;overflow-x:hidden;min-height:100vh}
 
 /* STELLE */
 #stars-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -40,14 +39,14 @@ body{background:#06060f;color:var(--cream);font-family:'EB Garamond',serif;font-
 .win-frame{position:absolute;inset:0;border:7px solid #4a2a0c;border-bottom:none;border-radius:50% 50% 0 0 / 7vw 7vw 0 0;pointer-events:none}
 
 /* BACK BTN */
-.back-btn{position:absolute;top:1.2rem;left:50%;transform:translateX(-50%);z-index:200;background:rgba(6,4,16,.92);border:1px solid rgba(201,168,76,.35);color:var(--gold-dim);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1.4rem;cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap}
+.back-btn{position:absolute;top:1.2rem;left:50%;transform:translateX(-50%);z-index:200;background:rgba(6,4,16,.92);border:1px solid rgba(201,168,76,.35);color:var(--gold-dim);font-family:'Palatino Linotype', 'Book Antiqua', Palatino,serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1.4rem;cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap}
 .back-btn:hover{border-color:var(--gold);color:var(--gold)}
 
 /* LAYOUT */
 .archive-wrap{position:relative;z-index:10;min-height:100vh;padding:5rem 2rem 6rem}
 .archive-header{text-align:center;margin-bottom:3rem}
-.archive-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--gold-light);text-shadow:0 0 40px rgba(201,168,76,.4);margin-bottom:.8rem}
-.archive-intro{font-family:'EB Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--cream-dim);line-height:1.8}
+.archive-title{font-family:'Palatino Linotype',serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--gold-light);text-shadow:0 0 40px rgba(201,168,76,.4);margin-bottom:.8rem}
+.archive-intro{font-family:Georgia, 'Times New Roman',serif;font-style:italic;font-size:1.1rem;color:var(--cream-dim);line-height:1.8}
 .archive-divider{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.2rem auto}
 .archive-divider::before,.archive-divider::after{content:'';flex:1;max-width:200px;height:1px}
 .archive-divider::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,.4))}
@@ -72,7 +71,7 @@ body{background:#06060f;color:var(--cream);font-family:'EB Garamond',serif;font-
 .book-cover::before{content:'';position:absolute;inset:0;background:linear-gradient(158deg,rgba(255,220,100,.12) 0%,transparent 38%,rgba(0,0,0,.22) 100%);pointer-events:none}
 .book-cover::after{content:'';position:absolute;top:5px;bottom:5px;left:5px;right:5px;border:1px solid rgba(201,168,76,.13);pointer-events:none}
 .book-pages{position:absolute;right:-5px;top:3px;bottom:3px;width:6px;background:repeating-linear-gradient(180deg,#d4b880 0px,#d4b880 1.5px,#b8984a 2.5px,#b8984a 3px,#c8a860 3px,#c8a860 4.5px);border-radius:0 2px 2px 0;box-shadow:2px 0 5px rgba(0,0,0,.4)}
-.book-title-vert{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;letter-spacing:.14em;color:rgba(240,210,120,1);text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 14px rgba(201,168,76,.4);padding:.5rem .2rem;max-height:88%;overflow:hidden}
+.book-title-vert{font-family:'Palatino Linotype', 'Book Antiqua', Palatino,serif;font-size:1rem;font-weight:700;letter-spacing:.14em;color:rgba(240,210,120,1);text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 14px rgba(201,168,76,.4);padding:.5rem .2rem;max-height:88%;overflow:hidden}
 
 /* READER */
 .book-reader-overlay{position:fixed;inset:0;z-index:9990;background:rgba(2,1,8,.96);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center}
@@ -81,19 +80,19 @@ body{background:#06060f;color:var(--cream);font-family:'EB Garamond',serif;font-
 .book-cover-page img{max-height:78vh;max-width:86vw;object-fit:contain;border-radius:4px;box-shadow:0 24px 80px rgba(0,0,0,.95)}
 .book-reading{display:flex;flex-direction:column;align-items:center;gap:1.4rem;width:min(1200px,96vw)}
 .book-open{display:grid;grid-template-columns:1fr 1fr;width:100%;height:min(82vh,820px);background:#1a0f04;border:2px solid rgba(201,168,76,.3);border-radius:4px;box-shadow:0 30px 80px rgba(0,0,0,.95);overflow:hidden}
-.book-page{display:flex;flex-direction:column;padding:2.5rem 3rem;background:repeating-linear-gradient(90deg,rgba(40,20,5,.04) 0px,transparent 1px,transparent 20px),linear-gradient(135deg,#fdf6e3,#f8edd0);color:#2c1a08;font-family:'EB Garamond',serif;font-size:1.05rem;line-height:1.75;position:relative;overflow:hidden}
+.book-page{display:flex;flex-direction:column;padding:2.5rem 3rem;background:repeating-linear-gradient(90deg,rgba(40,20,5,.04) 0px,transparent 1px,transparent 20px),linear-gradient(135deg,#fdf6e3,#f8edd0);color:#2c1a08;font-family:Georgia, 'Times New Roman',serif;font-size:1.05rem;line-height:1.75;position:relative;overflow:hidden}
 .book-page:first-child{border-right:4px solid #8b5e1a;background:repeating-linear-gradient(90deg,rgba(40,20,5,.04) 0px,transparent 1px,transparent 20px),linear-gradient(135deg,#f8edd0,#fdf6e3)}
-.book-page-title{font-family:'Cinzel',serif;font-size:.65rem;font-weight:600;color:rgba(90,42,8,.55);text-align:center;margin:0 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(90,42,8,.15);letter-spacing:.22em;text-transform:uppercase;flex-shrink:0}
+.book-page-title{font-family:'Palatino Linotype', 'Book Antiqua', Palatino,serif;font-size:.65rem;font-weight:600;color:rgba(90,42,8,.55);text-align:center;margin:0 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(90,42,8,.15);letter-spacing:.22em;text-transform:uppercase;flex-shrink:0}
 .book-page-content{flex:1;overflow:hidden}
 .book-page-content p{margin:.4rem 0}
-.book-page-num{font-family:'Cinzel',serif;font-size:.55rem;color:rgba(90,42,8,.4);letter-spacing:.1em;text-align:center;flex-shrink:0;margin-top:.5rem}
+.book-page-num{font-family:'Palatino Linotype', 'Book Antiqua', Palatino,serif;font-size:.55rem;color:rgba(90,42,8,.4);letter-spacing:.1em;text-align:center;flex-shrink:0;margin-top:.5rem}
 .book-reader-controls{display:flex;align-items:center;gap:1.5rem}
 .book-nav-btn{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);color:var(--gold);width:50px;height:50px;font-size:1.4rem;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center}
 .book-nav-btn:hover{background:rgba(201,168,76,.25);border-color:var(--gold)}
 .book-nav-btn:disabled{opacity:.25;cursor:default}
-.book-close-btn{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold-dim);padding:.6rem 1.8rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.book-close-btn{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold-dim);padding:.6rem 1.8rem;font-family:'Palatino Linotype', 'Book Antiqua', Palatino,serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s}
 .book-close-btn:hover{background:rgba(201,168,76,.2);color:var(--gold)}
-.book-reader-page-info{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);min-width:80px;text-align:center}
+.book-reader-page-info{font-family:'Palatino Linotype', 'Book Antiqua', Palatino,serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);min-width:80px;text-align:center}
 </style>
 </head>
 <body>
@@ -369,7 +368,7 @@ function buildLayout(){
   var availW=w-96; // padding laterale
 
   var m=document.createElement('div');
-  m.style.cssText='position:fixed;top:-9999px;left:-9999px;width:'+availW+'px;font-family:"EB Garamond",serif;font-size:1.05rem;line-height:1.75;';
+  m.style.cssText='position:fixed;top:-9999px;left:-9999px;width:'+availW+'px;font-family:Georgia, "Times New Roman",serif;font-size:1.05rem;line-height:1.75;';
   document.body.appendChild(m);
 
   _pageTexts=[];
