@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archivio — Le Cronache di Gwernia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#9a7535;
+  --bg:#06060f;--cream:#f0e6d3;--cream-dim:#bba98c;
+  --border:rgba(201,168,76,.42);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#06060f;color:var(--cream);font-family:'EB Garamond',serif;font-size:18px;overflow-x:hidden;min-height:100vh}
+
+/* STELLE */
+#stars-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* PARETE */
+#wall-left{position:absolute;top:0;left:0;width:3vw;z-index:2;pointer-events:none;background:#0e0804}
+#wall-center{position:absolute;top:0;left:17vw;right:17vw;z-index:2;pointer-events:none;background:linear-gradient(180deg,#0e0804,#180d06 50%,#0e0804)}
+#wall-right{position:absolute;top:0;right:0;width:3vw;z-index:2;pointer-events:none;background:#0e0804}
+
+/* FINESTRE */
+#win-left{position:absolute;top:0;left:3vw;width:14vw;z-index:3;pointer-events:none;overflow:hidden}
+#win-right{position:absolute;top:0;right:3vw;width:14vw;z-index:3;pointer-events:none;overflow:hidden}
+
+.win-inner{
+  position:absolute;top:0;left:-10px;right:-10px;
+  border:10px solid #5a3210;border-bottom:none;
+  border-radius:50% 50% 0 0 / 7vw 7vw 0 0;
+  overflow:hidden;
+  box-shadow:inset 0 0 0 5px #3a1e08,inset 0 0 0 12px #7a4820,0 0 40px rgba(0,0,0,.8);
+}
+.win-sky{position:absolute;inset:0;background:rgba(3,2,10,.06)}
+.win-bar-h1{position:absolute;top:35%;left:0;right:0;height:13px;background:linear-gradient(180deg,#7a4818,#4a2a0c 50%,#7a4818);box-shadow:0 3px 10px rgba(0,0,0,.8)}
+.win-bar-h2{position:absolute;top:65%;left:0;right:0;height:13px;background:linear-gradient(180deg,#7a4818,#4a2a0c 50%,#7a4818);box-shadow:0 3px 10px rgba(0,0,0,.8)}
+.win-bar-v{position:absolute;top:0;bottom:0;left:50%;width:13px;transform:translateX(-50%);background:linear-gradient(90deg,#7a4818,#4a2a0c 50%,#7a4818);box-shadow:3px 0 10px rgba(0,0,0,.8)}
+.win-frame{position:absolute;inset:0;border:7px solid #4a2a0c;border-bottom:none;border-radius:50% 50% 0 0 / 7vw 7vw 0 0;pointer-events:none}
+
+/* BACK BTN */
+.back-btn{position:absolute;top:1.2rem;left:50%;transform:translateX(-50%);z-index:200;background:rgba(6,4,16,.92);border:1px solid rgba(201,168,76,.35);color:var(--gold-dim);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.5rem 1.4rem;cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap}
+.back-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* LAYOUT */
+.archive-wrap{position:relative;z-index:10;min-height:100vh;padding:5rem 2rem 6rem}
+.archive-header{text-align:center;margin-bottom:3rem}
+.archive-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--gold-light);text-shadow:0 0 40px rgba(201,168,76,.4);margin-bottom:.8rem}
+.archive-intro{font-family:'EB Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--cream-dim);line-height:1.8}
+.archive-divider{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.2rem auto}
+.archive-divider::before,.archive-divider::after{content:'';flex:1;max-width:200px;height:1px}
+.archive-divider::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,.4))}
+.archive-divider::after{background:linear-gradient(90deg,rgba(201,168,76,.4),transparent)}
+
+/* SCAFFALE */
+.bookshelf{max-width:1300px;margin:0 auto;display:flex;flex-direction:column;gap:0;padding:0 1rem}
+.shelf-row{position:relative;display:flex;align-items:flex-end;justify-content:space-evenly;gap:6px;padding:28px 16px 0}
+.shelf-plank{position:absolute;bottom:0;left:-4px;right:-4px;height:28px;background:repeating-linear-gradient(90deg,rgba(255,200,100,.08) 0px,transparent 4px,transparent 28px,rgba(0,0,0,.12) 28px,rgba(0,0,0,.12) 30px),linear-gradient(180deg,#7e4c1c,#5e3210 45%,#3e2008);border-top:2px solid rgba(255,190,70,.28);border-radius:2px 2px 0 0;box-shadow:0 8px 30px rgba(0,0,0,.95),inset 0 2px 0 rgba(255,210,100,.2);z-index:3}
+.shelf-plank::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,transparent,rgba(255,230,130,.35) 30%,rgba(255,240,150,.45) 50%,rgba(255,230,130,.35) 70%,transparent)}
+.shelf-side{position:absolute;bottom:28px;width:20px;height:calc(100% - 28px);background:linear-gradient(90deg,#281004,#482010,#382008);box-shadow:inset -4px 0 10px rgba(0,0,0,.6)}
+.shelf-side.left{left:-4px;border-radius:4px 0 0 0}
+.shelf-side.right{right:-4px;border-radius:0 4px 0 0;background:linear-gradient(90deg,#382008,#482010,#281004)}
+
+/* LIBRI */
+.book{position:relative;cursor:pointer;flex-shrink:0;transition:filter .3s,transform .3s cubic-bezier(.2,0,.2,1);transform-origin:bottom center;z-index:1}
+.book:hover{filter:brightness(1.35) saturate(1.2);transform:translateY(-22px);z-index:2}
+.book::after{content:'';position:absolute;bottom:-6px;left:15%;right:15%;height:10px;background:radial-gradient(ellipse,rgba(0,0,0,.65) 0%,transparent 70%);filter:blur(5px);z-index:-1;transition:opacity .3s}
+.book:hover::after{opacity:.3}
+.book-spine{position:absolute;left:-13px;top:0;bottom:0;width:13px;background:linear-gradient(90deg,rgba(0,0,0,.85),var(--bspine,#2a1008) 55%,rgba(0,0,0,.2));border-radius:3px 0 0 3px;box-shadow:inset -2px 0 5px rgba(0,0,0,.7)}
+.book-cover{width:100%;height:100%;background:var(--bcolor,#4a1a0a);background-image:repeating-linear-gradient(162deg,rgba(255,200,80,.04) 0px,transparent 2px,transparent 10px),linear-gradient(148deg,rgba(255,200,80,.12) 0%,transparent 42%,rgba(0,0,0,.28) 100%);border-radius:1px 5px 5px 1px;border-left:2px solid rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:4px 0 14px rgba(0,0,0,.75),inset -3px 0 8px rgba(0,0,0,.4),inset 1px 0 4px rgba(255,200,100,.07);overflow:hidden;position:relative}
+.book-cover::before{content:'';position:absolute;inset:0;background:linear-gradient(158deg,rgba(255,220,100,.12) 0%,transparent 38%,rgba(0,0,0,.22) 100%);pointer-events:none}
+.book-cover::after{content:'';position:absolute;top:5px;bottom:5px;left:5px;right:5px;border:1px solid rgba(201,168,76,.13);pointer-events:none}
+.book-pages{position:absolute;right:-5px;top:3px;bottom:3px;width:6px;background:repeating-linear-gradient(180deg,#d4b880 0px,#d4b880 1.5px,#b8984a 2.5px,#b8984a 3px,#c8a860 3px,#c8a860 4.5px);border-radius:0 2px 2px 0;box-shadow:2px 0 5px rgba(0,0,0,.4)}
+.book-title-vert{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;letter-spacing:.14em;color:rgba(240,210,120,1);text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 14px rgba(201,168,76,.4);padding:.5rem .2rem;max-height:88%;overflow:hidden}
+
+/* READER */
+.book-reader-overlay{position:fixed;inset:0;z-index:9990;background:rgba(2,1,8,.96);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center}
+.book-reader-overlay.open{display:flex}
+.book-cover-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:2rem}
+.book-cover-page img{max-height:78vh;max-width:86vw;object-fit:contain;border-radius:4px;box-shadow:0 24px 80px rgba(0,0,0,.95)}
+.book-reading{display:flex;flex-direction:column;align-items:center;gap:1.4rem;width:min(1200px,96vw)}
+.book-open{display:grid;grid-template-columns:1fr 1fr;width:100%;height:min(82vh,820px);background:#1a0f04;border:2px solid rgba(201,168,76,.3);border-radius:4px;box-shadow:0 30px 80px rgba(0,0,0,.95);overflow:hidden}
+.book-page{display:flex;flex-direction:column;padding:2.5rem 3rem;background:repeating-linear-gradient(90deg,rgba(40,20,5,.04) 0px,transparent 1px,transparent 20px),linear-gradient(135deg,#fdf6e3,#f8edd0);color:#2c1a08;font-family:'EB Garamond',serif;font-size:1.05rem;line-height:1.75;position:relative;overflow:hidden}
+.book-page:first-child{border-right:4px solid #8b5e1a;background:repeating-linear-gradient(90deg,rgba(40,20,5,.04) 0px,transparent 1px,transparent 20px),linear-gradient(135deg,#f8edd0,#fdf6e3)}
+.book-page-title{font-family:'Cinzel',serif;font-size:.65rem;font-weight:600;color:rgba(90,42,8,.55);text-align:center;margin:0 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(90,42,8,.15);letter-spacing:.22em;text-transform:uppercase;flex-shrink:0}
+.book-page-content{flex:1;overflow:hidden}
+.book-page-content p{margin:.4rem 0}
+.book-page-num{font-family:'Cinzel',serif;font-size:.55rem;color:rgba(90,42,8,.4);letter-spacing:.1em;text-align:center;flex-shrink:0;margin-top:.5rem}
+.book-reader-controls{display:flex;align-items:center;gap:1.5rem}
+.book-nav-btn{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);color:var(--gold);width:50px;height:50px;font-size:1.4rem;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center}
+.book-nav-btn:hover{background:rgba(201,168,76,.25);border-color:var(--gold)}
+.book-nav-btn:disabled{opacity:.25;cursor:default}
+.book-close-btn{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold-dim);padding:.6rem 1.8rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.book-close-btn:hover{background:rgba(201,168,76,.2);color:var(--gold)}
+.book-reader-page-info{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);min-width:80px;text-align:center}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<div id="wall-left"></div>
+<div id="wall-center"></div>
+<div id="wall-right"></div>
+
+<div id="win-left">
+  <div class="win-inner">
+    <div class="win-sky"></div>
+    <div class="win-bar-h1"></div>
+    <div class="win-bar-h2"></div>
+    <div class="win-bar-v"></div>
+    <div class="win-frame"></div>
+  </div>
+</div>
+<div id="win-right">
+  <div class="win-inner">
+    <div class="win-sky"></div>
+    <div class="win-bar-h1"></div>
+    <div class="win-bar-h2"></div>
+    <div class="win-bar-v"></div>
+    <div class="win-frame"></div>
+  </div>
+</div>
+
+<a class="back-btn" href="index_light.html">Torna al Sito</a>
+
+<div class="archive-wrap">
+  <div class="archive-header">
+    <h1 class="archive-title">Archivio</h1>
+    <div class="archive-divider"><span style="color:var(--gold);font-size:.8rem">✦</span></div>
+    <p class="archive-intro">La conoscenza di Gwernia, raccolta e custodita. Ogni tomo è una voce del passato.</p>
+  </div>
+  <div class="bookshelf">
+<div class="shelf-row">
+  <div class="shelf-side left"></div>
+  <div class="book" style="width:95px;height:360px;--bcolor:#5a2010;--bspine:#3a1008" onclick="openBook('b1')" title="Pactum Regis">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Pactum Regis</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:88px;height:340px;--bcolor:#1a3a5a;--bspine:#0d2238" onclick="openBook('b2')" title="La Testuggine Dragona">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">La Testuggine Dragona</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:92px;height:355px;--bcolor:#1a4a2a;--bspine:#0d2e1a" onclick="openBook('b3')" title="La Storia di Xandria">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">La Storia di Xandria</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:85px;height:345px;--bcolor:#1a1a3a;--bspine:#0d0d22" onclick="openBook('b4')" title="Oracolo della Notte">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Oracolo della Notte</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:90px;height:365px;--bcolor:#0a2a4a;--bspine:#051828" onclick="openBook('b5')" title="Le Pietre di Contenimento">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Le Pietre di Contenimento</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:88px;height:350px;--bcolor:#1a4a4a;--bspine:#0d2e2e" onclick="openBook('b6')" title="Gli Echi di Kael'Zor">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Gli Echi di Kael'Zor</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:85px;height:340px;--bcolor:#4a1010;--bspine:#2e0808" onclick="openBook('b7')" title="Draghi e Dragonici">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Draghi e Dragonici</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:92px;height:360px;--bcolor:#1a4a1a;--bspine:#0d2e0d" onclick="openBook('b8')" title="Alleanza di Sylvandor">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Alleanza di Sylvandor</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:90px;height:345px;--bcolor:#3a2a0a;--bspine:#221a04" onclick="openBook('b9')" title="La Grande Faida">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">La Grande Faida</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:85px;height:355px;--bcolor:#3a3a2a;--bspine:#22221a" onclick="openBook('b10')" title="Accordo delle 4 Cime">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Accordo delle 4 Cime</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="shelf-side right"></div>
+  <div class="shelf-plank"></div>
+</div>
+<div class="shelf-row">
+  <div class="shelf-side left"></div>
+  <div class="book" style="width:88px;height:340px;--bcolor:#1a4a10;--bspine:#0d2e08" onclick="openBook('b11')" title="Storia degli Yuan-Ti">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Storia degli Yuan-Ti</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:92px;height:350px;--bcolor:#2a1a4a;--bspine:#1a0d2e" onclick="openBook('b12')" title="Mondi e Piani Conosciuti">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Mondi e Piani Conosciuti</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:85px;height:360px;--bcolor:#3a1a3a;--bspine:#220d22" onclick="openBook('b13')" title="L'Arte della Cartomanzia">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">L'Arte della Cartomanzia</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:90px;height:355px;--bcolor:#1a1a1a;--bspine:#0d0d0d" onclick="openBook('b14')" title="I 4 Cavalieri dell'Apocalisse">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">I 4 Cavalieri dell'Apocalisse</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:88px;height:345px;--bcolor:#3a2a10;--bspine:#221a08" onclick="openBook('b15')" title="Proselide">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Proselide</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:85px;height:350px;--bcolor:#2a3a3a;--bspine:#1a2222" onclick="openBook('b16')" title="Il Grande Clockout">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Il Grande Clockout</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:92px;height:360px;--bcolor:#3a1a2a;--bspine:#220d1a" onclick="openBook('b17')" title="Disfatta dei Monarchi">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">Disfatta dei Monarchi</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:90px;height:355px;--bcolor:#0a1a3a;--bspine:#050d22" onclick="openBook('b18')" title="I 12 Astri dello Zodiaco">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">I 12 Astri dello Zodiaco</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="book" style="width:88px;height:345px;--bcolor:#4a3a0a;--bspine:#2e2304" onclick="openBook('b19')" title="I Nove Astri del Divino">
+    <div class="book-spine"></div>
+    <div class="book-cover"><div class="book-title-vert">I Nove Astri del Divino</div></div>
+    <div class="book-pages"></div>
+  </div>
+  <div class="shelf-side right"></div>
+  <div class="shelf-plank"></div>
+</div>
+  </div>
+</div>
+
+<!-- READER -->
+<div class="book-reader-overlay" id="book-reader-overlay">
+  <div class="book-cover-page" id="book-cover-page" style="display:none">
+    <img id="book-cover-img" src="" alt="">
+    <div class="book-reader-controls">
+      <button class="book-close-btn" onclick="closeBook()">✕ &nbsp; Riponi</button>
+      <button class="book-nav-btn" onclick="startReading()">&#8594;</button>
+    </div>
+  </div>
+  <div class="book-reading" id="book-reading" style="display:none">
+    <div class="book-open" id="book-open">
+      <div class="book-page" id="book-page-left">
+        <div class="book-page-title" id="bpl-title"></div>
+        <div class="book-page-content" id="bpl-text"></div>
+        <div class="book-page-num" id="bpl-num"></div>
+      </div>
+      <div class="book-page" id="book-page-right">
+        <div class="book-page-title" id="bpr-title"></div>
+        <div class="book-page-content" id="bpr-text"></div>
+        <div class="book-page-num" id="bpr-num"></div>
+      </div>
+    </div>
+    <div class="book-reader-controls">
+      <button class="book-nav-btn" id="btn-prev" onclick="goBack()">&#8592;</button>
+      <button class="book-close-btn" onclick="closeBook()">✕ &nbsp; Riponi</button>
+      <span class="book-reader-page-info" id="book-page-info"></span>
+      <button class="book-nav-btn" id="btn-next" onclick="turnPage(1)">&#8594;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══ STELLE ═══ */
+const canvas=document.getElementById('stars-canvas'),ctx=canvas.getContext('2d');
+let W,H,stars=[],meteors=[],starsOffsetY=0,targetOffsetY=0;
+window.addEventListener('scroll',function(){targetOffsetY=window.scrollY*0.25;},{passive:true});
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;initStars()}
+function initStars(){
+  stars=[];
+  var count=Math.floor((W*H)/3800);
+  for(var i=0;i<count;i++){
+    var bright=Math.random()<0.12;
+    stars.push({x:Math.random()*W,y:Math.random()*H,r:bright?Math.random()*.8+1:Math.random()*.9+.2,pulse:Math.random()*Math.PI*2,speed:Math.random()*.8+.4,bright:bright,gp:Math.random()*Math.PI*2});
+  }
+}
+function spawnMeteor(){meteors.push({x:Math.random()*W*.6+W*.2,y:Math.random()*H*.3,vx:Math.random()*3+2,vy:Math.random()*2+1,len:Math.random()*80+60,a:1})}
+function drawStars(){
+  ctx.clearRect(0,0,W,H);
+  starsOffsetY+=(targetOffsetY-starsOffsetY)*.06;
+  var t=Date.now()*.001;
+  stars.forEach(function(s){
+    var dy=((s.y-starsOffsetY)%H+H)%H;
+    var alpha=s.bright?.55+.45*Math.sin(t*s.speed+s.pulse):.25+.35*Math.sin(t*s.speed*.6+s.pulse);
+    ctx.beginPath();ctx.arc(s.x,dy,s.r,0,Math.PI*2);ctx.fillStyle='rgba(255,245,210,'+alpha+')';ctx.fill();
+    if(s.bright){var ga=.18+.18*Math.sin(t*s.speed+s.gp),g=ctx.createRadialGradient(s.x,dy,0,s.x,dy,s.r*5);g.addColorStop(0,'rgba(201,168,76,'+ga+')');g.addColorStop(1,'rgba(201,168,76,0)');ctx.beginPath();ctx.arc(s.x,dy,s.r*5,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();}
+  });
+  meteors=meteors.filter(function(m){
+    m.x+=m.vx;m.y+=m.vy;m.a-=.015;if(m.a<=0)return false;
+    var g=ctx.createLinearGradient(m.x-m.vx*m.len/m.vx,m.y-m.vy*m.len/m.vx,m.x,m.y);
+    g.addColorStop(0,'rgba(201,168,76,0)');g.addColorStop(1,'rgba(201,168,76,'+m.a*.7+')');
+    ctx.beginPath();ctx.moveTo(m.x-m.vx*m.len/5,m.y-m.vy*m.len/5);ctx.lineTo(m.x,m.y);
+    ctx.strokeStyle=g;ctx.lineWidth=1.5;ctx.stroke();return true;
+  });
+  requestAnimationFrame(drawStars);
+}
+window.addEventListener('resize',resize);
+resize();drawStars();
+setInterval(function(){if(Math.random()<.45)spawnMeteor();},2200);
+
+/* ═══ ALTEZZE PARETE E FINESTRE ═══ */
+function setWallHeights(){
+  var h=document.body.scrollHeight;
+  ['wall-left','wall-center','wall-right','win-left','win-right'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.style.height=h+'px';
+  });
+  document.querySelectorAll('.win-inner').forEach(function(w){w.style.height=h+'px';});
+}
+window.addEventListener('load',setWallHeights);
+window.addEventListener('resize',setWallHeights);
+setTimeout(setWallHeights,200);
+setTimeout(setWallHeights,800);
+
+/* ═══ ARCHIVIO ═══ */
+const ARCHIVE_BOOKS = {"b1": {"title": "Pactum Regis", "cover": "https://i.ibb.co/nqJJSfB2/Pactum-Regis.png", "paragraphs": ["Durante la 3ª Era, i sovrani dei territori più influenti stipularono un Trattato politico e commerciale con l'intento di porre fine al ciclo di conflitti e diffidenze tra i Regni. Tale accordo mirava a favorire una cooperazione strategica e una globalizzazione vantaggiosa per il progresso collettivo.", "Sotto la guida visionaria dei Re Andor Ulrick, Mithrandir Mornil, Draedan Ghexiros e Dulgroff Tallforge, vennero abbattute molte delle barriere culturali che avevano diviso le loro razze per secoli. La collaborazione tra queste figure di spicco portò a una prosperità senza precedenti.", "Circa dieci anni dopo la ratifica del Trattato, una profonda crisi politica, innescata da una disputa sul controllo delle rotte commerciali chiave e delle risorse naturali, coinvolse i Regni. La situazione si aggravò ulteriormente quando emersero prove di una possibile cospirazione orchestrata da qualcuno nel Consiglio Mondiale, che cercava di manipolare le politiche commerciali a proprio vantaggio.", "Questo generò un'ondata di sfiducia reciproca, dovuta anche a conflitti di interesse. L'escalation culminò nella dissoluzione ufficiale del Pactum Regis, segnando la fine di un periodo di cooperazione e il ritorno a una politica di isolazionismo e sospetto reciproco."]}, "b2": {"title": "La Testuggine Dragona", "cover": "https://i.ibb.co/tT5JstyZ/La-Testuggine-Dragona.png", "paragraphs": ["All'alba di una notte insonne mi trovai a fissare l'orizzonte di un nuovo mistero. Tra il rum scadente e i sogni infranti, il racconto di un uomo mi scaldò il cuore. \"Rogue Island\", conosciuta anche come \"l'Isola Sfuggente\" o \"l'Isola Galleggiante\", un enigma che danzava sulle onde del mare.", "I porti di Eldoria, Ysgar e Murondhir divennero teatro della mia ricerca. Un viaggio di prove e tribolazioni che mi condussero tra le braccia di Bartholomew, un pirata distinto, un uomo che rompeva ogni stereotipo con la sua erudizione e il suo fascino. La sua proposta fu una folgorazione, una promessa di avventura che superava ogni mia aspettativa.", "Unirsi alla sua ciurma era un salto nel buio, un passo verso l'ignoto che accettai con un coraggio che non sapevo di possedere. I giorni in mare divennero mesi, e la nave di Bartholomew fu il mio mondo, un mondo in cui l'orizzonte era tanto inafferrabile quanto affascinante.", "Quando finalmente l'Isola Galleggiante si delineò all'orizzonte, il cuore mi balzò in petto. Ma l'isola era un miraggio che sfuggiva a ogni tentativo di avvicinamento, un enigma che si svelò solo sotto l'abile guida marinaresca di Bartholomew.", "La rivelazione fu tanto meravigliosa quanto inaspettata. Quell'Isola Galleggiante non era altro che una Testuggine Dragona, una creatura di proporzioni mitiche che portava sul suo dorso un microcosmo di vita. I suoi misteri si svelarono lentamente, mentre Bartholomew navigava tra le correnti del destino.", "La fauna e la flora che prosperavano sul dorso della Testuggine Dragona erano testimonianze viventi dell'adattabilità della natura. Il perché non si muovesse al di sotto della superficie del mare resta un mistero.", "L'Oede: una curiosa pianta che produce un unico frutto all'anno. Consumandolo, tutte le ferite vengono rimarginate, si guarisce da ogni malattia, inclusa quella di origine magica, e si è liberati da ogni condizione come avvelenamento, cecità, ammaliamento, paralisi e sordità.", "La Morwen Ambrata: una straordinaria pianta in grado di produrre una densa linfa color ambra che, se ingerita, migliora permanentemente la caratteristica più alta dell'organismo. Sulla Testuggine esiste un solo esemplare, capace di generare al massimo due dosi. Ogni individuo può beneficiarne una sola volta nella vita."]}, "b3": {"title": "La Storia di Xandria", "cover": "https://i.ibb.co/nspsn5M7/La-storia-di-Xandria.png", "paragraphs": ["Il libro racconta la toccante vicenda di Xandria, una nobile Elfa dei Boschi destinata a sposare un Elfo Alto. Un matrimonio imposto, concepito per sancire il rinnovo di un'antica alleanza tra due popoli un tempo divisi da profondi conflitti.", "Frustrata dalla vita che le era stata imposta, decise di ritagliarsi uno spazio tutto suo. In una valle remota scoprì un lago le cui acque placide parevano accogliere con benevolenza le sue lacrime di amarezza. Un giorno, in quel luogo incantato, Xandria incontrò un Drow, Elfo Oscuro scampato alle ombre oppressive del Sottosuolo.", "Il loro primo incontro fu carico di timore: lei, sorpresa e impaurita, cercò di allontanarsi, ma il Drow non mostrava ostilità. Al contrario, portava un'aura di solitudine che rifletteva la propria. Lentamente, le barriere si sciolsero e i due iniziarono a condividere storie di profonda intimità, tessendo un legame proibito ma irresistibile.", "Ma i giorni di segreto finirono quando il padre di Xandria, insospettito dalle sue frequenti assenze, scoprì la verità. Per gli Elfi, i Drow erano un popolo maledetto. Fu così che l'ordine di morte fu emesso, e l'amato di Xandria cadde sotto la lama di una sentenza inesorabile.", "Devastata dal dolore, Xandria si rivolse agli Dei, pregando di riavere il suo amato. Ma il silenzio divino fu l'unica risposta. Nella disperazione, trovò conforto un'ultima volta presso il lago, e con un gesto estremo, scelse di unirsi alle profondità delle sue acque.", "Oggi, quel luogo è considerato sacro dagli Alti Elfi e dagli Elfi dei Boschi del nord di Arinthel. Si racconta che in tempi recenti abbia acquisito proprietà straordinarie, capaci di estendere la vita degli Elfi che meditano in quelle acque."]}, "b4": {"title": "Oracolo della Notte", "cover": "https://i.ibb.co/XxFhCLYx/Oracolo-della-Notte.png", "paragraphs": ["Pochi sono gli scritti che menzionano l'Oracolo, e nessuno rivela con certezza la sua natura. Le notizie che ci giungono provengono da racconti tramandati a voce, da pellegrini e viandanti che giurano d'aver udito il suo sussurro.", "Si narra che il Tumulo di Nihilsar, se davvero esiste, sia stato innalzato nella Prima Era, ma la sua ubicazione rimane celata. I racconti sostengono che l'Oracolo sia in grado di suscitare visioni tali da spezzare e ricomporre la coscienza stessa, ma di queste esperienze non restano che pergamene lacere e simboli consumati dal tempo.", "Secondo alcune interpretazioni, Nihilsar incarna il concetto di nulla, il vuoto, la non-esistenza. Il prefisso \"Nihil-\" richiama il nichilismo, la corrente filosofica che sostiene l'assenza di significato, scopo o valore intrinseco nella vita. Questo Oracolo rappresenta dunque la negazione dell'essere.", "Alcuni testi più criptici accennano all'esistenza di un secondo Oracolo, che potrebbe simboleggiare l'esatto opposto del Tumulo di Nihilsar, rappresentando invece l'essenza della pienezza. Se dovesse esistere, i due Oracoli rifletterebbero temi filosofici riguardanti l'esistenza e la non-esistenza."]}, "b5": {"title": "Le Pietre di Contenimento", "cover": "https://i.ibb.co/zhR5WjpN/Le-Pietre-di-Contenimento.png", "paragraphs": ["Trascritto dagli appunti personali di Krivaxtheralzis, Maestro Cristallomante, con la sapienza di Veridia Fiammaramata, Guardiana della Conoscenza. 325° Arco Ciclico — Pyraxis.", "Durante una spedizione nelle profondità di Khaz-Moran, Krivaxtheralzis rinvenne quattro Cristalli di purezza straordinaria, sepolti in una vena di roccia che nessun piccone aveva mai toccato. Le analisi rivelarono una struttura cristallina così stabile da renderli contenitori naturali di energia arcana.", "Fu dato il via al progetto delle Pietre di Contenimento, un'iniziativa ambiziosa che mirava a creare focus arcani in grado di offrire agli incantatori una riserva di magia. Ulteriori studi rivelarono che quei cristalli potevano anche assorbire e trattenere potere elementale puro.", "La Pietra Ardencia: il primo Cristallo fu immerso nelle Pozze di Magma del Monte Ignaryx, nel Piano Elementale del Fuoco. Il rituale durò tre giorni ininterrotti.", "La Pietra Acquasilva: il secondo Cristallo fu immerso nelle acque del Ghiacciaio Piangente, nel Piano Elementale dell'Acqua. Le temperature estreme sfinirono l'officiante del rituale.", "La Pietra Zephyris: la terza infusione fu la prova più pericolosa. Il Cristallo venne esposto alle tempeste perpetue della Vetta del Fulmine. L'officiante fu colpito 28 volte da scariche di intensità anomala.", "La Pietra Lithogea: la quarta infusione si svolse nelle Paludi Acide di Xil'thrax, nel Piano Elementale della Terra. Il processo risultò più rapido dei precedenti grazie all'esperienza accumulata.", "Le settimane successive furono dedicate a test sistematici. La prima proprietà documentata fu la risonanza: quando un incantatore usava una pietra come focus, questa amplificava la potenza della magia corrispondente. La seconda proprietà permetteva di assorbire attacchi elementali e rilasciarli come raggio."]}, "b6": {"title": "Gli Echi di Kael'Zor", "cover": "https://i.ibb.co/sJyXrY9Z/Gli-Echi-di-Kael-Zor.png", "paragraphs": ["Tutto ebbe inizio a Pyraxis, la prima Capitale di Draconia. Situata in una vasta pianura circondata da montagne ricche di purissimi cristalli magici, Pyraxis prosperava grazie alla capacità dei suoi abitanti di sfruttare quei cristalli per approfondire le arti arcane.", "A governarla c'era Kael'Zor, il leggendario Drago di Cristallo, guardiano delle montagne e maestro dei Dragonidi nell'arte di canalizzare l'energia attraverso i cristalli. Unico nel suo genere, era temuto e incompreso dagli altri draghi, poiché la sua Magia sembrava interferire con il loro potere.", "Intorno all'800 a.C. accadde l'irreparabile. Un gruppo di Dragonidi, sedotti dal potere e dalle promesse dei Draghi Cromatici, cospirò per distruggere Kael'Zor. Sapevano che l'unico modo era annientare il suo Cuore di Cristallo, la fonte stessa della sua Magia.", "Dopo una lunga e sanguinosa impresa, riuscirono nel loro intento, ma il prezzo fu catastrofico. Alla frantumazione del Cuore, una risonanza magica incontrollata si diffuse attraverso i Cristalli, liberando onde di pura energia che devastarono ogni cosa. Frane, valanghe e mutazioni colpirono terre, bestie e Dragonidi.", "Il Cuore di Cristallo si divise in cinque frammenti, mentre il corpo del drago si disperse in schegge minute per tutta Pyraxis. I pochi sopravvissuti abbandonarono le terre devastate, oggi note come \"Terre Infrante\", e fondarono Drakelang.", "Dalla contaminazione lasciata dalla Magia di Kael'Zor nacquero i primi Draghi e Dragonidi Gemmati, alcuni dei quali fondarono \"I Custodi di Kael'Zor\", un ordine devoto a recuperare i Frammenti del Cuore di Drago."]}, "b7": {"title": "Draghi e Dragonici", "cover": "https://i.ibb.co/LzZ278Td/Draghi-e-Dragonici.png", "paragraphs": ["I Draghi, creature mitiche e mastodontiche dotate di grande potere magico e di una notevole intelligenza, pare popolino il mondo da prima delle Ere. Essi si dividono principalmente in due categorie: i Draghi Cromatici, noti per la loro natura malevola, e i Draghi Metallici, riconosciuti per la loro bontà.", "Col passare dei secoli, molti popoli tentarono di sfidare i Draghi, ma nulla riuscì mai a intaccare la loro supremazia, se non una calamità nota come \"Fearg-An\", una misteriosa piaga che scatenò un'anomalia nei Draghi. Questa malattia li condusse sull'orlo dell'estinzione.", "Un destino poi sigillato dai Nani, che riuscirono, grazie alle loro balliste, a porre fine al caos che aveva travolto il mondo. La perdita dei Draghi fu un colpo durissimo, poiché già in passato i Dragonidi avevano affrontato la tragedia della distruzione di Pyraxis.", "Oggi tutto ciò che rimane dell'antica stirpe dei Draghi è rappresentato dai Dragonidi. Questi discendenti conservano l'antico legame con i loro progenitori, portando avanti l'eredità di nobiltà e potenza che un tempo dominava i cieli e le terre di Gwernia. Non a caso, il Draconico è una delle lingue più utilizzate nel campo della Magia."]}, "b8": {"title": "Alleanza di Sylvandor", "cover": "https://i.ibb.co/JRjVXH5v/Alleanza-di-Sylvandor.png", "paragraphs": ["Nelle mistiche terre di Arinthel si estende l'antica Foresta di Sylvandor, dove alberi altissimi prendono vita come Treant, esseri arborei senzienti che hanno assistito agli albori del tempo. Questa foresta sacra viene venerata dagli Elfi dei Boschi.", "Durante la Prima Era, gli Elfi Alti intravidero nella Foresta di Sylvandor una fonte di potere magico da mettere al servizio della civiltà. Decisero quindi di stabilire una colonia nella foresta per studiarne la magia, ma gli Elfi dei Boschi percepirono questo intervento come una violazione della sacralità del luogo.", "I tentativi di dialogo non portarono risultati. Questo spinse gli Elfi dei Boschi a intraprendere azioni mirate a ostacolare l'insediamento, aggravando le tensioni. Con il passare del tempo, il conflitto raggiunse un punto critico.", "Gli Elfi dei Boschi eseguirono un potente rituale per isolare la foresta, ma gli Elfi Alti interferirono, causando una devastante frattura nella trama magica. Questo evento provocò la moria dei Treant. L'incidente spinse entrambe le fazioni a comprendere che la loro ostilità stava distruggendo ciò che entrambe avrebbero voluto preservare.", "Fu convocato un consiglio che vedeva gli Alti Saggi degli Elfi dei Boschi e il Re degli Elfi Alti. L'accordo stabilì la creazione di un piccolo insediamento comune, con accesso alla Foresta regolato a periodi specifici dell'anno. Fu vietato l'uso eccessivo della magia e venne istituito un rito di unione tra i lignaggi elfici."]}, "b9": {"title": "La Grande Faida", "cover": "https://i.ibb.co/BHdZvcfV/La-Grande-Faida.png", "paragraphs": ["Nel corso della storia, numerosi conflitti hanno segnato le relazioni tra Nani ed Elfi. Tra questi, spicca quello tra i Nani di Moghurn e gli Elfi dei Boschi di Illfnor, nato per l'ottenimento del prezioso Mithril.", "Affascinati da questo raro minerale, i Nani convinsero gli Elfi a consentire l'avvio di attività minerarie nel loro territorio, promettendo loro una parte del materiale estratto. Tuttavia, le prime operazioni si rivelarono invasive e dannose per l'ambiente.", "A causa della fragilità delle rocce locali, diversi crolli nelle miniere provocarono numerose vittime. Gli Elfi scoprirono con orrore che tra i morti vi erano anche degli schiavi, un atto che non poteva essere tollerato. Questo evento spinse gli Elfi a interrompere immediatamente l'accordo, costringendo i Nani a lasciare le loro terre.", "Offesi e umiliati, i Nani reagirono con un approccio bellicoso, tentando di riconquistare le miniere con la forza. Dopo anni di scontri, gli Elfi riuscirono infine a espellere definitivamente i Nani dai loro territori.", "Da quella sconfitta, i Nani cercarono nelle proprie terre giacimenti di Mithril simili. Fu durante lo scavo più profondo che abbandonarono questa caccia. Si imbatterono in qualcosa di così oscuro e pericoloso che la miniera fu immediatamente sigillata. Oggi, il Mithril estratto dalle terre di Illfnor rimane l'unico disponibile al mondo."]}, "b10": {"title": "Accordo delle 4 Cime", "cover": "https://i.ibb.co/C5hXNyN9/Accordo-delle-4-Cime.png", "paragraphs": ["In passato, le città Naniche erano indipendenti e costantemente in competizione tra loro. Tuttavia, un Clan in particolare, sconfitto in un violento conflitto con altri Clan, fu costretto a rifugiarsi nelle profondità della terra, nell'oscuro e inospitale Underdark.", "Generazioni trascorse in un ambiente così ostile trasformarono radicalmente la loro cultura e fisiologia, trasformandoli negli odierni Nani Grigi conosciuti come Duergar.", "Con il passare del tempo, spinti da un inestinguibile desiderio di vendetta, i Duergar iniziarono a prendere di mira le miniere dei Clan Nanici in superficie. Con sabotaggi mirati, paralizzarono le operazioni di estrazione, infliggendo gravi danni alle economie delle città Naniche.", "Fu nell'840 a.C. che Darnak Thaurgrim, Capo Clan di Helstrom, convocò gli altri tre leader più influenti di Murondir. Riuscì a convincere gli altri Capi Clan a mettere da parte le rivalità e unire le forze per scongiurare la rovina del popolo nanico.", "Dopo anni di sanguinosi conflitti, i Duergar furono costretti a ritirarsi e molte delle loro vie d'accesso al sottosuolo vennero sigillate. Questa vittoria segnò l'inizio di una nuova società Nanica. I legami tra i Clan si rafforzarono e Darnak Thaurgrim fu proclamato primo Re dei Nani."]}, "b11": {"title": "Storia degli Yuan-Ti", "cover": "https://i.ibb.co/KpyWNRn4/Storia-degli-Yuan-Ti.png", "paragraphs": ["L'origine degli Yuan-Ti risale agli albori del mondo, quando nacquero le prime razze e si formarono le fondamenta della civiltà. Da allora, queste creature si sono evolute, adattandosi agli ambienti più estremi e sviluppando caratteristiche uniche.", "Oggi si è consapevoli dell'esistenza di due distinte tipologie di Yuan-Ti: gli \"Yuan-Ti Henophidi\" e gli \"Yuan-Ti Caenophidi\". Gli Henophidi abitano le zone desertiche di Aralynn e sono noti per le loro scaglie bianche e gli occhi azzurri.", "I Caenophidi vivono nelle regioni tropicali di Belaver e si distinguono per le scaglie verdi e gli occhi gialli. Sebbene possano apparire come creature istintive, entrambe le stirpi possiedono una struttura sociale rigidamente organizzata, forgiata da millenni di selezione naturale e rituali cruenti.", "Il fine di tali rituali, così come le entità a cui sono dedicati, rimane avvolto nel mistero. I sacerdoti del Pantheon Egizio sostengono che dietro le loro pratiche si celi Apophis, il grande serpente simbolo del caos e dell'oscurità.", "Tra gli Yuan-Ti più conosciuti vi sono i \"Meticci\", nati da rituali falliti o unioni interrazziali con gli umani. Rinnegati sia dal loro popolo che dalle altre razze, vivono isolati, nascondendo la loro vera natura per sfuggire a persecuzioni. Tuttavia, ad Aralynn godono di una certa tolleranza."]}, "b12": {"title": "Mondi e Piani Conosciuti", "cover": "https://i.ibb.co/NwVZWjF/Mondi-e-Piani-Conosciuti.png", "paragraphs": ["Le Divinità Occulte, così chiamate per la loro natura avvolta nel mistero, rappresentano un enigma controverso per i teologi e gli studiosi del mondo. Non esistono cronache antiche né testi sacri che ne descrivano l'origine o il ruolo.", "Eppure la loro presenza si percepisce come un'ombra persistente, insinuata nelle pieghe della realtà di Gwernia. Si dice che operino dai loro Piani di Esistenza, luoghi fuori dalla portata dei mortali, ma stranamente vicini al mondo materiale.", "Thaleus, un devoto di Vecna, dichiarò sotto tortura che la vera natura delle Divinità Occulte rappresenta al tempo stesso la fonte del loro immenso potere e la loro più grande vulnerabilità. Questa rivelazione gli costò la vita. Morì lasciando dietro di sé più interrogativi che certezze.", "Ad oggi, l'esistenza di solo due di queste Divinità è stata confermata: Vecna e Pelor, i cui seguaci dimostrano concretamente la realtà del loro potere."]}, "b13": {"title": "L'Arte della Cartomanzia", "cover": "https://i.ibb.co/tTFNR8HS/L-Arte-della-Cartomanzia.png", "paragraphs": ["Fin dall'alba dei tempi, gli esseri viventi hanno sempre cercato un modo per scrutare nel futuro della propria esistenza. Questa inesauribile curiosità ha dato vita, attraverso i secoli, a metodi di divinazione sempre più bizzarri, nella speranza di catturare anche solo un soffio di certezza in un universo di incertezze.", "Dadi della Predizione, Ossa Profetiche e, tra i più celebri, la Cartomanzia: la divinazione attraverso i Tarocchi. Questa forma di divinazione nacque nel 1250 a.C. con Madame Bovary, una cartomante di talento ineguagliabile, la cui fama raggiunse ogni angolo del globo.", "Madame Bovary vagava per il mondo con un solo scopo: offrire risposte a coloro che erano tormentati dai quesiti della vita. Ma la sua abilità non era ordinaria. Il suo mazzo di tarocchi era in grado di predire il futuro con una precisione spaventosa. Con esso rivelò destini e svelò segreti oscuri, guadagnandosi una reputazione temuta ma rispettata."]}, "b14": {"title": "I 4 Cavalieri dell'Apocalisse", "cover": "https://i.ibb.co/wrc6jKxk/I-4-Cavalieri-dell-Apocalisse.png", "paragraphs": ["Ho attraversato tutta Prohelide, mosso dalla determinazione di comprendere più a fondo l'influenza che le Divinità esercitano sul nostro mondo. Alla fine, ho trovato la risposta che cercavo, ma insieme a essa è emersa una verità che non riuscirò mai ad accettare.", "Le Divinità, sebbene potenti oltre ogni immaginazione, sono vincolate da leggi cosmiche che limitano il loro intervento diretto nel nostro mondo. Per proteggerci dalle catastrofi, hanno creato quattro emissari: i Cavalieri dell'Apocalisse.", "Queste entità appaiono nei momenti di crisi globale per segnalarci che il nostro destino è appeso a un filo. I Cavalieri non sono solo araldi di distruzione, ma anche simboli di speranza, strumenti per cambiare il corso degli eventi.", "Il Cavaliere Bianco — Giudizio: il corno che porta è un segnale, un richiamo a risvegliarsi e riconoscere l'importanza del momento, preparando il terreno per ciò che deve venire.", "Il Cavaliere Rosso — Guerra: la sua Spada Bramasangue è il simbolo della distruzione, che taglia via il marcio per permettere la guarigione. La sua presenza infiamma gli animi, spingendo al cambiamento attraverso il conflitto.", "Il Cavaliere Verde — Carestia: la Bilancia che porta è un promemoria costante che, alla fine, tutti sono uguali di fronte alle forze dell'universo. Le prove della carestia sono le sfide che spingono gli individui a riflettere e adattarsi.", "Il Cavaliere Nero — Morte: la sua Falce Eterea non raccoglie vite, ma Anime. È colui che recide ciò che è stato da ciò che sarà."]}, "b15": {"title": "Proselide", "cover": "https://i.ibb.co/Zz3TttHX/Proselide.png", "paragraphs": ["Al calare di una pallida nebbia, raggiunsi i confini di Vraithgar, un luogo avvolto da un silenzio innaturale e custode dei segreti del Regno di Prohelide. Tra rovine distrutte e biblioteche date alle fiamme, raccolsi frammenti di conoscenze ormai dimenticate.", "Al centro di tutto, Erypolis, cuore pulsante di Proselide. Grazie a magie di decifrazione, interpretai iscrizioni e testi che parlano di una Magocrazia: un consiglio di cinque potenti maghi a capo del regno. La magia non era solo un mezzo, ma la stessa essenza della vita.", "Tuttavia, la luce che quel popolo aveva nel cuore si tramutò poi in fede. Fu allora che nacque la religione per il dio Pelor, venerato come portatore di guarigione e speranza, un evento che segnò il futuro di Prohelide.", "Con l'ausilio di una magia che mi consente di sondare le leggende, tornai a Vraithgar e iniziai le mie indagini. Nelle visioni apparve un bambino segnato dalla tragedia: dopo aver assistito alla morte della madre sul rogo, crebbe con il cuore avvelenato dal desiderio di vendetta. Diventato uno dei Maghi supremi, scatenò il Morbo Spettrale.", "Oggi, Vraithgar non è altro che un'immensa landa desolata, infestata da orrori e maledizioni antiche. Tramanderò queste conoscenze affinché il passato possa insegnare qualcosa."]}, "b16": {"title": "Il Grande Clockout", "cover": "https://i.ibb.co/qYDRrMxL/Il-Grande-Clockout.png", "paragraphs": ["Il Grande Clockout fu un evento catastrofico che segnò indelebilmente la storia di Aresil, generando un clima di paura e diffidenza verso i Forgiati. L'incidente avvenne durante l'Esposizione Meccanomagica, quando un criminale sabotò il sistema di controllo dei Forgiati nel tentativo di sottrarne alcuni.", "Il sabotaggio innescò comportamenti imprevedibili nei Forgiati, causando gravi danni alle strutture e ferendo numerosi spettatori. Un incendio accidentale, provocato da un difetto di progettazione in uno dei Forgiati, amplificò il caos e aumentò il bilancio delle vittime.", "In seguito al Clockout, le autorità introdussero regolamentazioni più rigide sull'uso e la manutenzione dei Forgiati. L'evento provocò una spaccatura nella comunità: da un lato, i sostenitori dell'innovazione; dall'altro, movimenti di resistenza che promuovevano un ritorno a metodi tradizionali.", "Il Grande Clockout sollevò anche un dibattito etico riguardo alla crescente autonomia dei Forgiati. Alcuni esperti sostennero che il malfunzionamento potesse derivare da una primitiva forma di autocontrollo sviluppatasi nei modelli più avanzati.", "Questa teoria suggeriva che i Forgiati, progettati per apprendere e adattarsi, potessero aver iniziato a prendere decisioni indipendenti in situazioni di stress. L'idea che i Forgiati potessero evolvere una sorta di volontà propria inquietò ulteriormente la popolazione."]}, "b17": {"title": "Disfatta dei Monarchi", "cover": "https://i.ibb.co/GXsHVLD/Disfatta-dei-Monarchi.png", "paragraphs": ["Ci fu un tempo in cui cinque individui, eredi delle Oscure Materie, spinti da un'ambizione senza pari, usarono la loro maestria nel manipolare tali forze per aspirare a dominare le altre razze.", "Correva l'Arco Ciclico 950 quando la loro presenza gettò le terre in un susseguirsi di Guerre, Carestie e Morte. Furono gli uomini a riconoscere il pericolo che gli eredi rappresentavano per l'equilibrio del mondo.", "Sfruttando l'alleanza nata dal Pactum Regis, si unirono con l'obiettivo di neutralizzare la minaccia. Con ingegno e determinazione, furono forgiate cinque Reliquie, ognuna capace di assorbire i loro poteri, rendendoli inermi a qualunque offensiva.", "La battaglia che ne seguì fu ardua, ma alla fine trionfarono i Vertici. Gli eredi furono sconfitti e le reliquie furono distrutte. Il Re degli uomini, Andor, l'eroe indomito che guidò il mondo verso la luce di una nuova alba, cancellò ogni traccia di quella tirannia."]}, "b18": {"title": "I 12 Astri dello Zodiaco", "cover": "https://i.ibb.co/wZMFCckg/I-12-Astri-dello-Zodiaco.png", "paragraphs": ["Nel silenzioso buio che precede l'alba, quando il mondo è ancora immerso in un sonno profondo, alcuni astri diventano i protagonisti della volta celeste: lo Zodiaco Bianco e lo Zodiaco Nero, 12 Costellazioni la cui scoperta fu merito dell'astronomo Basileus.", "Un uomo il cui genio era superato solo dalla sua ossessione, che aveva scrutato a lungo il vuoto tra le stelle. Protagoniste non solo dell'astronomia ma anche dell'astrologia, le Costellazioni dello Zodiaco sono l'eco di Anime Mortali divenute Semidivine a causa delle loro azioni.", "Basileus proveniva da una famiglia di astronomi e matematici, ma era sempre stato considerato il più brillante. La sua sete di conoscenza lo portò oltre i confini dell'accettazione sociale, con la scrittura del Cosmocron e la costruzione di un Astrolabio capace di canalizzare il potere delle costellazioni.", "Questa sua geniale invenzione non fu accolta con ammirazione dai Chierici di Pelor. Per paura che il congegno potesse essere usato per incanalare il potere dello Zodiaco Nero, fu condannato al rogo insieme al Cosmocron.", "Si narra che mentre le fiamme lo consumavano, il suo grido di agonia echeggiò attraverso il cielo notturno, e per un momento le Costellazioni brillarono più intensamente, come se il cosmo stesse piangendo la perdita del suo più devoto osservatore."]}, "b19": {"title": "I Nove Astri del Divino", "cover": "https://i.ibb.co/SwKqSjkR/I-Nove-Astri-del-Divino.png", "paragraphs": ["Il Sancta Fides è la religione ufficiale di Eldoria, che ha quasi completamente soppiantato i tre principali Pantheon: Norreno, Egizio e Greco. Questo predominio è dovuto al sostegno della famiglia reale, che fornisce la maggior parte delle risorse al culto.", "Al vertice della religione si trova un'unica figura, la Voce di Pelor, nota anche come Sommo Padre. Questa religione si diffuse a Eldoria nel 640 a.C. grazie ai Solacri di Pelor: Elyon, Kainor, Perseus, Daryos e Vastor, individui benedetti dall'essenza del sole.", "Il loro potere consentiva di tenere sotto controllo la piaga della necromanzia usata per scopi ignobili. Il numero dei Solacri è sempre rimasto invariato, in omaggio ai cinque raggi del sole di Pelor. Quando uno di loro moriva prematuramente, veniva resuscitato dai suoi compagni.", "Tuttavia, anche un sole può non brillare per sempre. Secondo alcuni testi sacri, ci fu un tempo in cui una piaga mise in ginocchio persino i Solacri, portandone uno a una morte senza ritorno.", "Con la fede in Pelor vacillante, la necromanzia maligna si rafforzò, e i Solacri, un tempo custodi della luce, videro il loro potere svanire. E come in un circolo vizioso, con l'affievolimento dei poteri, si affievoliva anche la loro fede in Pelor."]}};
+var _curBook=null, _pageTexts=[], _curPage=0;
+
+function openBook(id){
+  _curBook=ARCHIVE_BOOKS[id];
+  if(!_curBook)return;
+  _pageTexts=[];_curPage=0;
+  document.getElementById('book-reader-overlay').classList.add('open');
+  if(_curBook.cover){
+    document.getElementById('book-cover-img').src=_curBook.cover;
+    document.getElementById('book-cover-page').style.display='flex';
+    document.getElementById('book-reading').style.display='none';
+  } else {
+    startReading();
+  }
+}
+function startReading(){
+  document.getElementById('book-cover-page').style.display='none';
+  document.getElementById('book-reading').style.display='flex';
+  _curPage=0;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    buildLayout();renderSpread();
+  });});
+}
+function showCover(){
+  document.getElementById('book-reading').style.display='none';
+  document.getElementById('book-cover-page').style.display='flex';
+}
+function closeBook(){
+  document.getElementById('book-reader-overlay').classList.remove('open');
+  _curBook=null;_pageTexts=[];
+}
+document.getElementById('book-reader-overlay').addEventListener('click',function(e){
+  if(e.target===this)closeBook();
+});
+
+function buildLayout(){
+  if(!_curBook||!_curBook.paragraphs)return;
+  var pageEl=document.getElementById('book-page-left');
+  var h=pageEl.offsetHeight||Math.round(window.innerHeight*0.72);
+  var w=pageEl.offsetWidth||Math.round(window.innerWidth*0.35);
+  var availH=h-80; // titolo + numero pagina + padding
+  var availW=w-96; // padding laterale
+
+  var m=document.createElement('div');
+  m.style.cssText='position:fixed;top:-9999px;left:-9999px;width:'+availW+'px;font-family:"EB Garamond",serif;font-size:1.05rem;line-height:1.75;';
+  document.body.appendChild(m);
+
+  _pageTexts=[];
+  var paras=_curBook.paragraphs.slice();
+  var i=0;
+  while(i<paras.length){
+    var pg=[];
+    while(i<paras.length){
+      m.innerHTML='<p style="margin:.4rem 0">'+pg.concat(paras[i]).join('</p><p style="margin:.4rem 0">')+'</p>';
+      if(m.scrollHeight>availH && pg.length>0) break;
+      pg.push(paras[i++]);
+    }
+    if(pg.length===0 && i<paras.length) pg.push(paras[i++]);
+    _pageTexts.push(pg.join('\n\n'));
+  }
+  document.body.removeChild(m);
+}
+
+function renderSpread(){
+  if(!_curBook)return;
+  var tot=_pageTexts.length;
+  var li=_curPage, ri=_curPage+1;
+  document.getElementById('bpl-title').textContent=_curBook.title;
+  document.getElementById('bpr-title').textContent=_curBook.title;
+  document.getElementById('bpl-text').innerHTML='<p>'+(_pageTexts[li]||'').replace(/\n\n/g,'</p><p>')+'</p>';
+  document.getElementById('bpr-text').innerHTML=ri<tot?'<p>'+_pageTexts[ri].replace(/\n\n/g,'</p><p>')+'</p>':'';
+  document.getElementById('bpl-num').textContent=li+1;
+  document.getElementById('bpr-num').textContent=ri<tot?ri+1:'';
+  document.getElementById('book-page-info').textContent=(Math.floor(_curPage/2)+1)+' / '+Math.ceil(tot/2);
+  document.getElementById('btn-next').disabled=ri>=tot;
+  var prev=document.getElementById('btn-prev');
+  prev.disabled=false;
+  if(_curBook.cover&&_curPage===0){prev.onclick=showCover;}
+  else if(_curPage===0){prev.disabled=true;prev.onclick=null;}
+  else{prev.onclick=function(){turnPage(-1);};}
+}
+function goBack(){} // il click è gestito da prev.onclick in renderSpread
+function turnPage(d){
+  if(!_curBook)return;
+  var n=_curPage+d*2;
+  if(n<0||n>=_pageTexts.length)return;
+  var bo=document.getElementById('book-open');
+  bo.style.transition='opacity .18s,transform .18s';
+  bo.style.opacity='0';bo.style.transform='scale(0.97)';
+  setTimeout(function(){_curPage=n;renderSpread();bo.style.opacity='1';bo.style.transform='scale(1)';},180);
+}
+</script>
+</body>
+</html>
