@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0058)file:///C:/Users/Vincenzo/Downloads/index_light%20(9).html -->
+<!-- saved from url=(0036)https://helvorn92.github.io/Gwernia/ -->
 <html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Le Cronache di Gwernia</title>
-<link href="file:///C:/Users/Vincenzo/Downloads/index_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 /* ═══════════ TOKENS ═══════════ */
 :root{
@@ -295,7 +295,7 @@ footer{position:relative;z-index:1;background:var(--bg);border-top:2px solid var
 .org-title-row{display:flex;align-items:center;gap:1rem;padding:5rem 0 1.2rem;border-bottom:1px solid rgba(201,168,76,.3);margin-bottom:0}
 .org-castle{font-size:2rem;flex-shrink:0}
 .org-title-text{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,3vw,2.6rem);color:var(--gold-light);text-shadow:0 0 40px rgba(201,168,76,.35)}
-.org-top-row{display:grid;grid-template-columns:240px 1fr;gap:2rem;padding:2rem 0 0;align-items:start}
+.org-top-row{display:grid;grid-template-columns:240px 1fr;gap:2rem;padding:2rem 0 0;align-items:center}
 .org-symbol-box{aspect-ratio:1/1;width:100%;background:rgba(10,6,22,.95);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));overflow:hidden}
 .org-symbol-box img{width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box}
 .org-symbol-ph{font-size:3.5rem;opacity:.2}
@@ -619,8 +619,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   <p class="search-hint" id="search-hint">Digita per cercare • Premi ESC per chiudere</p>
 </div>
 
-<div id="cursor" style="left: 1505px; top: 59px;"></div>
-<div id="cursor-ring" style="left: 1504.49px; top: 52.9355px; transform: translate(-50%, -50%) scale(1); border-color: rgba(201, 168, 76, 0.75);"></div>
+<div id="cursor" style="left: 1076px; top: 970px;"></div>
+<div id="cursor-ring" style="left: 1076px; top: 970px; transform: translate(-50%, -50%) scale(1); border-color: rgba(201, 168, 76, 0.75);"></div>
 <canvas id="stars-canvas" width="2048" height="983"></canvas>
 
 <!-- ═══════════════════ NAV ═══════════════════ -->
@@ -744,13 +744,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
     </li>
+    <li class="nav-item"><a class="nav-link" href="archivio.html">Archivio</a></li>
     <li class="nav-item"><a class="nav-link" onclick="showPage(&#39;personaggi&#39;,this)">Personaggi</a></li>
   </ul>
   <button id="search-btn" onclick="openSearch()" title="Cerca">⚲</button></div>
 </nav>
 
 <!-- ═══════════ PAGE: HOME ═══════════ -->
-<div class="page" id="page-home" style="">
+<div class="page active" id="page-home" style="opacity: 1;">
   <div class="hero" id="hero">
     <div class="hero-bg"></div><div class="hero-orb" style="transform: translate(-50%, calc(-50% + 0px));"></div>
     <div class="hero-runes" id="heroRunes"><div class="rune" style="left: 96.8341%; bottom: -3rem; animation-duration: 19.8697s; font-size: 1.5511rem; animation-delay: 0s;">ᚐ</div><div class="rune" style="left: 85.2995%; bottom: -3rem; animation-duration: 19.396s; font-size: 2.46445rem; animation-delay: 0s;">ᚇ</div><div class="rune" style="left: 30.3885%; bottom: -3rem; animation-duration: 30.5877s; font-size: 1.00207rem; animation-delay: 0s;">ᚊ</div><div class="rune" style="left: 91.0303%; bottom: -3rem; animation-duration: 21.4091s; font-size: 1.71201rem; animation-delay: 0s;">ᚏ</div><div class="rune" style="left: 22.012%; bottom: -3rem; animation-duration: 27.564s; font-size: 2.12001rem; animation-delay: 0s;">ᚇ</div><div class="rune" style="left: 54.0866%; bottom: -3rem; animation-duration: 24.8131s; font-size: 2.16081rem; animation-delay: 0s;">ᚏ</div><div class="rune" style="left: 49.2579%; bottom: -3rem; animation-duration: 26.3112s; font-size: 1.08964rem; animation-delay: 0s;">ᚃ</div><div class="rune" style="left: 31.2336%; bottom: -3rem; animation-duration: 29.1087s; font-size: 1.35134rem; animation-delay: 0s;">ᚄ</div><div class="rune" style="left: 90.6532%; bottom: -3rem; animation-duration: 17.9388s; font-size: 1.07748rem; animation-delay: 0s;">ᚇ</div><div class="rune" style="left: 55.9761%; bottom: -3rem; animation-duration: 24.4704s; font-size: 2.14085rem; animation-delay: 0s;">ᚏ</div><div class="rune" style="left: 45.6028%; bottom: -3rem; animation-duration: 27.3129s; font-size: 2.47014rem; animation-delay: 0s;">ᚈ</div><div class="rune" style="left: 94.8044%; bottom: -3rem; animation-duration: 21.8711s; font-size: 2.91056rem; animation-delay: 0s;">ᚌ</div><div class="rune" style="left: 16.6932%; bottom: -3rem; animation-duration: 14.535s; font-size: 2.11996rem; animation-delay: 0s;">ᚃ</div><div class="rune" style="left: 63.5736%; bottom: -3rem; animation-duration: 17.4639s; font-size: 1.04839rem; animation-delay: 0s;">ᚐ</div></div>
@@ -1012,7 +1013,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 <div class="page" id="page-gli-antichi" style="">
   <div class="mystery-page">
     <div class="mystery-icon">🏛️</div>
-    <span class="mystery-page-tag">✦ Entità Minori ✦</span>
+    <span class="mystery-page-tag">✦ Entità Maggiori ✦</span>
     <h1 class="mystery-title">Gli Antichi</h1>
     <div class="mystery-box">
       <span class="mystery-lock">🔒</span>
@@ -1026,7 +1027,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 <!-- ORACOLO DI OMNYSAR -->
 <div class="page" id="page-omnysar">
   <div class="mystery-page">
-    <div class="mystery-icon">🔮</div>
+    <div class="mystery-icon">🌑</div>
     <span class="mystery-page-tag">✦ Oracoli ✦</span>
     <h1 class="mystery-title">Oracolo di Omnysar</h1>
     <p class="mystery-subtitle">✦ La Voce del Tutto ✦</p>
@@ -1056,7 +1057,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 <!-- PANDEMONIUM -->
 <div class="page" id="page-pandemonium">
   <div class="mystery-page">
-    <div class="mystery-icon">🌋</div>
+    <div class="mystery-icon">✨</div>
     <span class="mystery-page-tag">✦ Mondi ✦</span>
     <h1 class="mystery-title">Pandemonium</h1>
     <p class="mystery-subtitle">✦ Il Reame dei Demoni ✦</p>
@@ -1086,7 +1087,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 <!-- AVERNO -->
 <div class="page" id="page-averno">
   <div class="mystery-page">
-    <div class="mystery-icon">⛓️</div>
+    <div class="mystery-icon">✨</div>
     <span class="mystery-page-tag">✦ Mondi ✦</span>
     <h1 class="mystery-title">Averno</h1>
     <p class="mystery-subtitle">✦ Il Reame dei Diavoli ✦</p>
@@ -1107,7 +1108,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   </div>
 
   <p class="zodiac-intro reveal visible">
-    Lo Zodiaco Bianco è un insieme di sei Costellazioni, ciascuna visibile solo a chi sa dove cercare. Le Costellazioni non sono semplici disegni astrali, ma Anime di individui la cui volontà, straordinariamente intensa, ha resistito alla morte, fondendosi con il Cosmo mantenendo la propria impronta. Lo Zodiaco Bianco in particolare raccoglie martiri e protettori. Individui che in vita hanno agito per il bene degli altri, spesso a costo della propria esistenza
+    Lo Zodiaco Bianco è un insieme di sei Costellazioni, ciascuna visibile solo a chi sa dove cercare. Le Costellazioni non sono semplici disegni astrali, ma Anime di individui la cui volontà, straordinariamente intensa, ha lasciato un'impronta vivida nel Cosmo. Lo Zodiaco Bianco in particolare raccoglie martiri e protettori. Individui che in vita hanno agito per il bene degli altri, spesso a costo della propria esistenza
   </p>
 
   <div class="zodiac-grid">
@@ -1190,7 +1191,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   </div>
 
   <p class="zodiac-intro reveal">
-    Lo Zodiaco Nero è un insieme di sei Costellazioni, ciascuna visibile solo a chi sa dove cercare. Le Costellazioni non sono semplici disegni astrali, ma Anime di individui la cui volontà, straordinariamente intensa, ha resistito alla morte, fondendosi con il Cosmo mantenendo la propria impronta. Lo Zodiaco Nero in particolare raccoglie tiranni e carnefici. Individui che in vita hanno costruito la propria potenza seminando rovina, indifferenti al prezzo pagato dagli altri.
+    Lo Zodiaco Nero è un insieme di sei Costellazioni, ciascuna visibile solo a chi sa dove cercare. Le Costellazioni non sono semplici disegni astrali, ma Anime di individui la cui volontà, straordinariamente intensa, ha lasciato un'impronta vivida nel Cosmo. Lo Zodiaco Nero in particolare raccoglie tiranni e carnefici. Individui che in vita hanno costruito la propria potenza seminando rovina, indifferenti al prezzo pagato dagli altri.
   </p>
 
   <div class="zodiac-grid">
@@ -1275,7 +1276,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       
     </div>
     <div class="piano-img-wide reveal" style="transition-delay:.1s">
-      <img src="https://i.ibb.co/XrzmgJKN/Selva-Fatata.png" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="https://i.ibb.co/JjBmHn1T/Selva-Fatata.png" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
     <div class="piano-content">
       <div class="piano-section reveal" style="transition-delay:.15s">
@@ -1284,7 +1285,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       </div>
       <div class="piano-section reveal" style="transition-delay:.2s">
         <div class="piano-section-title">Entità del Piano</div>
-        <p class="piano-p">Nella Selva Fatata a governare sulle diverse regioni sono le Arcifate. Potenti Entità che rappresentano aspetti naturali o emotivi, come stagioni, emozioni o elementi. Ad esempio, un Dominio potrebbe essere perennemente avvolto in una primavera rigogliosa, mentre un altro potrebbe essere caratterizzato da un inverno perenne. Non tutte le Arcifate sono benevole. Alcune possono essere malvagie o capricciose. Le Arcifate incarnano poteri che rasentano la Divinità, e la cui essenza e volontà modellano l'intero ecosistema della Selva Fatata. La morte di un'Arcifata non è un evento che può accadere facilmente. Ogni Arcifata, infatti, ha una propria Nemesi, che può manifestarsi come un Oggetto o una Condizione Speciale, specifica per ogni Arcifata, capace di porre fine alla sua esistenza. Questo aspetto conferisce alle Arcifate una quasi immortalità.</p>
+        <p class="piano-p">Nella Selva Fatata a governare sulle diverse regioni sono le Arcifate. Potenti Entità che rappresentano aspetti naturali o emotivi, come stagioni, emozioni o elementi. Ad esempio, un Dominio potrebbe essere perennemente avvolto in una primavera rigogliosa, mentre un altro potrebbe essere caratterizzato da un inverno perenne. Non tutte le Arcifate sono benevole. Alcune possono essere malvagie o capricciose. Le Arcifate incarnano poteri che rasentano la Divinità, e la cui essenza e volontà modellano l'intero ecosistema della Selva Fatata. La morte di un'Arcifata non è un evento che può accadere facilmente. Ogni Arcifata, infatti, ha una propria Nemesi che può manifestarsi come un oggetto o una condizione speciale, capace di porre fine alla sua esistenza. Questo aspetto conferisce alle Arcifate una quasi immortalità.</p>
       </div>
     </div>
   </div>
@@ -1301,7 +1302,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   <div class="piano-page">
    
     <div class="piano-img-wide reveal" style="transition-delay:.1s">
-      <img src="https://i.ibb.co/Pvnw00fb/Coltre-Oscura.png" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="https://i.ibb.co/GvWyXL1b/Coltre-Oscura.png" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
     <div class="piano-content">
       <div class="piano-section reveal" style="transition-delay:.15s">
@@ -1311,7 +1312,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       </div>
       <div class="piano-section reveal" style="transition-delay:.2s">
         <div class="piano-section-title">Entità del Piano</div>
-        <p class="piano-p">la Coltre Oscura è un Piano frammentato che non vede sovrani assoluti, ma vi sono comunque Entità potenti o organizzate che esercitano controllo su porzioni di esso, come la Regina Corvo o l'Alto Conclave delle Mani d'Ombra, ma questi non sono gli unici.</p>
+        <p class="piano-p">la Coltre Oscura è un Piano frammentato che non vede sovrani assoluti, ma vi sono comunque diverse potenti figure o organizzazioni che esercitano controllo su porzioni di esso, come la Regina Corvo o l'Alto Conclave delle Mani d'Ombra.</p>
       </div>
     </div>
   </div>
@@ -1328,7 +1329,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   <div class="piano-page">
     
     <div class="piano-img-wide reveal" style="transition-delay:.1s">
-      <img src="https://i.ibb.co/mCX2PRYB/Piano-Elementale.png" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="https://i.ibb.co/VcCGmT5n/Piano-Elementale.png" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
     <div class="piano-content">
       <div class="piano-section reveal" style="transition-delay:.15s">
@@ -1362,7 +1363,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   <div class="piano-page">
     
     <div class="piano-img-wide reveal" style="transition-delay:.1s">
-      <img src="https://i.ibb.co/G3scY3xZ/Piani-di-Transizione.png" style="width:100%;height:100%;object-fit:cover;display:block">
+      <img src="https://i.ibb.co/PZVdHh6y/Piani-di-Transizione.png" style="width:100%;height:100%;object-fit:cover;display:block">
     </div>
     <div class="piano-content">
       <div class="piano-section reveal" style="transition-delay:.15s">
@@ -1371,7 +1372,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       </div>
       <div class="piano-section reveal" style="transition-delay:.2s">
         <div class="piano-section-title">Il Piano Etereo</div>
-        <p class="piano-p">Il Piano Etereo si sovrappone al Mondo Materiale come un mantello invisibile e separa il Mondo Materiale dalla Selva Fatata, dalla Coltre Oscura e dal Dal Quor. Chi si trova nel Piano Etereo può vedere il Mondo Materiale come attraverso una nebbia, ma non può interagire con esso. Quando i viaggiatori attraversano il Confine Etereo, loro e i loro beni si trasformano nei rispettivi equivalenti eterei. Ciò consente un movimento libero, nella maggior parte dei casi, in qualsiasi direzione attraverso la materia solida del piano adiacente. Il viaggio nel Piano Etereo è guidato dalla forza di volontà. Ti muovi dove vuoi alla tua normale velocità di movimento, esiste una percezione di su e giù ma non una vera gravità e gli oggetti rilasciati restano sospesi dove vengono lasciati cadere. Con l'uso della magia o grazie a capacità naturali di alcune creature, è possibile svanire nell'Etereo e viaggiare liberamente.
+        <p class="piano-p">Il Piano Etereo si sovrappone al Mondo Materiale come un mantello invisibile e separa il Mondo Materiale dalla Selva Fatata, dalla Coltre Oscura e dal Dal Quor. Chi si trova nel Piano Etereo può vedere il Mondo Materiale come attraverso una nebbia, ma non può interagire con esso. Quando i viaggiatori attraversano il Confine Etereo, loro e i loro beni si trasformano nei rispettivi equivalenti eterei. Ciò consente un movimento libero, nella maggior parte dei casi, in qualsiasi direzione attraverso la materia solida del piano adiacente. Il viaggio nel Piano Etereo è guidato dalla forza di volontà. Ti muovi dove vuoi alla tua normale velocità di movimento, esiste una percezione di su e giù ma non una vera gravità e gli oggetti rilasciati restano sospesi dove vengono lasciati cadere. Molte creature possono muoversi nel Piano Etereo grazie all'uso della magia o ad abilità naturali.
 </p>
       </div>
     </div>
@@ -1404,7 +1405,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   <p class="occulte-intro reveal visible">Le Divinità Occulte rappresentano un enigma controverso per i teologi del mondo. Non esistono cronache antiche né testi sacri che ne descrivano l’origine o il ruolo, eppure la loro presenza si percepisce come un’ombra persistente, insinuata nelle pieghe della realtà di Gwernia. Si dice che operino dai loro Piani di Esistenza, luoghi fuori dalla portata dei mortali, ma stranamente vicini al mondo materiale.</p>
   <div class="occulte-grid">
     <div class="occulte-card reveal visible" style="transition-delay:.05s"><div class="occulte-img"><img src="https://i.ibb.co/B276dWmy/Pelor.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"></div><div class="occulte-bottom"><h3 class="occulte-name">Pelor</h3><p class="occulte-title">Signore della Luce</p><p class="mystery-desc">Pelor simboleggia il sole e quindi vita, guarigione, calore e forza. Gli adoratori di Pelor mirano alla prevalenza del Bene, e sono contrari a qualunque forma di Non Morte. Il culto di Pelor è vastamente praticato nella terra di Eldoria, ma nulla li frena nel cercare di diffondere tale altruismo la dove l'oscurità cerca di farsi strada nel mondo.</p><ul class="occulte-info"><li><strong>Divinità della Misericordia:</strong> Pelor è associato alla bontà, alla giustizia e all'ordine. I suoi insegnamenti incoraggiano la compassione, la carità e la protezione dei deboli.</li><li><strong>Allineamento:</strong> Legale-Buono.</li><li><strong>Simbolo:</strong> Un Sole con cinque raggi.</li><li><strong>Seguaci:</strong> Spesso chierici, paladini e sacerdoti. Noti per le loro opere caritative, la lotta contro il male e l'impegno nel curare i malati.</li></ul></div></div>
-    <div class="occulte-card reveal visible" style="transition-delay:.1s"><div class="occulte-img"><img src="https://i.ibb.co/SwVhLtFs/Elegua.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"></div><div class="occulte-bottom"><div class="mystery-badge"><span class="mystery-badge-lock">🔒</span><span class="mystery-badge-text">Mistero da Svelare</span></div><p class="mystery-desc">Identità e dominio di questa Divinità sono custoditi dall'oscurità. Scoprila nel corso della tua avventura.</p></div></div>
+    <div class="occulte-card reveal visible" style="transition-delay:.1s"><div class="occulte-img"><img src="https://i.ibb.co/hJ6c56Z3/Vecna.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"></div><div class="occulte-bottom"><div class="mystery-badge"><span class="mystery-badge-lock">🔒</span><span class="mystery-badge-text">Mistero da Svelare</span></div><p class="mystery-desc">Identità e dominio di questa Divinità sono custoditi dall'oscurità. Scoprila nel corso della tua avventura.</p></div></div>
     <div class="occulte-card reveal visible" style="transition-delay:.15s"><div class="occulte-img"><img src="https://i.ibb.co/VYHXRGCL/Azuth.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"></div><div class="occulte-bottom"><div class="mystery-badge"><span class="mystery-badge-lock">🔒</span><span class="mystery-badge-text">Mistero da Svelare</span></div><p class="mystery-desc">Identità e dominio di questa Divinità sono custoditi dall'oscurità. Scoprila nel corso della tua avventura.</p></div></div>
     <div class="occulte-card reveal visible" style="transition-delay:.2s"><div class="occulte-img"><img src="https://i.ibb.co/ds1HbXmw/Liira.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"></div><div class="occulte-bottom"><div class="mystery-badge"><span class="mystery-badge-lock">🔒</span><span class="mystery-badge-text">Mistero da Svelare</span></div><p class="mystery-desc">Identità e dominio di questa Divinità sono custoditi dall'oscurità. Scoprila nel corso della tua avventura.</p></div></div>
     <div class="occulte-card reveal visible" style="transition-delay:.25s"><div class="occulte-img"><img src="https://i.ibb.co/7JMvQ51t/Yawirka.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"></div><div class="occulte-bottom"><div class="mystery-badge"><span class="mystery-badge-lock">🔒</span><span class="mystery-badge-text">Mistero da Svelare</span></div><p class="mystery-desc">Identità e dominio di questa Divinità sono custoditi dall'oscurità. Scoprila nel corso della tua avventura.</p></div></div>
@@ -1416,7 +1417,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 </div>
 
 <!-- ═══════════ PAGE: DIVINITÀ CELESTI ═══════════ -->
-<div class="page active" id="page-divinita-celesti" style="opacity: 1;">
+<div class="page" id="page-divinita-celesti" style="opacity: 1;">
   <div class="page-header">
     <span class="page-header-tag">✦ Entità Maggiori ✦</span>
     <h1 class="page-header-title">Divinità Celesti</h1>
@@ -1484,6 +1485,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
           <tr><td>Kiaransalee</td><td class="sym">Mano di donna con anello di ossa</td><td><span class="al al-cm">CM</span></td><td class="deity-type">Divinità Minore</td><td class="deity-type">Non Morti, Vendetta, Drow</td></tr>
           <tr><td>Selvetarm</td><td class="sym">Ragno su spada incrociata</td><td><span class="al al-cm">CM</span></td><td class="deity-type">Divinità Minore</td><td class="deity-type">Guerrieri Drow, Combattimento</td></tr>
           <tr><td>Vhaeraun</td><td class="sym">Maschera nera</td><td><span class="al al-cm">CM</span></td><td class="deity-type">Divinità Intermedia</td><td class="deity-type">Furto, Scorrerie, Mezzorchi Drow</td></tr>
+
+
+          <tr class="deity-subgroup"><td colspan="5">Duergar</td></tr>
+          <tr><td>Deep Duerra</td><td class="sym">Cranio di illithid</td><td><span class="al al-lm">LM</span></td><td class="deity-type">Divinità Minore</td><td class="deity-type">Psionici, Conquista, Duergar</td></tr>
+          <tr><td>Laduguer</td><td class="sym">Freccia spezzata</td><td><span class="al al-lm">LM</span></td><td class="deity-type">Divinità Intermedia</td><td class="deity-type">Artigianato, Protezione, Duergar</td></tr>
 
           <tr class="deity-subgroup"><td colspan="5">Draghi</td></tr>
           <tr><td>Bahamut</td><td class="sym">Drago d'oro su sfondo azzurro</td><td><span class="al al-lb">LB</span></td><td class="deity-type">Divinità Maggiore</td><td class="deity-type">Draghi Buoni, Vento, Giustizia</td></tr>
@@ -1638,14 +1644,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Eldoria</span>
     </div>
     <div class="terr-imgs-row reveal visible" style="transition-delay:.06s">
-      <div class="terr-symbol-box"><img src="https://i.ibb.co/gZv6kKdf/simbolo-eldoria.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
-      <div class="terr-landscape-box"><img src="https://i.ibb.co/k214wxgK/eldoria.webp" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="terr-symbol-box"><img src="https://i.ibb.co/PvPLHJxq/simbolo-eldoria.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
+      <div class="terr-landscape-box"><img src="https://i.ibb.co/Rvw7sNjv/eldoria.webp" style="width:100%;height:100%;object-fit:cover"></div>
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal visible" style="transition-delay:.1s">Il Regno di <em>Eldoria</em> si estende come un vasto mosaico di biomi tutti diversi. Intricate foreste, ondulate pianure, imponenti montagne e silenziosi deserti si susseguono in un paesaggio ricco e mutevole. Al centro di questa terra sorge <em>Ravenholm</em>, la capitale e cuore pulsante del potere regio. Da qui il sovrano governa attraverso tre pilastri fondamentali: le <em>Guarnigioni</em>, gli otto <em>Signori del Commercio</em> e gli <em>Yarl</em>.</div>
     <hr class="terr-divider">
     <div class="terr-leader-row reveal">
-      <div class="terr-portrait-box"><img src="https://i.ibb.co/SXCSvqrZ/giulius.webp" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
+      <div class="terr-portrait-box"><img src="https://i.ibb.co/NdVcGgbG/giulius.webp" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
       <div class="terr-scroll">
         <span class="terr-leader-name">Re Giulius Ulrick</span>
         <p class="terr-scroll-text">Celebre per saggezza e senso di giustizia, qualità che lo hanno reso un modello di sovranità illuminata in tutto il continente. La sua riforma più audace fu la concessione alle classi lavoratrici del diritto di partecipare ai Consigli di Reggenza, rompendo secoli di esclusivismo nobiliare. Osteggiata inizialmente dai grandi casati, la misura si rivelò un successo. La gestione delle risorse migliorò sensibilmente, le tensioni sociali si allentarono e Eldoria divenne sinonimo di prosperità condivisa e innovazione politica, un esempio raro nel mondo di Gwernia.</p>
@@ -1654,7 +1660,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     <hr class="terr-divider">
     <div class="terr-sections reveal">
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Politica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1666,7 +1672,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Militare</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1674,7 +1680,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
           <div class="terr-section-content">
             <p>L'esercito di Eldoria è tra i più organizzati del continente. Al suo vertice siede l'<em>Alto Comandante</em>, figura che risponde direttamente al Re e coordina sia le operazioni terrestri che quelle navali. Sotto di lui operano sette <em>Generali</em>, ciascuno responsabile della guarnigione e della sicurezza di una delle principali città del regno. Ogni Generale ha piena autonomia tattica nel proprio territorio, ma è tenuto a coordinarsi con l'Alto Comandante in caso di minacce che superino i confini della propria regione.</p>
             <table class="rank-table">
-              <tr><td>Alto Comandante</td><td>Cassandra Ryan - Ravenholm</td></tr>
+              <tbody><tr><td>Alto Comandante</td><td>Cassandra Ryan - Ravenholm</td></tr>
               <tr><td>Generale</td><td>Philomena Cogwright - Aresil</td></tr>
               <tr><td>Generale</td><td>Fenton Greenleaf - Bardville</td></tr>
               <tr><td>Generale</td><td>Zephyra Frostveil - Grindwall</td></tr>
@@ -1682,7 +1688,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
               <tr><td>Generale</td><td>Gabriel Lightbringer - Eastweak</td></tr>
               <tr><td>Generale</td><td>Yasmin Al-Sahra - Aralynn</td></tr>
               <tr><td>Generale</td><td>Drake Shadowend - Belaver</td></tr>
-            </table>
+            </tbody></table>
             <p>Sul mare, Eldoria può contare sulla <em>Flotta Navale</em> governata dal <em>Consiglio delle Maree</em>. Il <em>Gran Ammiraglio</em> coordina le flotte regionali e risponde all'Alto Comandante con lo stesso rango di un Generale. Gli <em>Ammiragli</em> comandano i contingenti navali di ogni regione costiera, mentre i <em>Capitani</em> guidano le singole navi.</p>
             <p>Ai confini con altri regni si trovano <em>Fortezze Militari</em> presidiate da guarnigioni miste di soldati e funzionari reali. Il loro compito è controllare e tassare merci e viaggiatori stranieri, monitorare il passaggio di mercenari e spie, e rilevare eventuali minacce magiche. Agli ingressi di ogni città operano invece le <em>Dogane</em>, che riscuotono i dazi su carichi pregiati come metalli, spezie e oggetti magici, e verificano i documenti di viaggio. Tuttavia, data l'epoca di pace e prosperità, i controlli si sono ridotti notevolmente.</p>
             <p>Chi è in possesso del <em>Sigillo d'Onore</em> gode di protezione legale da accuse minori e ha diritto a rifornimenti essenziali, cure mediche di base e riparo presso qualsiasi fortino, avamposto militare o tempio del <em>Sancta Fides</em>.</p>
@@ -1690,7 +1696,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Economica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1700,7 +1706,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
             <p>I <em>Lord</em> fissano le regole e i monopoli. I <em>Marchesi</em>, che corrispondono ai Capi Gilda, gestiscono le associazioni di mercanti nelle loro aree di competenza. I <em>Baroni</em> sono figure influenti e facoltose che operano in autonomia, il cui titolo viene assegnato dalla Corona come riconoscimento. I piccoli commercianti, per lavorare in sicurezza, possono affiliarsi a una Gilda, cedendo il <strong>20%</strong> dei profitti mensili. La Gilda trattiene parte di questa quota e versa il <strong>10%</strong> per attività al Lord di riferimento. I mercanti più abili e ambiziosi possono scalare la gerarchia fino a fondare una propria Gilda o, in casi eccezionali, aspirare al titolo di Lord del Commercio.</p>
             <p>Una figura che merita menzione a parte è <em>Lord Rathgaron</em> di Ravenholm, l'unico Dragonide tra i Lord. La sua razza è storicamente percepita come neutrale e autorevole dagli altri regni di Gwernia, il che gli conferisce un peso diplomatico che nessun umano potrebbe eguagliare con la stessa facilità. Per questo motivo, è il solo Lord autorizzato a siglare accordi commerciali ufficiali con nazioni straniere, come trattati sull'importazione di minerali o risorse strategiche che interessano l'intero Regno. Agli altri Lord questo privilegio è precluso, il che alimenta rivalità e risentimento.</p>
             <table class="rank-table">
-              <tr><td>Lord 1</td><td>Lady Virginia - Aresil</td></tr>
+              <tbody><tr><td>Lord 1</td><td>Lady Virginia - Aresil</td></tr>
               <tr><td>Lord 2</td><td>Lord Nestor - Bardville</td></tr>
               <tr><td>Lord 3</td><td>Lord Talarin - Grindwall</td></tr>
               <tr><td>Lord 4</td><td>Lord Galar - Nadesh</td></tr>
@@ -1708,7 +1714,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
               <tr><td>Lord 6</td><td>Lord Valmar - Aralynn</td></tr>
               <tr><td>Lord 7</td><td>Lord Baeron - Belaver</td></tr>
               <tr><td>Lord 8</td><td>Lord Rathgaron - Ravenholm</td></tr>
-            </table>
+            </tbody></table>
           </div>
         </div>
       </div>
@@ -1723,23 +1729,23 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Arinthel</span>
     </div>
     <div class="terr-imgs-row reveal" style="transition-delay:.06s">
-      <div class="terr-symbol-box"><img src="https://i.ibb.co/j986gN1H/simbolo-arinthel.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
-      <div class="terr-landscape-box"><img src="https://i.ibb.co/8nHXxqY6/arinthel.webp" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="terr-symbol-box"><img src="https://i.ibb.co/FkD1Fh26/simbolo-arinthel.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
+      <div class="terr-landscape-box"><img src="https://i.ibb.co/BVQjnFfW/arinthel.webp" style="width:100%;height:100%;object-fit:cover"></div>
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s"><em>Arinthel</em> è un territorio di straordinaria bellezza naturale, dominato da foreste antiche, corsi d'acqua cristallini e pianure inviolate. È il regno degli elfi, ma non di un'unica stirpe. Due culture profondamente diverse condividono questa terra da secoli, tenute insieme da rispetto reciproco, necessità strategica e una radice comune mai del tutto dimenticata. Gli <em>Elfi Alti</em> abitano la fascia occidentale, in città di architettura fluida e raffinata, profondamente intrecciate con la magia. Gli <em>Elfi dei Boschi</em> occupano la fascia orientale, vivendo a stretto contatto con la natura tra alberi millenari e fiumi nascosti. Le loro culture differiscono in quasi ogni aspetto, eppure Arinthel è un regno unico. La collaborazione tra le due stirpi è silenziosa ma reale. Scambi di informazioni sui movimenti ai confini, coordinamento delle pattuglie nelle zone condivise, accordi commerciali discreti. Non vi è un esercito unificato, ma in caso di guerra aperta le due forze hanno protocolli consolidati per operare insieme.</div>
     <hr class="terr-divider">
     <div class="terr-leader-row reveal">
-      <div class="terr-portrait-box"><img src="https://i.ibb.co/RkgbS52N/meneldor.webp" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
+      <div class="terr-portrait-box"><img src="https://i.ibb.co/TM62pt0V/meneldor.webp" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
       <div class="terr-scroll">
         <span class="terr-leader-name">Alto Re Meneldor Valdorien</span>
-        <p class="terr-scroll-text">Sovrano di straordinaria saggezza e determinazione incrollabile. La sua fama è legata soprattutto alla leggendaria incursione nell'<em>Underdark</em>, guidando personalmente le sue armate nelle profondità più insidiose del sottosuolo, liberò centinaia di prigionieri elfi, tra cui un Alto Saggio catturato dai Drow. Un'impresa che nessuno aveva osato prima. Quell'atto di coraggio e abilità strategica gli garantì un ruolo permanente nel <em>Consiglio dei Saggi</em>, l'organo misto che delibera le questioni di portata straordinaria per l'intero Regno, consolidando la sua autorità ben oltre i confini della sola fascia occidentale, dove a regnare sono i quattro <em>Alti Saggi</em>.</p>
+        <p class="terr-scroll-text">Sovrano di straordinaria saggezza e determinazione incrollabile. La sua fama è legata soprattutto alla leggendaria incursione nell'Underdark, guidando personalmente le sue armate nelle profondità più insidiose del sottosuolo, liberò centinaia di prigionieri elfi, tra cui un Alto Saggio catturato dai Drow. Un'impresa che nessuno aveva osato prima. Quell'atto di coraggio e abilità strategica gli garantì un ruolo permanente nel Consiglio dei Saggi, l'organo misto che delibera le questioni di portata straordinaria per l'intero Regno, consolidando la sua autorità ben oltre i confini della sola fascia occidentale, dove a regnare sono i quattro Alti Saggi.</p>
       </div>
     </div>
     <hr class="terr-divider">
     <div class="terr-sections reveal">
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Politica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1752,7 +1758,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Militare</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1765,15 +1771,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Economica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
         <div class="terr-section-body">
           <div class="terr-section-content">
             <p>L'economia delle due stirpi seguono filosofie radicalmente diverse, che riflettono il loro modo di stare al mondo.</p>
-            <p><strong>Elfi Alti:</strong> Non misurano la prosperità in oro, ma nell'equilibrio tra magia, arte e risorse naturali. La produzione è regolata dal <em>Circolo di Lúnareth</em>, un consiglio composto da arcimaghi, artigiani d'eccellenza e filosofi, che decide i flussi di risorse, le priorità artigianali e i rapporti commerciali con il mondo esterno. Il commercio con altre razze avviene, ma con grande selettività. Solo prodotti di alto valore simbolico o strategico vengono scambiati, e sempre dopo un'attenta valutazione delle implicazioni politiche e culturali dell'accordo.</p>
-            <p><strong>Elfi dei Boschi:</strong> La loro economia si fonda su caccia, raccolta, artigianato naturale e scambi mirati. Non accumulano ricchezze, né hanno interesse a farlo. Il rispetto per la natura vale più di qualunque bene materiale, e questo principio non è retorica ma pratica quotidiana. Ogni risorsa prelevata dal bosco non deve essere sprecata. Gli scambi con l'esterno sono rari e sempre valutati dall'Alto Saggio competente per quell'area, che considera l'impatto ambientale e culturale dell'accordo prima di qualunque considerazione economica. La loro forza non è nella quantità, ma nell'autosufficienza. Raramente dipendono da altri e raramente hanno bisogno di chiedere.</p>
+            <p><strong>Elfi Alti:</strong> Non misurano la prosperità in oro, ma nell'equilibrio tra magia, arte e risorse naturali. La produzione è regolata dal <em>Circolo di Lúnareth</em>, un consiglio composto da Maghi, artigiani d'eccellenza e filosofi, che decide i flussi di risorse, le priorità artigianali e i rapporti commerciali con il mondo esterno. Il commercio con altre razze avviene, ma con grande selettività. Solo prodotti di alto valore simbolico o strategico vengono scambiati, e sempre dopo un'attenta valutazione delle implicazioni politiche e culturali dell'accordo.</p>
+            <p><strong>Elfi dei Boschi:</strong> La loro economia si fonda su caccia, raccolta, artigianato e scambi mirati. Non accumulano ricchezze, né hanno interesse a farlo. Il rispetto per la natura vale più di qualunque bene materiale, e questo principio non è retorica ma pratica quotidiana. Ogni risorsa prelevata dal bosco non deve essere sprecata. Gli scambi con l'esterno sono rari e sempre valutati dall'Alto Saggio competente per quell'area, che considera l'impatto ambientale e culturale dell'accordo prima di qualunque considerazione economica. La loro forza non è nella quantità, ma nell'autosufficienza. Raramente dipendono da altri e raramente hanno bisogno di chiedere.</p>
           </div>
         </div>
       </div>
@@ -1788,7 +1794,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Nocthuril</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/YFmNd5Yk/Nocturil.png" alt="Nocthuril">
+      <img src="https://i.ibb.co/XZpKfCVM/Nocturil.png" alt="Nocthuril">
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s">I Drow di <em>Eilistraee</em> rappresentano una rottura radicale con la tirannia di Lolth. Rifugiati in superficie, questi elfi oscuri hanno abbracciato i principi della loro Dea, redenzione, libertà, bellezza e armonia con il mondo. La loro società è egualitaria, pacifica e votata a dimostrare che i Drow possono vivere diversamente da come il resto del continente li immagina. A differenza della rigida gerarchia Lolthiana, i seguaci di Eilistraee adottano una struttura comunitaria fluida, fatta di esuli e fuggitivi che vivono nascosti e in costante movimento. A guidare queste comunità sono le <em>Sacerdotesse</em>, che non comandano ma consigliano e mediano, conducendo i rituali notturni di canto e danza sotto la luna. Vivono in accampamenti temporanei, grotte naturali, rovine abbandonate rimaste intatte dopo la Guerra che divise i due Regni e radure nascoste. Tuttavia, spesso si spostano di continuo per sfuggire a chi li cerca.</div>
@@ -1803,7 +1809,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Northgul</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/1tMzZCJx/northgul.webp" alt="Northgul">
+      <img src="https://i.ibb.co/JRL7rX5B/northgul.webp" alt="Northgul">
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s"><em>Northgul</em> è un territorio di freddo estremo, fatto di pianure gelide, montagne imponenti e corsi d'acqua cristallizzati. Qui i Tiefling, esiliati e discriminati dal resto del continente, hanno trovato rifugio nelle loro cittadelle di pietra, unite sotto la protezione della <em>Dinastia Xhair</em>, discendente di Zariel. Sono stati gli Xhair a garantire la sopravvivenza dei Tiefling durante le crociate umane, attraverso battaglie, strategie e abilità diplomatiche che nessuno ha dimenticato. La loro parola è rispettata non per un titolo formale, ma per ciò che hanno fatto. Chi si oppone agli Xhair viene fermato dai propri simili, che ricordano bene cosa costerebbe perdere quella guida. I Tiefling non hanno un sistema civile strutturato. Vivono in una sorta di anarchia guidata da quell'unico faro, in comunità solidali dove le persecuzioni passate hanno ridotto al minimo le rivalità interne. Il commercio si basa sul baratto, ma la vicinanza con le città di confine di Grindwall ha introdotto gradualmente l'uso della moneta. Ciò nonostante, la vita rimane dura, a causa dei <em>Goliath</em> li attaccano costantemente per contendersi i territori di caccia. Eppure qualcosa sta cambiando lentamente. Un ammorbidimento dell'atteggiamento esterno si fa sentire, e c'è chi tra gli Xhair inizia a chiedersi se non sia giunto il momento di smettere di sopravvivere e cominciare a rivendicare un posto nel mondo.</div>
@@ -1818,7 +1824,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Grunduir</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/03Vxgc2/grunduir.webp" alt="Grunduir">
+      <img src="https://i.ibb.co/RkV4MZfY/grunduir.webp" alt="Grunduir">
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s">Tra montagne taglienti e steppe selvagge si estende il dominio degli <em>Orchi</em>, creature tenaci e brutali che seguono la volontà del loro Dio <em>Gruumsh</em>. Qui il potere non appartiene a un monarca ma si conquista con la forza e si mantiene con il sangue. Il più temuto diventa <em>Capo Guerra</em>, un titolo di autorità assoluta che risponde solo alla volontà divina. Le cicatrici valgono più delle parole, e il rispetto si misura a colpi di lama. I villaggi sono dominati da <em>Capi Guerrieri</em> che governano con astuzia e forza, in un sistema dove ogni leader è tanto sovrano quanto pedina di un gioco di dominio fisico e strategico. Gli Orchi sono sospettosi e ostili verso le altre razze, un odio che viene pienamente ricambiato.</div>
@@ -1833,10 +1839,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Erengad</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/xKXPR1q5/erengad.webp" alt="Erengad">
+      <img src="https://i.ibb.co/mVcGZ9L4/erengad.webp" alt="Erengad">
     </div>
     <hr class="terr-divider">
-    <div class="terr-desc reveal" style="transition-delay:.1s"><em>Erengad</em> è una terra indomabile al confine di Eldoria, dove colline si ergono come bastioni naturali e fiumi scorrono impetuosi attraverso boschi intricati e prati selvaggi. Qui la vita segue il ritmo primordiale della natura. <em>Lucertoloidi, Loxodonti, Tabaxi</em> e altre creature umanoidi non hanno sviluppato alcuna forma di civiltà, vivono di istinto, territorialità e sopravvivenza, governate da gerarchie brutali e prive di legge. Le rare eccezioni, individui che parlano, commerciano o si integrano tra le genti civilizzate, non sono cresciuti tra i loro simili. Sono cuccioli strappati al loro ambiente, spesso cacciati appositamente, portati altrove e allevati come si alleva un animale domestico, o peggio, come si tiene uno schiavo. Erengad è accessibile solo via mare, attraverso la <em>Foresta di Ebonreach</em>, le <em>Colline dei Giganti</em> o la <em>Discesa di Kaldrath</em>. Ad oggi resta un territorio inesplorato e spesso sottovalutato.</div>
+    <div class="terr-desc reveal" style="transition-delay:.1s"><em>Erengad</em> è una terra indomabile al confine di Eldoria, dove colline si ergono come bastioni naturali e fiumi scorrono impetuosi attraverso boschi intricati e prati selvaggi. Qui la vita segue il ritmo primordiale della natura. <em>Lucertoloidi, Loxodonti, Tabaxi</em> e altre bestie umanoidi non hanno sviluppato alcuna forma di civiltà, vivono di istinto, territorialità e sopravvivenza, governate da gerarchie brutali e prive di legge. Le rare eccezioni, individui che parlano, commerciano o si integrano tra le genti civilizzate, non sono cresciuti tra i loro simili. Sono cuccioli strappati al loro ambiente, spesso cacciati appositamente, portati altrove e allevati come si alleva un animale domestico, o peggio, come si tiene uno schiavo. Erengad è accessibile solo via mare, attraverso la <em>Foresta di Ebonreach</em>, le <em>Colline dei Giganti</em> o la <em>Discesa di Kaldrath</em>. Ad oggi resta un territorio inesplorato e spesso sottovalutato.</div>
   </div>
   <footer><span class="footer-logo">✦ Le Cronache di Gwernia ✦</span><p class="footer-text">«Ogni mito cela una verità. Ogni leggenda, un frammento di storia perduta.»</p></footer>
 </div>
@@ -1848,14 +1854,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Draconia</span>
     </div>
     <div class="terr-imgs-row reveal" style="transition-delay:.06s">
-      <div class="terr-symbol-box"><img src="https://i.ibb.co/zhbBVjY8/simbolo-draconia.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
-      <div class="terr-landscape-box"><img src="https://i.ibb.co/35YVF8nJ/draconia.webp" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="terr-symbol-box"><img src="https://i.ibb.co/MDhyvJhP/simbolo-draconia.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
+      <div class="terr-landscape-box"><img src="https://i.ibb.co/nqyKs7wZ/draconia.webp" style="width:100%;height:100%;object-fit:cover"></div>
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s">Un tempo i cieli di questa terra erano solcati dalle maestose ali dei <em>Draghi</em>, creature di immensa potenza e saggezza la cui presenza plasmò le fondamenta stesse della civiltà dragonide. Le città di quell'epoca, imponenti e solenni, furono costruite per onorarli. Vie ampie, piazze aperte e torri slanciate verso il cielo celebravano l'unione tra Draghi e Dragonidi. Oggi quell'era è lontana, ma il suo peso si sente ancora in ogni pietra di <em>Drakelang</em>, la capitale che sostituì <em>Pyraxis</em> dopo la sua distruzione. L'Impero è retto da un Imperatore il cui titolo incarna tanto l'autorità terrena quanto il legame spirituale con i sovrani dei cieli. La società dragonide è costruita sul merito, sulla disciplina e sul Codice d'Onore. Coraggio, lealtà e integrità non sono ideali astratti ma obblighi concreti che regolano ogni aspetto della vita civile e militare. Le Divinità principali venerate in Draconia sono <em>Bahamut</em> e <em>Tiamat</em>. Secondo le cronache antiche, prima che la rivalità li dividesse, i due unirono i propri poteri per generare <em>Kael'Zor</em>, un Drago Semidivino destinato a incarnare l'equilibrio tra le stirpi cromatiche e quelle metalliche.</div>
     <hr class="terr-divider">
     <div class="terr-leader-row reveal">
-      <div class="terr-portrait-box"><img src="https://i.ibb.co/626DCTP/Imperatore.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
+      <div class="terr-portrait-box"><img src="https://i.ibb.co/ZRt9nMCm/Imperatore.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
       <div class="terr-scroll">
         <span class="terr-leader-name">Imperatore Arkanthar il Bianco </span>
         <p class="terr-scroll-text">Sovrano dalla volontà incrollabile e dall'animo riflessivo, capace di bilanciare forza e compassione con rara lucidità. Governa l'Impero con autorità assoluta. Ogni sua decisione è filtrata da un profondo senso di giustizia e da un rispetto viscerale per il Codice d'Onore. La sua azione più controversa rimane l'Editto delle Scaglie Nobili, con cui ha sancito la supremazia dei Draghi Metallici come guida morale e politica dell'Impero, relegando i Cromatici a ruoli subalterni ed escludendoli dai centri di potere. Un provvedimento che ha consolidato la stabilità interna ma che alimenta una tensione tra le stirpi che l'Impero non ha ancora del tutto risolto.</p>
@@ -1864,7 +1870,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     <hr class="terr-divider">
     <div class="terr-sections reveal">
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Politica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1877,7 +1883,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Militare</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1889,7 +1895,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Economica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1912,14 +1918,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Murondir</span>
     </div>
     <div class="terr-imgs-row reveal" style="transition-delay:.06s">
-      <div class="terr-symbol-box"><img src="https://i.ibb.co/twCBLPsT/simbolo-murondir.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
-      <div class="terr-landscape-box"><img src="https://i.ibb.co/5hPY5CJw/murondir.webp" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="terr-symbol-box"><img src="https://i.ibb.co/MkNfpGtj/simbolo-murondir.webp" style="width:100%;height:100%;object-fit:contain;padding:.6rem;box-sizing:border-box"></div>
+      <div class="terr-landscape-box"><img src="https://i.ibb.co/W4xkBGGN/murondir.webp" style="width:100%;height:100%;object-fit:cover"></div>
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s"><em>Murondir</em> è un regno scolpito tra maestose montagne, dove le indomabili stirpi naniche hanno eretto roccaforti inespugnabili, baluardi di potere e tradizione. Ogni regione è governata e protetta da potenti <em>Clan</em>, custodi della politica, della difesa e dell'economia locale. Le ricche miniere di Murondir offrono una straordinaria varietà di minerali, trasformati in opere di ineguagliabile maestria che hanno fatto la fama dei Nani in tutto il continente. Tra le meraviglie del regno spicca la leggendaria <em>Forgia di Vulkrand</em>, nascosta nel cuore ardente del vulcano <em>Stilvur</em>, dove sorge anche la capitale <em>Helstrom</em>. Al confine con i regni umani si erge il <em>Vallo di Kargrom</em>, una colossale muraglia di pietra che separa Murondir dal resto del mondo, simbolo tanto della forza nanica quanto del suo orgoglioso isolamento.</div>
     <hr class="terr-divider">
     <div class="terr-leader-row reveal">
-      <div class="terr-portrait-box"><img src="https://i.ibb.co/LdCbyMGj/thorgar.webp" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
+      <div class="terr-portrait-box"><img src="https://i.ibb.co/RkV4MZfY/thorgar.webp" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
       <div class="terr-scroll">
         <span class="terr-leader-name">Re Thorgar «Scudo di Pietra»</span>
         <p class="terr-scroll-text">Sovrano dallo spirito inflessibile. Governa con pugno di ferro, ponendo l'isolamento culturale e la purezza delle tradizioni naniche sopra ogni altra considerazione. Diffida degli stranieri, delle influenze esterne e di chiunque metta in discussione l'ordine tradizionale dei Clan. La sua opera più imponente è il completamento delle Mura del Vallo di Kargrom, una barriera colossale progettata sette secoli fa e finalmente terminata sotto il suo regno. Un'impresa titanica che per Thorgar è motivo di orgoglio assoluto, ma che non tutti i Nani condividono. C'è chi vede nel Vallo un baluardo necessario, e chi invece lo percepisce come una prigione costruita con le proprie mani.</p>
@@ -1928,7 +1934,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     <hr class="terr-divider">
     <div class="terr-sections reveal">
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Politica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1940,7 +1946,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Militare</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1953,7 +1959,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Forza Economica</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -1978,7 +1984,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Vraithgar</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/YBvBPXpm/vraithgar.webp" alt="Vraithgar">
+      <img src="https://i.ibb.co/HTwVxdYN/vraithgar.webp" alt="Vraithgar">
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s"><em>Vraithgar</em> è un dominio avvolto in un manto perenne di umidità e malessere, fatto di paludi nebbiose e terreni inospitali che sembrano respingere ogni forma di vita ordinata. Non esiste un divieto formale d'accesso, ma il pericolo intrinseco di questo luogo basta a farlo considerare proibito da quasi tutti. Sopravvivere a un viaggio attraverso Vraithgar non porta prestigio, ma suscita timore. Si tramanda che un tempo qui prosperasse un regno fiorente, prima di cadere vittima di innumerevoli tragedie, tra cui il famigerato <em>Morbo Spettrale</em>. Il terrore di questo flagello è tale che pochi osano avventurarsi in queste terre, temendo non solo di contrarre la malattia, ma di tornare marchiati dall'ombra di una terra maledetta. Chi vuole raggiungerla ha tre strade oltre quella del mare, attraverso il <em>Passo di Brumalvento</em>, il <em>Passo di Durin'skald</em>, o il <em>Passo Ghiacciato di Northgul</em>.</div>
@@ -1993,7 +1999,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Omgar</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/mCwxXX8B/omgar.webp" alt="Omgar">
+      <img src="https://i.ibb.co/DDKBPc8Z/omgar.webp" alt="Omgar">
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s">Nelle distese verdi di <em>Omgar</em>, il clima temperato e la terra feconda hanno dato vita a un angolo di quiete raro a Gwernia. Qui vivono i <em>Tartarugoidi</em>, e già questo basterebbe a rendere il luogo degno di nota, visto che queste creature hanno costruito villaggi, elaborato tradizioni e dato vita a una società guidata da <em>Anziani Saggi</em>. Le loro costruzioni di legno e paglia si mimetizzano con il paesaggio, quasi a voler lasciare un'impronta minima sul mondo, e le loro tradizioni millenarie vengono tramandate oralmente di generazione in generazione. Tra i boschi e i campi di Omgar vivono anche piccoli gruppi di umani, non cavernicoli né fuggiaschi, ma viaggiatori che hanno scelto deliberatamente di fermarsi qui, attratti dalla semplicità del luogo e dalla pace che offre. Condividono lo spazio con i Tartarugoidi in silenzio e rispetto reciproco, senza cercare di cambiare ciò che trovano. Gran parte di ciò che si conosce sulla regione proviene dai resoconti di esploratori accolti nelle comunità Tartarugoidi, che descrivono un luogo immune alla violenza del resto di Gwernia, forse proprio perché non offre nulla che valga la pena di contendersi.</div>
@@ -2008,14 +2014,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="terr-title-text">Underdark</span>
     </div>
     <div class="terr-img-secondary reveal" style="transition-delay:.06s">
-      <img src="https://i.ibb.co/DqSGHWz/Underdark.webp" alt="Underdark">
+      <img src="https://i.ibb.co/k2j4Pxb0/Ravenholm-3-0.webp" alt="Underdark">
     </div>
     <hr class="terr-divider">
     <div class="terr-desc reveal" style="transition-delay:.1s">L'<em>Underdark</em> è una rete sconfinata di caverne, cunicoli, abissi e gallerie che si estende sotto l'intera superficie di Gwernia, a profondità che nessuna mappa ha mai documentato per intero. Qui la luce naturale non esiste, ad illuminare queste distese sotterranee sono la bioluminescenza dei funghi giganti, i bagliori magici di cristalli antichi e il fuoco di civiltà che hanno imparato a sopravvivere senza sole. Il tempo viene percepito diversamente nell'Underdark, e il senso della direzione scompare dopo poche ore. Le regole della superficie non hanno alcun valore tra queste pareti di pietra. L'Underdark è popolato da creature relativamente note, come <em>Goblin, Drow, Duergar e Svirfneblin</em>.</div>
     <hr class="terr-divider">
     <div class="terr-sections reveal">
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Società Duergar</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -2026,7 +2032,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
         </div>
       </div>
       <div class="terr-section">
-        <div class="terr-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="terr-section-header" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
           <span class="terr-section-label">Società Drow</span>
           <span class="terr-section-arrow">▾</span>
         </div>
@@ -2097,35 +2103,35 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <div class="map-legend-row"><span>Comandanti di Divisione</span><span>12</span></div>
     </div>Clicca sulla mappa per posizionare il segnaposto</div>
     <div class="map-controls" style="bottom:3rem">
-      <button class="map-btn" id="map-btn-pin-ravenholm" onclick="togglePlaceMode('ravenholm','pin')" title="Inserisci Pin">📍</button>
-      <button class="map-btn" id="map-btn-star-ravenholm" onclick="togglePlaceMode('ravenholm','star')" title="Inserisci Stella">⭐</button>
+      <button class="map-btn" id="map-btn-pin-ravenholm" onclick="togglePlaceMode(&#39;ravenholm&#39;,&#39;pin&#39;)" title="Inserisci Pin">📍</button>
+      <button class="map-btn" id="map-btn-star-ravenholm" onclick="togglePlaceMode(&#39;ravenholm&#39;,&#39;star&#39;)" title="Inserisci Stella">⭐</button>
       <div class="map-btn-separator"></div>
-      <button class="map-btn" onclick="mapZoom('ravenholm', 1.25)" title="Zoom in">+</button>
-      <button class="map-btn" onclick="mapZoom('ravenholm', 0.8)" title="Zoom out">−</button>
-      <button class="map-btn" onclick="mapReset('ravenholm')" title="Reset" style="font-size:.7rem">↺</button>
+      <button class="map-btn" onclick="mapZoom(&#39;ravenholm&#39;, 1.25)" title="Zoom in">+</button>
+      <button class="map-btn" onclick="mapZoom(&#39;ravenholm&#39;, 0.8)" title="Zoom out">−</button>
+      <button class="map-btn" onclick="mapReset(&#39;ravenholm&#39;)" title="Reset" style="font-size:.7rem">↺</button>
     </div>
     <div class="map-hint">Scorri per zoomare · Trascina · 📍⭐ per aggiungere pin</div>
   </div>
-  <div class="map-overlay" id="map-overlay-ravenholm" onclick="closeMapPopup('ravenholm')"></div>
+  <div class="map-overlay" id="map-overlay-ravenholm" onclick="closeMapPopup(&#39;ravenholm&#39;)"></div>
   <div class="map-popup" id="map-popup-ravenholm">
-    <button class="map-popup-close" onclick="closeMapPopup('ravenholm')">✕</button>
-    <button class="map-pin-delete" id="map-popup-delete-ravenholm" onclick="deleteCurrentPin('ravenholm')" title="Elimina pin">🗑</button>
+    <button class="map-popup-close" onclick="closeMapPopup(&#39;ravenholm&#39;)">✕</button>
+    <button class="map-pin-delete" id="map-popup-delete-ravenholm" onclick="deleteCurrentPin(&#39;ravenholm&#39;)" title="Elimina pin">🗑</button>
     <div id="map-popup-view-ravenholm">
       <div class="map-popup-title" id="map-popup-title-ravenholm"></div>
       <div class="map-popup-divider"></div>
       <div class="map-popup-desc" id="map-popup-desc-ravenholm"></div>
       <div class="map-popup-divider"></div>
-      <button class="map-popup-save" onclick="switchToEdit('ravenholm')">✎ &nbsp; Modifica</button>
+      <button class="map-popup-save" onclick="switchToEdit(&#39;ravenholm&#39;)">✎ &nbsp; Modifica</button>
     </div>
     <div id="map-popup-edit-ravenholm" style="display:none" class="map-popup-edit">
       <label>Titolo</label>
       <input type="text" id="map-popup-input-title-ravenholm" placeholder="Nome del luogo...">
       <label>Descrizione</label>
       <textarea id="map-popup-input-desc-ravenholm" placeholder="Descrivi questo luogo..."></textarea>
-      <button class="map-popup-save" onclick="savePopupEdit('ravenholm')">✦ &nbsp; Salva</button>
+      <button class="map-popup-save" onclick="savePopupEdit(&#39;ravenholm&#39;)">✦ &nbsp; Salva</button>
     </div>
   </div>
-</div>
+
 
 <div class="page" id="page-organizzazioni" style="">
   <div class="cat-index">
@@ -2196,7 +2202,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     </div>
     <hr class="org-divider">
     <div class="org-landscape reveal visible" style="transition-delay:.1s"><img src="https://i.ibb.co/TM62pt0V/brema.webp"></div>
-    <p class="org-desc">L'<em>Accademia di Brema</em> è un focolare di espressione artistica. Oltre a fornire un'istruzione di alto livello, permette agli artisti di condividere, esplorare e crescere insieme, arricchendo la cultura e l'arte della città stessa. Sotto l'egida del <em>Decano</em>, che riveste anche il titolo di Jarl del Re, l'Accademia riceve finanziamenti regolari dal tesoro reale, integrati da donazioni private, sovvenzioni per progetti artistici e ricavi derivanti da spettacoli ed esibizioni. L'ingresso all'Accademia è aperto a tutti gli aspiranti artisti, senza pregiudizi. Pochi però riescono a ottenere il titolo di "Musicante di Brema", che apre ulteriori opportunità professionali e prestigio all'interno della comunità artistica, nonchè l'opportunità di esporre la propria arte al primo e unico teatro mai costruito, il teatro <em>Silverlight</em>.</p>
+    <p class="org-desc">L'<em>Accademia di Brema</em> è un focolare di espressione artistica. Oltre a fornire un'istruzione di alto livello, permette agli artisti di condividere, esplorare e crescere insieme, arricchendo la cultura e l'arte della città stessa. Sotto l'egida del <em>Decano</em>, che riveste anche il titolo di Jarl del Re, l'Accademia riceve finanziamenti regolari dal tesoro reale, integrati da donazioni private, sovvenzioni per progetti artistici e ricavi derivanti da spettacoli ed esibizioni. L'ingresso all'Accademia è aperto a tutti gli aspiranti artisti, senza pregiudizi. Pochi però riescono a ottenere il titolo di <em>Musicante di Brema</em>, che apre ulteriori opportunità professionali e prestigio all'interno della comunità artistica, nonchè l'opportunità di esporre la propria arte al primo e unico teatro mai costruito, il teatro <em>Silverlight</em>.</p>
   </div>
   <footer><span class="footer-logo">✦ Le Cronache di Gwernia ✦</span><p class="footer-text">«Ogni mito cela una verità. Ogni leggenda, un frammento di storia perduta.»</p></footer>
 </div>
@@ -2207,11 +2213,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
       <span class="org-title-text">Custodi di Kael'Zor</span>
     </div>
     <div class="org-top-row reveal" style="transition-delay:.06s">
-      <div class="org-symbol-box"><img src="https://i.ibb.co/rKsQ3Hfj/associazioni-e-ordini-copia.webp"></div>
+      <div class="org-symbol-box"><img src="https://i.ibb.co/k2T8bCvN/custodi-di-kael-zor.webp"></div>
       <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">865° Arco Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Diamyr - Zhaur’kyn Trelvaar</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Pyraxis</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">"Dal suo sacrificio riprendiamo il nostro cammino"</span></div></div>
     </div>
     <hr class="org-divider">
-    <div class="org-landscape reveal" style="transition-delay:.1s"><img src="https://i.ibb.co/k2T8bCvN/custodi-di-kael-zor.webp"></div>
+    <div class="org-landscape reveal" style="transition-delay:.1s"><img src="https://i.ibb.co/rKsQ3Hfj/associazioni-e-ordini-copia.webp"></div>
     <p class="org-desc">I <em>Custodi di Kael'Zor</em> sono conosciuti per la loro instancabile ricerca dei Frammenti di Cuore di Drago. Tuttavia, il loro compito principale è monitorare le <em>Terre Infrante</em>, con l'obiettivo di purificarle e restituirle all'antico splendore. A sostenerli economicamente è il commercio dei Cristalli, che nessuno sa estrarre e lavorare meglio di loro. Una padronanza di quelle terre così profonda e riconosciuta che persino l'Imperatore ha scelto di affidar loro piena autorità su di esse.
 </p>
   </div>
@@ -2241,7 +2247,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     </div>
     <div class="org-top-row reveal" style="transition-delay:.06s">
       <div class="org-symbol-box"><img src="https://i.ibb.co/8Lc7zWt6/bujinkan-dojo.webp"></div>
-      <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">620° Arcoo Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Shihan - Shinroku Tarumai</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Nadesh</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">""Chi padroneggia sé stesso, padroneggia tutto"</span></div></div>
+      <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">620° Arco Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Shihan - Shinroku Tarumai</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Nadesh</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">"Chi padroneggia sé stesso, padroneggia tutto"</span></div></div>
     </div>
     <hr class="org-divider">
     <div class="org-landscape reveal" style="transition-delay:.1s"><img src="https://i.ibb.co/WNP1DMGb/dojo.webp"></div>
@@ -2370,7 +2376,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     </div>
     <div class="org-top-row reveal" style="transition-delay:.06s">
       <div class="org-symbol-box"><img src="https://i.ibb.co/RphkTrvz/Sacro-Corvo.jpg"></div>
-      <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">1600° Arco Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Corvus</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Belaver</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">“Nulla da Temere, Tutto da Proteggere”</span></div></div>
+      <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">1600° Arco Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Corvus</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Belaver</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">"Nulla da Temere, Tutto da Proteggere"</span></div></div>
     </div>
     <hr class="org-divider">
     <div class="org-landscape reveal" style="transition-delay:.1s"><img src="https://i.ibb.co/35VLBzgV/sacro-corvo.webp"></div>
@@ -2387,7 +2393,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     </div>
     <div class="org-top-row reveal" style="transition-delay:.06s">
       <div class="org-symbol-box"><img src="https://i.ibb.co/9kpF7K79/rigor-mortis-2.webp"></div>
-      <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">720° Arco Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Fondatore</span><span class="org-meta-val">Signore della Morte</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Sinedrio Oscuro</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Sconosciuta</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">"Dalla carne senza Anima nasce l'ordine"</span></div></div>
+      <div class="org-meta"><div class="org-meta-row"><span class="org-meta-key">Fondazione</span><span class="org-meta-val">720° Arco Ciclico</span></div><div class="org-meta-row"><span class="org-meta-key">Leader</span><span class="org-meta-val">Sinedrio Oscuro</span></div><div class="org-meta-row"><span class="org-meta-key">Posizione</span><span class="org-meta-val">Sconosciuta</span></div><div class="org-meta-row"><span class="org-meta-key">Motto</span><span class="org-meta-val">"Dalla carne senza Anima nasce l'ordine"</span></div></div>
     </div>
     <hr class="org-divider">
     <div class="org-landscape reveal" style="transition-delay:.1s"><img src="https://i.ibb.co/gM0G9Zvk/rigor-mortis.webp"></div>
@@ -3081,7 +3087,7 @@ window.addEventListener('DOMContentLoaded', ()=>{ buildSearchIndex(); });
   // Carica pin statici
   function loadStaticPins() {
     if (!window.MAP_PINS) window.MAP_PINS = {};
-    const STATIC = {"p_2004": {"x": "29.55", "y": "22.66", "type": "star", "title": "Locanda - Lanterna Rossa", "desc": ""}, "p_2006": {"x": "25.24", "y": "40.61", "type": "pin", "title": "Guarnigione Imperiale", "desc": "La guarnigione di Ravenholm si trova in un'imponente struttura fortificata, costruita in pietra scura e ornata con stendardi del Regno che sventolano al vento. Le mura sono pattugliate da soldati in armature lucenti, e il suono ritmico dei loro passi riecheggia nei cortili interni. All'interno, le sale sono austere ma ordinate, illuminate da torce che proiettano ombre nette sulle pareti. L'aria porta con sé l'odore pungente del metallo delle armi appena affilate e il leggero sentore del cuoio delle armature."}, "p_2007": {"x": "32.24", "y": "41.79", "type": "pin", "title": "Hospes", "desc": "L'Hospes si presenta come un imponente edificio di pietra grigia, con rifiniture in marmo che aggiungono un tocco di eleganza. Le sue alte vetrate lasciano entrare abbondante luce solare. L'aria intorno all'Hospes è fresca, con un lieve sentore di erbe medicinali che sfugge dai giardini curati posti ai lati dell'edificio. Per chi può permetterselo, l'Hospes offre trattamenti magici straordinari, con l'aiuto dei sacerdoti del Sancta Unitas."}, "p_2010": {"x": "40.57", "y": "47.22", "type": "pin", "title": "Banca di Aldebrant", "desc": "La banca si rivela un luogo di ordine e maestosità. Pavimenti di marmo lucidato riflettono la luce dei grandi lampadari di ferro battuto, e sulle pareti pendono arazzi riccamente lavorati con l'emblema di Ravenholm. L'aria sa di pergamena, cera e inchiostro. Ogni dettaglio è pensato per ispirare fiducia, tanto al mercante quanto al nobile, ricordando a chiunque che qui i propri averi saranno custoditi e rispettati."}, "p_2011": {"x": "34.32", "y": "74.54", "type": "pin", "title": "Biblioteca Imperiale", "desc": "La biblioteca si erge maestosa con mura fatte di pietra grezza e robuste travi di quercia annerite dal tempo. L'atmosfera è coinvolgente: la luce soffusa di torce e candele illumina file interminabili di scaffali traboccanti di tomi rilegati in pelle. L'odore di carta antica e cera fusa pervade l'aria, mentre un silenzio reverente regna sovrano. Questa è tra le biblioteche più fornite al Mondo dopo Arcadia, ed è aperta 12 ore su 24, dalle 8:00."}, "p_2012": {"x": "57.00", "y": "67.40", "type": "pin", "title": "Voliera Postale", "desc": "<p>La Voliera Postale è un antico sistema di comunicazione che collega i principali capoluoghi di Eldoria tramite piccioni viaggiatori addestrati. I messaggi possono impiegare giorni o settimane a seconda della distanza e delle condizioni atmosferiche.</p><h3>Tariffe</h3><ul><li>Invio Lettera – <em>2 Ma</em> per ogni giorno di distanza</li><li>Messaggero Magico Non Sicuro – <em>50 Mo</em> per foglio</li><li>Messaggero Magico Sicuro – <em>100 Mo</em> per foglio</li><li>Fattorino – <em>5 Ma</em> al giorno per ricerca persona</li></ul>"}, "p_2013": {"x": "66.43", "y": "57.98", "type": "pin", "title": "Porto Imperiale", "desc": "Navi maestose attraccano accanto a velieri mercantili e pescherecci, mentre marinai, mercanti e viaggiatori si mescolano in un caotico concerto di lingue e accenti esotici. Bazar traboccano di merci fresche provenienti da terre lontane. I maestri portuali garantiscono ordine in questo crocevia vibrante, dove ogni conversazione potrebbe celare un'opportunità o un segreto."}, "p_2014": {"x": "65.89", "y": "39.91", "type": "pin", "title": "Colosseo Imperiale", "desc": "<p>Il Colosseo Imperiale di Ravenholm è il simbolo della forza e dell'orgoglio di Eldoria. Una struttura colossale che attira spettatori da ogni angolo del mondo, capace di ospitare fino a 20.000 persone. Al suo interno si svolgono tornei, sfide tra eroi e spettacoli di ogni genere, governati da regole precise e da un codice d'onore che persino i guerrieri più feroci rispettano.</p><h3>Luoghi Principali</h3><ul><li><em>Ufficio Iscrizioni</em> – Punto di registrazione per i partecipanti</li><li><em>Hypogeum</em> – Area dedicata agli addestratori di bestie</li><li><em>Spoliarium</em> – Sala in cui si preparano i Combattenti</li><li><em>Tribune</em> – Area dedicata agli Spettatori</li><li><em>Loggia</em> – Zona riservata alla Famiglia Reale o Ospiti di Lustro</li></ul><h3>Distribuzione Tribune</h3><ul><li>Gallerie Economiche (50–60% dei posti) – <em>5–10 Ma</em></li><li>Settori Medi (20–30% dei posti) – <em>2–5 Mo</em></li><li>Posti Premium (10–15% dei posti) – <em>10–20 Mo</em></li><li>Posti di Lusso (5% dei posti) – <em>50 Mo</em></li></ul><h3>Capienza</h3><ul><li>Arena – da <em>1.000</em> a <em>10.000</em> persone</li><li>Colosseo – da <em>10.000</em> a <em>20.000</em> persone</li></ul><h3>Incassi per Spettacolo</h3><ul><li>Arena – da <em>4.150</em> a <em>76.000 Mo</em></li><li>Colosseo – da <em>41.500</em> a <em>152.000 Mo</em></li></ul><h3>Coppa Tre Campioni</h3><p>Torneo annuale a Settembre diviso in tre categorie: <em>Arti Magiche</em>, <em>Arti Marziali</em> e <em>Arti Ibride</em>. Dopo una fase preliminare e una qualificazione che riduce i partecipanti a 8, si passa all'eliminazione diretta. Non è all'ultimo sangue. I vincitori ricevono il titolo di <em>Campione Imperiale</em>, un Sigillo d'Onore e <em>30.000 Mo</em>. I tre Campioni possono poi affrontare una bestia leggendaria, conquistando il titolo di <em>Aurion</em> e un Oggetto Magico ciascuno.</p><h3>Sfida degli Eroi</h3><p>Gruppi di avventurieri affrontano sfide consecutive contro bestie. Dopo ogni prova si può ritirare con la ricompensa accumulata o continuare, rischiando di perdere tutto. In <em>Modalità Letale</em> la capienza è piena e i premi aumentano del 30%.</p><h3>Sfida Individuale</h3><p>Incontri 1 contro 1 tra partecipanti di livello simile. Il vincitore incassa la quota dell'avversario, il rimborso della propria e il 5% degli incassi del Colosseo diviso tra tutti i vincitori.</p><ul><li>Novizi (lv 1–5) – <em>20 Mo</em></li><li>Avventurieri (lv 6–10) – <em>50 Mo</em></li><li>Veterani (lv 11–15) – <em>100 Mo</em></li><li>Leggende (lv 16+) – <em>200 Mo</em></li></ul><h3>Esperienze per il Pubblico</h3><ul><li>Scommesse Legali – gestite da funzionari ufficiali</li><li>Mercato Tematico – cibo, bevande e oggetti commemorativi</li><li>Intrattenimenti Pre-Evento – artisti e ammaestratori di bestie</li></ul>"}, "p_2015": {"x": "73.60", "y": "29.43", "type": "pin", "title": "Accademia di Vaelorian", "desc": "L'Accademia di Magia di Ravenholm è un complesso di edifici in pietra bianca circondati da giardini curati. All'interno, le aule sono arredate con panche e scrivanie di legno scuro. L'atmosfera è animata dalle voci dei giovani studenti che discutono, provano incantesimi o reagiscono con sorpresa e risate quando qualcosa non va come previsto. I maestri guidano le lezioni con voci calme e autoritarie, fornendo istruzioni e correzioni."}, "p_2016": {"x": "69.12", "y": "20.98", "type": "pin", "title": "Scuderie di Valdorin", "desc": "<p>Le Scuderie di Valdorin sono famose in tutta Eldoria. Centinaia di cavalli di razze pregiate vengono allevati e addestrati con cura meticolosa. Un'officina adiacente produce carri robusti e personalizzati per ogni esigenza, dal commercio al viaggio. Mercanti, nobili e avventurieri giungono da ogni angolo per un servizio di qualità.</p><h3>Tariffe</h3><ul><li>Cavallo – <em>5 Ma</em></li><li>Senza cibo – <em>2 Ma</em></li><li>Carretto – <em>5 Ma</em></li></ul>"}, "p_2017": {"x": "53.08", "y": "11.54", "type": "pin", "title": "Giardino di Eros", "desc": "L'edificio ha l'aspetto di una grande villa privata circondata da un giardino rigoglioso. L'interno ha un'atmosfera seducente: stanze decorate con arazzi ricamati e candelabri di cristallo. Un luogo dove passione ed eleganza si intrecciano, senza confini di sessualità o razza, purché si disponga delle ricchezze necessarie per accedere ai suoi raffinati servizi."}, "p_2018": {"x": "47.11", "y": "30.91", "type": "pin", "title": "Gilda Aquila Dorata", "desc": "La sede della Gilda dell'Aquila Dorata si erge nel cuore di Ravenholm come un edificio che non ha bisogno di presentazioni. La facciata in pietra chiara è decorata da stendardi rosso porpora con l'aquila dorata, visibili da ogni angolo della piazza. Al centro campeggia un rosone in vetro colorato che ritrae l'aquila a ali spiegate, e quando la luce del sole lo attraversa, proietta riflessi dorati sull'ampia scalinata."}, "p_2019": {"x": "48.75", "y": "44.85", "type": "pin", "title": "Castello di Alabastro", "desc": "Il Castello di Ravenholm domina il paesaggio con le sue imponenti mura di Alabastro, una pietra bianca leggermente azzurrina che brilla sotto il sole e sembra quasi luminescente al chiaro di luna. Costruito con maestria, presenta torri slanciate coronate da guglie eleganti. Questa meraviglia architettonica, ristrutturata nel 980° Arco Ciclico, è un baluardo di potere e bellezza che impressiona chiunque."}, "p_2020": {"x": "39.64", "y": "36.95", "type": "pin", "title": "Sancta Unitas", "desc": "La Cattedrale di Ravenholm si erge imponente con le sue guglie slanciate e le torri di pietra bianca venata d'oro. Grandi vetrate istoriate narrano storie divine. All'interno, la luce crea riflessi vividi che illuminano le quattro aree principali, ognuna dedicata a un pantheon diverso. L'aria è intrisa di incenso e cera d'api, accompagnata da un silenzio reverenziale."}, "p_2022": {"x": "35.24", "y": "28.64", "type": "star", "title": "Alchimista - La Perla", "desc": ""}, "p_2023": {"x": "32.69", "y": "54.02", "type": "star", "title": "Cartomante - Madame Leota", "desc": ""}, "p_2024": {"x": "29.95", "y": "70.38", "type": "star", "title": "Locanda - Da Murkof", "desc": ""}, "p_2026": {"x": "66.12", "y": "63.19", "type": "star", "title": "Locanda - Il Porto Sicuro", "desc": ""}, "p_2027": {"x": "69.70", "y": "28.03", "type": "star", "title": "Fornitore - Veylor e Figli", "desc": ""}, "p_2029": {"x": "64.41", "y": "16.38", "type": "star", "title": "Locanda - Coppa d'Alabastro", "desc": ""}, "p_2030": {"x": "56.63", "y": "33.80", "type": "star", "title": "Cimitero Cittadino", "desc": ""}, "p_2032": {"x": "60.20", "y": "41.69", "type": "star", "title": "Magione di Lord Rathgaron", "desc": ""}, "p_2033": {"x": "36.41", "y": "15.50", "type": "star", "title": "Locanda - Lo Scoiattolo", "desc": ""}};
+    const STATIC = {"p_2004": {"x": "29.55", "y": "22.66", "type": "star", "title": "Locanda - Lanterna Rossa", "desc": ""}, "p_2006": {"x": "25.24", "y": "40.61", "type": "pin", "title": "Guarnigione Imperiale", "desc": "La guarnigione di Ravenholm si trova in un'imponente struttura fortificata, costruita in pietra scura e ornata con stendardi del Regno che sventolano al vento. Le mura sono pattugliate da soldati in armature lucenti, e il suono ritmico dei loro passi riecheggia nei cortili interni. All'interno, le sale sono austere ma ordinate, illuminate da torce che proiettano ombre nette sulle pareti. L'aria porta con sé l'odore pungente del metallo delle armi appena affilate e il leggero sentore del cuoio delle armature."}, "p_2007": {"x": "32.24", "y": "41.79", "type": "pin", "title": "Hospes", "desc": "L'Hospes si presenta come un imponente edificio di pietra grigia, con rifiniture in marmo che aggiungono un tocco di eleganza. Le sue alte vetrate lasciano entrare abbondante luce solare. L'aria intorno all'Hospes è fresca, con un lieve sentore di erbe medicinali che sfugge dai giardini curati posti ai lati dell'edificio. Per chi può permetterselo, l'Hospes offre trattamenti magici straordinari, con l'aiuto dei sacerdoti del Sancta Unitas."}, "p_2010": {"x": "40.57", "y": "47.22", "type": "pin", "title": "Banca di Aldebrant", "desc": "La banca si rivela un luogo di ordine e maestosità. Pavimenti di marmo lucidato riflettono la luce dei grandi lampadari di ferro battuto, e sulle pareti pendono arazzi riccamente lavorati con l'emblema di Ravenholm. L'aria sa di pergamena, cera e inchiostro. Ogni dettaglio è pensato per ispirare fiducia, tanto al mercante quanto al nobile, ricordando a chiunque che qui i propri averi saranno custoditi e rispettati."}, "p_2011": {"x": "34.32", "y": "74.54", "type": "pin", "title": "Biblioteca Imperiale", "desc": "La biblioteca si erge maestosa con mura fatte di pietra grezza e robuste travi di quercia annerite dal tempo. L'atmosfera è coinvolgente: la luce soffusa di torce e candele illumina file interminabili di scaffali traboccanti di tomi rilegati in pelle. L'odore di carta antica e cera fusa pervade l'aria, mentre un silenzio reverente regna sovrano. Questa è tra le biblioteche più fornite al Mondo dopo Arcadia, ed è aperta 12 ore su 24, dalle 8:00."}, "p_2012": {"x": "57.00", "y": "67.40", "type": "pin", "title": "Voliera Postale", "desc": "<p>La Voliera Postale è un antico sistema di comunicazione che collega i principali capoluoghi di Eldoria tramite piccioni viaggiatori addestrati. I messaggi possono impiegare giorni o settimane a seconda della distanza e delle condizioni atmosferiche.</p><h3>Tariffe</h3><ul><li>Invio Lettera - <em>2 Ma</em> per ogni giorno di distanza</li><li>Messaggero Magico Non Sicuro - <em>50 Mo</em> per foglio</li><li>Messaggero Magico Sicuro - <em>100 Mo</em> per foglio</li><li>Fattorino - <em>5 Ma</em> al giorno per ricerca persona</li></ul>"}, "p_2013": {"x": "66.43", "y": "57.98", "type": "pin", "title": "Porto Imperiale", "desc": "Navi maestose attraccano accanto a velieri mercantili e pescherecci, mentre marinai, mercanti e viaggiatori si mescolano in un caotico concerto di lingue e accenti esotici. Bazar traboccano di merci fresche provenienti da terre lontane. I maestri portuali garantiscono ordine in questo crocevia vibrante, dove ogni conversazione potrebbe celare un'opportunità o un segreto."}, "p_2014": {"x": "65.89", "y": "39.91", "type": "pin", "title": "Colosseo Imperiale", "desc": "<p>Il Colosseo Imperiale di Ravenholm è il simbolo della forza e dell'orgoglio di Eldoria. Una struttura colossale che attira spettatori da ogni angolo del mondo, capace di ospitare fino a 20.000 persone. Al suo interno si svolgono tornei, sfide tra eroi e spettacoli di ogni genere, governati da regole precise e da un codice d'onore che persino i guerrieri più feroci rispettano.</p><h3>Luoghi Principali</h3><ul><li><em>Ufficio Iscrizioni</em> - Punto di registrazione per i partecipanti</li><li><em>Hypogeum</em> - Area dedicata agli addestratori di bestie</li><li><em>Spoliarium</em> - Sala in cui si preparano i Combattenti</li><li><em>Tribune</em> - Area dedicata agli Spettatori</li><li><em>Loggia</em> - Zona riservata alla Famiglia Reale o Ospiti di Lustro</li></ul><h3>Distribuzione Tribune</h3><ul><li>Gallerie Economiche (50–60% dei posti) - <em>5–10 Ma</em></li><li>Settori Medi (20–30% dei posti) - <em>2–5 Mo</em></li><li>Posti Premium (10–15% dei posti) - <em>10–20 Mo</em></li><li>Posti di Lusso (5% dei posti) - <em>50 Mo</em></li></ul><h3>Capienza</h3><ul><li>Arena - da <em>1.000</em> a <em>10.000</em> persone</li><li>Colosseo - da <em>10.000</em> a <em>20.000</em> persone</li></ul><h3>Incassi per Spettacolo</h3><ul><li>Arena - da <em>4.150</em> a <em>76.000 Mo</em></li><li>Colosseo - da <em>41.500</em> a <em>152.000 Mo</em></li></ul><h3>Coppa Tre Campioni</h3><p>Torneo annuale a Settembre diviso in tre categorie: <em>Arti Magiche</em>, <em>Arti Marziali</em> e <em>Arti Ibride</em>. Dopo una fase preliminare e una qualificazione che riduce i partecipanti a 8, si passa all'eliminazione diretta. Non è all'ultimo sangue. I vincitori ricevono il titolo di <em>Campione Imperiale</em>, un Sigillo d'Onore e <em>30.000 Mo</em>. I tre Campioni possono poi affrontare una bestia leggendaria, conquistando il titolo di <em>Aurion</em> e un Oggetto Magico ciascuno.</p><h3>Sfida degli Eroi</h3><p>Gruppi di avventurieri affrontano sfide consecutive contro bestie. Dopo ogni prova si può ritirare con la ricompensa accumulata o continuare, rischiando di perdere tutto. In <em>Modalità Letale</em> la capienza è piena e i premi aumentano del 30%.</p><h3>Sfida Individuale</h3><p>Incontri 1 contro 1 tra partecipanti di livello simile. Il vincitore incassa la quota dell'avversario, il rimborso della propria e il 5% degli incassi del Colosseo diviso tra tutti i vincitori.</p><ul><li>Novizi (lv 1–5) - <em>20 Mo</em></li><li>Avventurieri (lv 6–10) - <em>50 Mo</em></li><li>Veterani (lv 11–15) - <em>100 Mo</em></li><li>Leggende (lv 16+) - <em>200 Mo</em></li></ul><h3>Esperienze per il Pubblico</h3><ul><li>Scommesse Legali - gestite da funzionari ufficiali</li><li>Mercato Tematico - cibo, bevande e oggetti commemorativi</li><li>Intrattenimenti Pre-Evento - artisti e ammaestratori di bestie</li></ul>"}, "p_2015": {"x": "73.60", "y": "29.43", "type": "pin", "title": "Accademia di Vaelorian", "desc": "L'Accademia di Magia di Ravenholm è un complesso di edifici in pietra bianca circondati da giardini curati. All'interno, le aule sono arredate con panche e scrivanie di legno scuro. L'atmosfera è animata dalle voci dei giovani studenti che discutono, provano incantesimi o reagiscono con sorpresa e risate quando qualcosa non va come previsto. I maestri guidano le lezioni con voci calme e autoritarie, fornendo istruzioni e correzioni."}, "p_2016": {"x": "69.12", "y": "20.98", "type": "pin", "title": "Scuderie di Valdorin", "desc": "Le Scuderie di Valdorin sono famose in tutta Eldoria. Centinaia di cavalli di razze pregiate vengono allevati e addestrati con cura meticolosa. Un'officina adiacente produce carri robusti e personalizzati per ogni esigenza, dal commercio al viaggio. Mercanti, nobili e avventurieri giungono da ogni angolo per un servizio di qualità."}, "p_2017": {"x": "53.08", "y": "11.54", "type": "pin", "title": "Giardino di Eros", "desc": "L'edificio ha l'aspetto di una grande villa privata circondata da un giardino rigoglioso. L'interno ha un'atmosfera seducente: stanze decorate con arazzi ricamati e candelabri di cristallo. Un luogo dove passione ed eleganza si intrecciano, senza confini di sessualità o razza, purché si disponga delle ricchezze necessarie per accedere ai suoi raffinati servizi."}, "p_2018": {"x": "47.11", "y": "30.91", "type": "pin", "title": "Gilda Aquila Dorata", "desc": "La sede della Gilda dell'Aquila Dorata si erge nel cuore di Ravenholm come un edificio che non ha bisogno di presentazioni. La facciata in pietra chiara è decorata da stendardi rosso porpora con l'aquila dorata, visibili da ogni angolo della piazza. Al centro campeggia un rosone in vetro colorato che ritrae l'aquila a ali spiegate, e quando la luce del sole lo attraversa, proietta riflessi dorati sull'ampia scalinata."}, "p_2019": {"x": "48.75", "y": "44.85", "type": "pin", "title": "Castello di Alabastro", "desc": "Il Castello di Ravenholm domina il paesaggio con le sue imponenti mura di Alabastro, una pietra bianca leggermente azzurrina che brilla sotto il sole e sembra quasi luminescente al chiaro di luna. Costruito con maestria, presenta torri slanciate coronate da guglie eleganti. Questa meraviglia architettonica, ristrutturata nel 980° Arco Ciclico, è un baluardo di potere e bellezza che impressiona chiunque."}, "p_2020": {"x": "39.64", "y": "36.95", "type": "pin", "title": "Sancta Unitas", "desc": "La Cattedrale di Ravenholm si erge imponente con le sue guglie slanciate e le torri di pietra bianca venata d'oro. Grandi vetrate istoriate narrano storie divine. La Cattedrale è un faro di spiritualità e riflessione, perché accoglie con braccia aperte i fedeli di ogni credo. Sebbene Pelor sia la Divinità principale venerata, il tempio è suddiviso in quattro grandi aree, ognuna dedicata ai diversi pantheon in cui il popolo ripone la propria fede. Le statue delle varie Divinità presenti non sono lì per essere venerate, ma fungono piuttosto da strumento didattico, offrendo al popolo una panoramica sulle Divinità esistenti e il loro ruolo. L'aria è intrisa di incenso e cera d'api, accompagnata da un silenzio reverenziale."}, "p_2022": {"x": "35.24", "y": "28.64", "type": "star", "title": "Alchimista - La Perla", "desc": ""}, "p_2023": {"x": "32.69", "y": "54.02", "type": "star", "title": "Cartomante - Madame Leota", "desc": ""}, "p_2024": {"x": "29.95", "y": "70.38", "type": "star", "title": "Locanda - Da Murkof", "desc": ""}, "p_2026": {"x": "66.12", "y": "63.19", "type": "star", "title": "Locanda - Il Porto Sicuro", "desc": ""}, "p_2027": {"x": "69.70", "y": "28.03", "type": "star", "title": "Fornitore - Veylor e Figli", "desc": ""}, "p_2029": {"x": "64.41", "y": "16.38", "type": "star", "title": "Locanda - Coppa d'Alabastro", "desc": ""}, "p_2030": {"x": "56.63", "y": "33.80", "type": "star", "title": "Cimitero Cittadino", "desc": ""}, "p_2032": {"x": "60.20", "y": "41.69", "type": "star", "title": "Magione di Lord Rathgaron", "desc": ""}, "p_2033": {"x": "36.41", "y": "15.50", "type": "star", "title": "Locanda - Lo Scoiattolo", "desc": ""}};
     Object.entries(STATIC).forEach(([id, d]) => {
       if (!window.MAP_PINS[id]) window.MAP_PINS[id] = d;
       placePin(id, d.x, d.y, d.type || 'pin', d.title, d.desc);
@@ -3143,4 +3149,5 @@ window.addEventListener('DOMContentLoaded', ()=>{ buildSearchIndex(); });
   });
 })();
 </script>
+
 </body></html>
