@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DARKLORE — Un Gioco di Narrazione Oscura</title>
+<meta name="description" content="Darklore: gioco di narrazione cooperativa e competitiva dell'orrore. Innocenti e Traditori. Tra voi, qualcuno mente." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=IM+Fell+English:ital@0;1&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+<style>
+:root {
+  --bg-0: #07060a;
+  --bg-1: #0d0b10;
+  --bg-2: #15121a;
+  --ink: #1a1620;
+  --bone: #d8cdb6;
+  --bone-dim: #a89e8a;
+  --bone-deep: #6c6354;
+  --gold: #c9a558;
+  --gold-bright: #e9c97a;
+  --gold-dark: #6e5424;
+  --silver: #b8b8c0;
+  --silver-dim: #6a6a72;
+  --blood: #2a1050;
+  --blood-bright: #8a2aaa;
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --display: 'Cinzel', 'Cormorant Garamond', serif;
+  --display-2: 'Cinzel', serif;
+  --gothic: 'UnifrakturCook', 'IM Fell English', serif;
+  --book: 'IM Fell English', 'Cormorant Garamond', serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg-0); scroll-behavior: auto; }
+body {
+  min-height: 100vh;
+  font-size: 18px;
+  line-height: 1.7;
+  cursor: none;
+  color: var(--bone);
+  font-family: var(--serif);
+  overflow-x: hidden;
+  background: transparent;
+  letter-spacing: .01em;
+}
+@media (max-width: 720px) { body { cursor: auto; } }
+
+/* ---------------- GRAIN, VIGNETTE, GLOBAL OVERLAYS ---------------- */
+.grain {
+  position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: .12; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grainShift 1.2s steps(6) infinite;
+}
+@keyframes grainShift {
+  0% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); }
+  40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,3%); }
+  80% { transform: translate(3%,1%); } 100% { transform: translate(0,0); }
+}
+.vignette {
+  position: fixed; inset: 0; z-index: 8500; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.65) 100%);
+}
+#particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+/* ---------------- BOOKSHELF PATTERN ---------------- */
+.bg-bookshelf {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='140'%3E%3Crect x='0' y='136' width='320' height='4' fill='%23c9a558' fill-opacity='0.18'/%3E%3Crect x='4' y='68' width='13' height='68' rx='1' fill='%23c9a558' fill-opacity='0.055'/%3E%3Crect x='19' y='76' width='9' height='60' rx='1' fill='%23c9a558' fill-opacity='0.038'/%3E%3Crect x='30' y='64' width='15' height='72' rx='1' fill='%23c9a558' fill-opacity='0.052'/%3E%3Crect x='47' y='72' width='11' height='64' rx='1' fill='%23c9a558' fill-opacity='0.042'/%3E%3Crect x='60' y='78' width='8' height='58' rx='1' fill='%23c9a558' fill-opacity='0.032'/%3E%3Crect x='70' y='66' width='17' height='70' rx='1' fill='%23c9a558' fill-opacity='0.055'/%3E%3Crect x='89' y='73' width='12' height='63' rx='1' fill='%23c9a558' fill-opacity='0.042'/%3E%3Crect x='103' y='79' width='9' height='57' rx='1' fill='%23c9a558' fill-opacity='0.032'/%3E%3Crect x='114' y='62' width='16' height='74' rx='1' fill='%23c9a558' fill-opacity='0.058'/%3E%3Crect x='132' y='70' width='13' height='66' rx='1' fill='%23c9a558' fill-opacity='0.048'/%3E%3Crect x='147' y='77' width='10' height='59' rx='1' fill='%23c9a558' fill-opacity='0.035'/%3E%3Crect x='159' y='67' width='14' height='69' rx='1' fill='%23c9a558' fill-opacity='0.052'/%3E%3Crect x='175' y='74' width='11' height='62' rx='1' fill='%23c9a558' fill-opacity='0.042'/%3E%3Crect x='188' y='79' width='8' height='57' rx='1' fill='%23c9a558' fill-opacity='0.030'/%3E%3Crect x='198' y='65' width='15' height='71' rx='1' fill='%23c9a558' fill-opacity='0.055'/%3E%3Crect x='215' y='71' width='12' height='65' rx='1' fill='%23c9a558' fill-opacity='0.045'/%3E%3Crect x='229' y='77' width='9' height='59' rx='1' fill='%23c9a558' fill-opacity='0.035'/%3E%3Crect x='240' y='68' width='14' height='68' rx='1' fill='%23c9a558' fill-opacity='0.052'/%3E%3Crect x='256' y='73' width='11' height='63' rx='1' fill='%23c9a558' fill-opacity='0.042'/%3E%3Crect x='269' y='78' width='8' height='58' rx='1' fill='%23c9a558' fill-opacity='0.032'/%3E%3Crect x='279' y='66' width='13' height='70' rx='1' fill='%23c9a558' fill-opacity='0.052'/%3E%3Crect x='294' y='72' width='10' height='64' rx='1' fill='%23c9a558' fill-opacity='0.042'/%3E%3Crect x='306' y='68' width='12' height='68' rx='1' fill='%23c9a558' fill-opacity='0.048'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 1440px 520px;
+  opacity: .45;
+}
+
+/* ---------------- SLOW DRIFTING PARALLAX BACKGROUND ---------------- */
+.bg-parallax { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: var(--bg-0); }
+.bg-parallax .bg-scroll { position: absolute; inset: 0; will-change: transform; }
+.bg-parallax .bg-layer { position: absolute; inset: -20%; will-change: transform; }
+.bg-parallax .bg-layer.l1 {
+  background:
+    radial-gradient(ellipse 150% 130% at 15% 25%, rgba(20,5,35,.07), transparent 80%),
+    radial-gradient(ellipse 140% 120% at 85% 75%, rgba(8,3,18,.05), transparent 80%);
+  animation: drift1 90s ease-in-out infinite alternate;
+}
+.bg-parallax .bg-layer.l2 {
+  background:
+    radial-gradient(ellipse 170% 140% at 75% 15%, rgba(201,165,88,.012), transparent 82%),
+    radial-gradient(ellipse 130% 130% at 25% 85%, rgba(16,4,30,.04), transparent 80%);
+  animation: drift2 140s ease-in-out infinite alternate;
+}
+.bg-parallax .bg-layer.l3 {
+  background:
+    radial-gradient(ellipse 120% 100% at 55% 50%, rgba(201,165,88,.008), transparent 82%),
+    radial-gradient(ellipse 110% 120% at 35% 60%, rgba(22,7,42,.028), transparent 80%);
+  animation: drift3 110s ease-in-out infinite alternate;
+}
+@keyframes drift1 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(40px, -55px) rotate(1.5deg); } }
+@keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-60px, 40px); } }
+@keyframes drift3 { from { transform: translate(-180px, -90px); } to { transform: translate(180px, 90px); } }
+
+/* ---------------- CUSTOM CURSOR ---------------- */
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%); will-change: transform;
+}
+.cursor-dot { width: 5px; height: 5px; background: var(--gold-bright); border-radius: 50%; box-shadow: 0 0 12px var(--gold), 0 0 24px var(--gold-dark); }
+.cursor-ring {
+  width: 38px; height: 38px; border: 1px solid var(--gold); border-radius: 50%;
+  transition: transform .12s ease-out, opacity .2s, border-color .2s, width .2s, height .2s;
+  opacity: .55;
+  background:
+    radial-gradient(circle at center, transparent 70%, rgba(201,165,88,.06) 100%);
+}
+.cursor-ring::before, .cursor-ring::after {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 14px; height: 1px; background: var(--gold);
+  transform: translate(-50%,-50%);
+}
+.cursor-ring::after { transform: translate(-50%,-50%) rotate(90deg); }
+.cursor-ring.hover { width: 64px; height: 64px; border-color: var(--gold-bright); opacity: .9; }
+
+/* ---------------- LOADER ---------------- */
+#loader {
+  position: fixed; inset: 0; z-index: 10000; background: #000; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2rem;
+}
+#loader .spark {
+  width: 4px; height: 4px; background: var(--gold-bright); border-radius: 50%;
+  box-shadow: 0 0 24px var(--gold-bright), 0 0 60px var(--gold);
+  animation: sparkPulse 1.4s ease-in-out infinite;
+}
+@keyframes sparkPulse {
+  0%, 100% { opacity: .3; transform: scale(.7); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+#loader .loader-word {
+  font-family: var(--display); letter-spacing: .8em; font-size: .8rem; color: var(--bone-deep);
+  text-transform: uppercase; padding-left: .8em;
+}
+
+/* ---------------- NAV ---------------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 7000;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.4rem 2.2rem; mix-blend-mode: difference;
+  transition: padding .4s ease, background .4s ease;
+}
+.nav.scrolled {
+  padding: .9rem 2.2rem; mix-blend-mode: normal;
+  background: linear-gradient(180deg, rgba(7,6,10,.92) 0%, rgba(7,6,10,.7) 100%);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,165,88,.15);
+}
+.nav-brand {
+  font-family: var(--display); font-weight: 700; letter-spacing: .22em; font-size: 1.3rem;
+  color: var(--gold); display: flex; align-items: center; text-decoration: none;
+  text-shadow: 0 0 18px rgba(201,165,88,.4), 0 0 40px rgba(201,165,88,.15);
+  line-height: 1; text-indent: .22em;
+}
+.nav-brand .glyph { display: none; }
+.nav-links { display: flex; gap: 2.2rem; align-items: center; }
+.nav-links a {
+  font-family: var(--display-2); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--bone); text-decoration: none; opacity: .75; transition: opacity .25s, color .25s;
+  position: relative; padding: .4rem 0;
+}
+.nav-links a:hover { opacity: 1; color: var(--gold-bright); }
+.nav-links a::after {
+  content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 1px; background: var(--gold);
+  transition: width .35s ease, left .35s ease;
+}
+.nav-links a:hover::after { width: 100%; left: 0; }
+.nav-cta {
+  font-family: var(--display-2); font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--bg-0); background: var(--gold); padding: .65rem 1.2rem; text-decoration: none;
+  border: 1px solid var(--gold-bright); transition: background .3s, color .3s, transform .3s;
+}
+.nav-cta:hover { background: var(--gold-bright); transform: translateY(-1px); }
+@media (max-width: 880px) { .nav-links { display: none; } .nav { padding: 1rem 1.2rem; } }
+
+/* ---------------- HERO ---------------- */
+.hero {
+  position: relative; min-height: 78vh; min-height: 78svh; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding-bottom: 4rem;
+}
+.hero::after { content: none; }
+.hero .layers { position: absolute; inset: 0; }
+.hero .layer {
+  position: absolute; inset: 0; will-change: transform; pointer-events: none;
+}
+.hero .layer.fog-1 {
+  background: radial-gradient(ellipse 60% 40% at 30% 30%, rgba(60,40,80,.18), transparent 70%),
+              radial-gradient(ellipse 80% 50% at 70% 70%, rgba(20,30,50,.15), transparent 70%);
+  filter: blur(40px);
+}
+.hero .layer.fog-2 { display: none; }
+.hero .layer.moon {
+  display: none;
+}
+.hero .layer.rays {
+  display: none;
+}
+.hero .layer.ornament {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'><g fill='none' stroke='%23c9a558' stroke-opacity='0.07' stroke-width='.6'><circle cx='300' cy='300' r='220'/><circle cx='300' cy='300' r='180'/><circle cx='300' cy='300' r='140'/><path d='M300 80 L320 280 L300 300 L280 280 Z'/><path d='M300 520 L320 320 L300 300 L280 320 Z'/><path d='M80 300 L280 320 L300 300 L280 280 Z'/><path d='M520 300 L320 320 L300 300 L320 280 Z'/></g></svg>");
+  background-position: center; background-size: 80vmin 80vmin; background-repeat: no-repeat;
+}
+.hero-content { position: relative; z-index: 5; text-align: center; padding: 0 1.5rem; max-width: 1200px; }
+.hero .eyebrow {
+  display: inline-flex; align-items: center; gap: 1rem; font-family: var(--display-2); font-size: .72rem;
+  letter-spacing: .55em; text-transform: uppercase; color: var(--gold); margin-bottom: 2.4rem;
+}
+.hero .eyebrow .line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero h1 {
+  font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7.5vw, 5.4rem);
+  letter-spacing: .22em; color: var(--bone); line-height: 1;
+  text-indent: .22em;
+  text-shadow:
+    0 0 1px rgba(216,205,182,.4),
+    0 0 22px rgba(201,165,88,.12),
+    0 2px 0 rgba(0,0,0,.5);
+  position: relative; display: inline-block;
+}
+.hero h1 .char {
+  display: inline-block; will-change: transform, opacity, filter;
+}
+.hero h1::before, .hero h1::after { content: none; }
+.hero .tagline {
+  font-family: var(--book); font-style: italic; font-size: clamp(1.05rem, 2.2vw, 1.55rem);
+  color: var(--bone-dim); margin-top: 2rem; max-width: 760px; margin-left: auto; margin-right: auto;
+  letter-spacing: .02em;
+}
+.hero .sub-tag {
+  font-family: var(--display-2); font-size: .68rem; letter-spacing: .55em; text-transform: uppercase;
+  color: var(--bone-deep); margin-top: 1.4rem;
+}
+.hero .sub-tag span { color: var(--blood-bright); margin: 0 .8em; }
+.hero .scroll-cue { display: none; }
+
+/* ---------------- SECTIONS GENERIC ---------------- */
+section { position: relative; padding: 7rem 1.5rem; }
+.container { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+.section-eyebrow {
+    font-family: var(--display-2);
+    font-size: .7rem;
+    letter-spacing: .55em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: .9rem;
+}
+.section-eyebrow::before { content: none; }
+.section-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2rem, 4.6vw, 3.4rem);
+    color: var(--bone);
+    margin-top: 1.2rem;
+    line-height: 1.1;
+    letter-spacing: .08em;
+    text-align: center;
+}
+.section-title .accent { color: var(--gold); font-style: italic; }
+.section-title .blood { color: var(--blood-bright); font-style: italic; text-shadow: 0 0 18px rgba(138,36,36,.3); }
+.section-lede {
+    font-family: var(--book);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    color: var(--bone-dim);
+    margin-top: 1.6rem;
+    max-width: 100%;
+    margin-bottom: 3rem;
+}
+.divider { display: flex; align-items: center; gap: 1rem; margin: 3rem auto; max-width: 360px; opacity: .55; }
+.divider .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dark), transparent); }
+.divider .glyph { color: var(--gold); font-size: 1.2rem; }
+
+/* ---------------- MANIFESTO ---------------- */
+.manifesto {
+  background: transparent;
+  text-align: center;
+}
+.manifesto .container { max-width: 1100px; }
+.manifesto .quote {
+  font-family: var(--display); font-weight: 400; font-style: italic;
+  font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.25; color: var(--bone);
+  letter-spacing: .01em;
+}
+.manifesto .quote .word { display: inline-block; opacity: .15; transition: opacity .4s ease; will-change: opacity; }
+.manifesto .quote .word.lit { opacity: 1; color: var(--bone); }
+.manifesto .quote .word.gold { color: var(--gold-bright); }
+.manifesto .quote .word.blood { color: var(--blood-bright); font-style: italic; }
+.manifesto .signature {
+  font-family: var(--gothic); font-size: 2rem; color: var(--gold); margin-top: 4rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+}
+.manifesto .signature .line { width: 80px; height: 1px; background: var(--gold-dark); }
+
+/* ---------------- BILANCIA ---------------- */
+.bilancia-section {
+  background: transparent;
+  padding: 8rem 1.5rem;
+}
+.bilancia-wrap {
+  display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: center;
+}
+.bilancia-stage {
+  position: relative; height: clamp(420px, 60vh, 680px); width: 100%;
+  display: flex; justify-content: center; align-items: center;
+}
+.bilancia {
+  position: relative; width: min(100%, 720px); height: 100%;
+}
+.bilancia .post {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 6px; transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  border-radius: 3px;
+  box-shadow: 0 0 12px rgba(201,165,88,.3);
+}
+.bilancia .post::before, .bilancia .post::after {
+  content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+  background: var(--gold); border-radius: 50%;
+}
+.bilancia .post::before { top: 0; width: 26px; height: 26px; box-shadow: 0 0 18px var(--gold), inset 0 0 8px var(--gold-dark); }
+.bilancia .post::after  { bottom: 0; width: 50px; height: 18px; border-radius: 4px; background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); }
+.bilancia .beam-wrap {
+  position: absolute; top: 24px; left: 0; right: 0; height: 2px; transform-origin: 50% 50%;
+}
+.bilancia .beam {
+  position: absolute; top: 0; left: 5%; right: 5%; height: 4px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold), var(--gold-dark));
+  border-radius: 2px; box-shadow: 0 0 12px rgba(201,165,88,.4);
+}
+.bilancia .pan {
+  position: absolute; top: 100px; width: 220px; height: 220px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: .4rem;
+  transition: top .4s ease;
+}
+.bilancia .pan.left { left: 0; }
+.bilancia .pan.right { right: 0; }
+.bilancia .pan .chains {
+  display: flex; gap: 80px; height: 80px; position: relative;
+}
+.bilancia .pan .chains::before, .bilancia .pan .chains::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 1px;
+  background: repeating-linear-gradient(180deg, var(--gold-dark) 0 4px, transparent 4px 8px);
+}
+.bilancia .pan .chains::before { left: 30px; }
+.bilancia .pan .chains::after  { right: 30px; }
+.bilancia .pan .dish {
+  width: 220px; height: 60px; border-radius: 0 0 110px 110px / 0 0 60px 60px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+  border: 1px solid var(--gold-bright);
+  box-shadow: 0 6px 24px rgba(0,0,0,.5), inset 0 -4px 8px rgba(0,0,0,.3);
+  position: relative;
+}
+.bilancia .pan .dish::before {
+  content: ''; position: absolute; top: 0; left: 4px; right: 4px; height: 6px;
+  background: linear-gradient(180deg, rgba(255,255,255,.2), transparent); border-radius: 4px;
+}
+.bilancia .pan .label {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--display);
+    font-size: 1.15rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--bone);
+    white-space: nowrap;
+}
+.bilancia .pan.left .label { color: var(--bone); }
+.bilancia .pan.right .label { color: var(--blood-bright); }
+.bilancia .pan .symbol {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  font-size: 2.4rem; line-height: 1; color: var(--bg-0);
+  display: flex; align-items: center; justify-content: center;
+}
+.sun-glyph {
+  display: block; width: 2.4rem; height: 2.4rem;
+  fill: none; stroke: currentColor; overflow: visible;
+}
+.bilancia-info {
+  display: flex; justify-content: space-between; gap: 2rem;
+  max-width: min(100%, 720px); margin: 5rem auto 0; text-align: center;
+}
+.bilancia-info .col {
+  flex: 1; padding: 0; border: none; position: relative;
+}
+.bilancia-info .col + .col { padding-top: 0; border-top: none; }
+.bilancia-info .col-label {
+  font-family: var(--display); font-size: .78rem; letter-spacing: .45em; text-transform: uppercase;
+  color: var(--gold-dark); margin-bottom: .9rem;
+}
+.bilancia-info .col.dark .col-label { color: var(--silver-dim); }
+.bilancia-info h4 {
+  font-family: var(--display); font-size: 1.5rem; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--bone); margin-bottom: .8rem;
+}
+.bilancia-info h4 .blood { color: var(--blood-bright); }
+.bilancia-info .col.dark h4 { color: var(--silver); }
+.bilancia-info p { color: var(--bone-dim); font-family: var(--book); font-style: italic; max-width: 560px; margin: 0 auto; }
+.threshold-table {
+  margin-top: 4rem; max-width: 600px; margin-left: auto; margin-right: auto;
+  border: 1px solid var(--gold-dark); padding: 2rem;
+  background: linear-gradient(180deg, #0c0815, #07050f);
+  box-shadow: 0 8px 30px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+}
+.threshold-table h5 {
+  font-family: var(--display); font-size: .9rem; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--gold); text-align: center; margin-bottom: 1.4rem;
+}
+.threshold-table table { width: 100%; border-collapse: collapse; }
+.threshold-table td {
+  padding: .6rem .8rem; border-bottom: 1px dashed rgba(201,165,88,.15);
+  font-family: var(--book); color: var(--bone);
+}
+.threshold-table td:first-child { color: var(--gold); font-weight: 600; width: 50%; }
+.threshold-table td:last-child { text-align: right; font-style: italic; }
+.threshold-table tr:last-child td { border-bottom: none; }
+
+/* ---------------- DOMINI ---------------- */
+.domini-section {
+  background: transparent;
+  padding: 12rem 1.5rem;
+}
+.domini-grid {
+  margin-top: 5rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.4rem;
+}
+.dominio-card {
+  position: relative; aspect-ratio: 5/7; perspective: 1200px; cursor: pointer;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.55));
+}
+.dominio-inner {
+  position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 1s cubic-bezier(.7,.1,.3,1);
+}
+.dominio-card:hover .dominio-inner, .dominio-card.flipped .dominio-inner { transform: rotateY(180deg); }
+.dominio-face {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border: 1px solid var(--gold-dark); overflow: hidden;
+}
+.dominio-front {
+  background:
+    linear-gradient(135deg, rgba(201,165,88,.05) 0%, transparent 50%, rgba(42,16,80,.06) 100%),
+    linear-gradient(180deg, #0c0815 0%, #07050f 100%);
+}
+.dominio-front .dominio-img {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  filter: grayscale(.55) contrast(.92) brightness(.55) sepia(.18); opacity: .75;
+  transition: opacity .8s, filter .8s, transform 1.6s ease;
+}
+.dominio-front::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background:
+    radial-gradient(ellipse at top, rgba(0,0,0,0) 30%, rgba(0,0,0,.55) 100%),
+    linear-gradient(180deg, rgba(15,12,20,.6) 0%, rgba(8,7,11,0) 25%, rgba(8,7,11,0) 60%, rgba(8,7,11,.92) 100%);
+}
+.dominio-front::after {
+  content: ''; position: absolute; inset: 6px; border: 1px solid rgba(201,165,88,.22); pointer-events: none; z-index: 3;
+}
+.dominio-card:hover .dominio-img { transform: scale(1.04); filter: grayscale(.4) contrast(1) brightness(.65) sepia(.12); }
+.dominio-front .dominio-front-content {
+  position: absolute; inset: 0; z-index: 4; padding: 1.4rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center;
+}
+.dominio-front .num {
+  font-family: var(--display-2); font-size: .7rem; letter-spacing: .35em; color: var(--gold); text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0,0,0,.85);
+}
+.dominio-front .glyph {
+  font-size: 4.5rem; line-height: 1; color: var(--gold); text-shadow: 0 0 18px rgba(201,165,88,.4), 0 2px 6px rgba(0,0,0,.85);
+  font-family: var(--gothic);
+}
+.dominio-front .name {
+  font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: .2em;
+  color: var(--bone); text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,.9);
+}
+.dominio-back {
+  background:
+    radial-gradient(ellipse at top, rgba(42,16,80,.22), transparent 60%),
+    linear-gradient(180deg, #0d0918 0%, #0a0618 100%);
+  transform: rotateY(180deg);
+  font-family: var(--book); color: var(--bone);
+}
+.dominio-back .dominio-back-content {
+  position: absolute; inset: 0; padding: 1.6rem; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center;
+}
+.dominio-back .name-small {
+  font-family: var(--display-2); font-size: .68rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold-bright);
+}
+.dominio-back p {
+  font-style: italic; font-size: .95rem; line-height: 1.55; color: var(--bone-dim);
+  max-width: 92%;
+}
+.dominio-back .seal {
+  font-family: var(--gothic); color: var(--blood-bright); font-size: 1.6rem;
+  text-shadow: 0 0 14px rgba(138,36,36,.4);
+}
+
+/* ---------------- PERSONAGGI ---------------- */
+.personaggi-section {
+  background: transparent;
+}
+.personaggi-grid {
+  margin-top: 5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem;
+}
+.persona {
+  position: relative; padding: 0; border: 1px solid rgba(201,165,88,.1);
+  background: linear-gradient(180deg, #0c0815, #07050f);
+  box-shadow: 0 10px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1), border-color .5s, box-shadow .5s;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.persona .portrait {
+  position: relative; width: 100%; aspect-ratio: 3/5; overflow: hidden;
+  background: #0a070d;
+  border-bottom: 1px solid rgba(201,165,88,.15);
+}
+.persona .portrait img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 18%;
+  filter: grayscale(.35) contrast(1.05) brightness(.82) sepia(.08);
+  transition: transform 1.4s cubic-bezier(.2,.7,.2,1), filter .8s ease;
+  display: block;
+}
+.persona:hover .portrait img {
+  transform: scale(1.06);
+  filter: grayscale(.15) contrast(1.12) brightness(.95) sepia(.04);
+}
+.persona .portrait::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 50%, rgba(7,6,10,.9) 100%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.6) 100%);
+}
+.persona .portrait .sigil-overlay {
+  position: absolute; bottom: 12px; left: 14px; z-index: 2;
+  font-family: var(--gothic); color: var(--gold-bright); font-size: 1.6rem;
+  text-shadow: 0 0 14px rgba(201,165,88,.6), 0 2px 4px rgba(0,0,0,.8);
+}
+.persona .body { padding: 1.2rem 1.4rem 1.4rem; }
+.persona .portrait-fallback {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse at center, rgba(201,165,88,.1), transparent 70%),
+    linear-gradient(135deg, #14101a 0%, #08070b 100%);
+  position: relative;
+}
+.persona .portrait-fallback .glyph {
+  font-family: var(--gothic); font-size: 6rem; color: var(--gold-dark);
+  text-shadow: 0 0 24px rgba(201,165,88,.3);
+  opacity: .6;
+}
+.persona::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .4;
+  transition: opacity .5s;
+}
+.persona::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .4;
+}
+.persona:hover {
+  transform: translateY(-6px); border-color: var(--gold);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.6), 0 0 40px rgba(201,165,88,.06);
+}
+.persona:hover::before { opacity: 1; }
+.persona .role {
+  font-family: var(--display-2); font-size: .62rem; letter-spacing: .5em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .6rem;
+}
+.persona h3 {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(.9rem, 1.1vw, 1.2rem); letter-spacing: .03em;
+  color: var(--bone); margin-bottom: .4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.persona h3 em { font-style: italic; color: var(--gold-bright); font-weight: 700; }
+.persona .ability { display: none; }
+
+/* ---------------- IDENTITÀ SEGRETE ---------------- */
+.identita-section {
+  background: transparent;
+  padding: 8rem 1.5rem;
+}
+.identita-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1100px; margin: 5rem auto 0;
+}
+.faction {
+  position: relative; padding: 3rem 2.4rem; border: 1px solid var(--gold-dark);
+  background: linear-gradient(180deg, #0d0918, #080610);
+  box-shadow: 0 10px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35);
+  text-align: center;
+}
+.faction.innocenti { border-color: rgba(216,205,182,.4); }
+.faction.traditori { border-color: rgba(110,42,160,.6); background: linear-gradient(180deg, rgba(20,10,30,.7), rgba(10,6,20,.95)); }
+.faction h3 {
+  font-family: var(--display); font-weight: 700; font-size: 2rem; letter-spacing: .25em;
+  text-transform: uppercase; margin-bottom: 1.2rem;
+}
+.faction.innocenti h3 { color: var(--bone); }
+.faction.traditori h3 { color: var(--blood-bright); }
+.faction .symbol {
+  font-family: var(--gothic); font-size: 4rem; line-height: 1; margin-bottom: 1rem;
+  text-shadow: 0 0 24px currentColor;
+}
+.faction.innocenti .symbol { color: var(--gold-bright); display: flex; justify-content: center; }
+.faction.innocenti .sun-glyph { width: 4rem; height: 4rem; }
+.faction.traditori .symbol { color: var(--blood-bright); }
+.faction p {
+  font-family: var(--book); font-style: italic; color: var(--bone-dim); font-size: 1.05rem;
+}
+.players-table {
+  margin: 5rem auto 0; max-width: 700px; border: 1px solid var(--gold-dark); padding: 2rem;
+  background: linear-gradient(180deg, #0c0815, #07050f);
+  box-shadow: 0 8px 30px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+}
+.players-table h5 {
+  font-family: var(--display); font-size: 1rem; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--gold); text-align: center; margin-bottom: 1.6rem;
+}
+.players-table table { width: 100%; border-collapse: collapse; }
+.players-table th, .players-table td {
+  padding: .7rem; text-align: center; border-bottom: 1px dashed rgba(201,165,88,.15);
+  font-family: var(--book);
+}
+.players-table th {
+  font-family: var(--display-2); font-size: .68rem; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--gold); padding-bottom: 1rem;
+}
+.players-table td:first-child { color: var(--bone); font-weight: 600; }
+.players-table td:nth-child(2) { color: var(--bone-dim); }
+.players-table td:last-child { color: var(--blood-bright); font-style: italic; }
+.players-table tr:last-child td { border-bottom: none; }
+
+/* ---------------- FORZE IN GIOCO ---------------- */
+.forze-section {
+  background: transparent;
+}
+.forze-grid {
+  margin-top: 5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.6rem;
+}
+.forza {
+  position: relative; padding: 2.4rem 1.8rem 2rem; min-height: 360px;
+  border-top: 2px solid var(--gold); background: linear-gradient(180deg, #0d0918 0%, #07050f 100%);
+  box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+  display: flex; flex-direction: column;
+}
+.forza .num {
+  font-family: var(--display); font-size: 4rem; font-weight: 900; line-height: 1; color: var(--gold-dark);
+  margin-bottom: .8rem; opacity: .5;
+}
+.forza h3 {
+  font-family: var(--display); font-weight: 700; font-size: 1.4rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--bone); margin-bottom: 1rem;
+}
+.forza p {
+  font-family: var(--book); font-size: .98rem; line-height: 1.65; color: var(--bone-dim); flex: 1;
+}
+.forza ul {
+  margin-top: 1.4rem; list-style: none; padding-left: 0; font-family: var(--book); font-size: .92rem;
+}
+.forza ul li { padding: .35rem 0; color: var(--bone); border-bottom: 1px dashed rgba(201,165,88,.1); }
+.forza ul li:last-child { border-bottom: none; }
+.forza ul li .tag {
+  display: inline-block; font-family: var(--display-2); font-size: .6rem; letter-spacing: .2em;
+  text-transform: uppercase; padding: .15rem .5rem; margin-left: .5rem; border-radius: 1px;
+}
+.tag.luce { background: rgba(201,165,88,.15); color: var(--gold-bright); }
+.tag.ombra { background: rgba(110,42,160,.2); color: #c89ae0; }
+.tag.misto { background: rgba(184,184,192,.12); color: var(--silver); }
+
+/* ---------------- PEGNI OSCURI ---------------- */
+.pegni-section {
+  background: transparent;
+}
+.pegni-ladder {
+  margin-top: 5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem;
+}
+.pegno {
+  position: relative; padding: 2.4rem 2rem; text-align: center;
+  background: radial-gradient(ellipse at top, rgba(42,16,80,.25), transparent 70%), linear-gradient(180deg, #0d0918, #07050f);
+  border: 1px solid rgba(110,42,160,.4);
+  box-shadow: 0 8px 30px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+  transition: transform .4s, border-color .4s, box-shadow .4s;
+}
+.pegno:hover { transform: translateY(-4px); border-color: var(--blood-bright); }
+.pegno .coin-stack { display: flex; justify-content: center; gap: .4rem; margin-bottom: 1.5rem; }
+.pegno .coin {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #2a1050, #100828);
+  border: 1px solid rgba(110,42,160,.6);
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,.6), 0 4px 8px rgba(0,0,0,.5);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--gothic); color: var(--blood-bright); font-size: 1.4rem;
+}
+.pegno h4 {
+  font-family: var(--display); font-size: 1.2rem; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--blood-bright); margin-bottom: .8rem;
+}
+.pegno p {
+  font-family: var(--book); font-size: .95rem; color: var(--bone-dim); font-style: italic; line-height: 1.55;
+}
+
+/* ---------------- COMPONENTI ---------------- */
+.componenti-section {
+  background: transparent;
+}
+.componenti-grid {
+  margin-top: 5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;
+}
+.componente {
+  position: relative; padding: 2rem 1rem; text-align: center;
+  background: linear-gradient(180deg, #0c0815, #07050f);
+  box-shadow: 0 8px 30px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+  border: 1px solid rgba(201,165,88,.1); transition: border-color .4s, transform .4s, box-shadow .4s;
+}
+.componente:hover { border-color: var(--gold); transform: translateY(-4px); }
+.componente .count {
+  font-family: var(--display); font-weight: 900; font-size: 3rem; color: var(--gold-bright);
+  line-height: 1; text-shadow: 0 0 24px rgba(201,165,88,.3);
+}
+.componente .label {
+  margin-top: .8rem; font-family: var(--display-2); font-size: .72rem; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--bone-dim);
+}
+
+/* ---------------- CTA ---------------- */
+.cta-section {
+  background:
+    radial-gradient(ellipse at center, rgba(42,16,80,.22) 0%, transparent 60%);
+  text-align: center; padding: 8rem 1.5rem;
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'><g fill='none' stroke='%23c9a558' stroke-opacity='0.05' stroke-width='.6'><circle cx='400' cy='400' r='380'/><circle cx='400' cy='400' r='320'/><circle cx='400' cy='400' r='260'/><circle cx='400' cy='400' r='200'/><path d='M400 20 L420 380 L400 400 L380 380 Z'/><path d='M400 780 L420 420 L400 400 L380 420 Z'/><path d='M20 400 L380 420 L400 400 L380 380 Z'/><path d='M780 400 L420 420 L400 400 L420 380 Z'/></g></svg>");
+  background-position: center; background-size: 90vmin 90vmin; background-repeat: no-repeat;
+  pointer-events: none;
+}
+.cta-section .container { position: relative; z-index: 2; }
+.cta-section h2 {
+  font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 5rem);
+  color: var(--bone); line-height: 1.05; margin-bottom: 1.6rem;
+}
+.cta-section h2 .accent { color: var(--gold); font-style: italic; }
+.cta-section p {
+  font-family: var(--book); font-style: italic; color: var(--bone-dim); font-size: 1.2rem;
+  max-width: 640px; margin: 0 auto 3rem;
+}
+.cta-buttons { display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary, .btn-secondary {
+  font-family: var(--display); font-weight: 700; font-size: .85rem; letter-spacing: .35em;
+  text-transform: uppercase; padding: 1.3rem 2.6rem; text-decoration: none; transition: all .4s ease;
+  display: inline-flex; align-items: center; gap: 1rem; cursor: pointer;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%); color: var(--bg-0);
+  border: 1px solid var(--gold-bright);
+  box-shadow: 0 12px 30px -8px rgba(201,165,88,.5), inset 0 1px 0 rgba(255,255,255,.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px); box-shadow: 0 18px 40px -8px rgba(201,165,88,.7), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.btn-secondary {
+  background: transparent; color: var(--bone); border: 1px solid rgba(216,205,182,.4);
+}
+.btn-secondary:hover { color: var(--gold-bright); border-color: var(--gold); }
+.btn-primary .arrow, .btn-secondary .arrow { font-family: var(--book); font-style: normal; }
+
+.cta-pillars {
+  margin-top: 6rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;
+}
+.pillar {
+  text-align: center; padding: 1.6rem 1rem; border-top: 1px solid var(--gold-dark);
+}
+.pillar .glyph { font-family: var(--gothic); font-size: 2rem; color: var(--gold); }
+.pillar h5 {
+  font-family: var(--display); font-size: .8rem; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--bone); margin-top: .8rem;
+}
+.pillar p { font-family: var(--book); font-style: italic; font-size: .9rem; color: var(--bone-dim); margin-top: .4rem; }
+
+/* ---------------- FOOTER ---------------- */
+footer {
+  background: transparent;
+  text-align: center;
+  padding: 1.5rem 1.5rem 2.5rem;
+  border-top: 1px solid rgba(201,165,88,.1);
+  width: 100%; display: block; margin-bottom: 0;
+}
+footer .tagline {
+  font-family: var(--book); font-style: italic; color: var(--bone-deep); font-size: .9rem;
+  margin-bottom: .4rem;
+}
+footer .meta {
+  font-family: var(--display-2); font-size: .58rem; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--bone-deep); opacity: .45;
+}
+
+/* ---------------- ANIM CLASSES ---------------- */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-stagger > * { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.reveal-stagger.in > * { opacity: 1; transform: none; }
+.reveal-stagger.in > *:nth-child(1) { transition-delay: .05s; }
+.reveal-stagger.in > *:nth-child(2) { transition-delay: .15s; }
+.reveal-stagger.in > *:nth-child(3) { transition-delay: .25s; }
+.reveal-stagger.in > *:nth-child(4) { transition-delay: .35s; }
+.reveal-stagger.in > *:nth-child(5) { transition-delay: .45s; }
+.reveal-stagger.in > *:nth-child(6) { transition-delay: .55s; }
+.reveal-stagger.in > *:nth-child(7) { transition-delay: .65s; }
+.reveal-stagger.in > *:nth-child(8) { transition-delay: .75s; }
+.reveal-stagger.in > *:nth-child(9) { transition-delay: .85s; }
+.reveal-stagger.in > *:nth-child(10) { transition-delay: .95s; }
+
+/* ---------------- RESPONSIVE TWEAKS ---------------- */
+@media (max-width: 1024px) {
+  .domini-grid { grid-template-columns: repeat(3, 1fr); }
+  .personaggi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .bilancia-info { flex-direction: column; }
+  .identita-grid { grid-template-columns: 1fr; }
+  .domini-grid { grid-template-columns: repeat(2, 1fr); }
+  .personaggi-grid { grid-template-columns: repeat(2, 1fr); }
+  .bilancia .pan { width: 160px; }
+  .bilancia .pan .dish { width: 160px; }
+  section { padding: 4rem 1.2rem; }
+  .nav-cta { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="spark"></div>
+  <div class="loader-word">DARKLORE</div>
+</div>
+
+<!-- ============ OVERLAYS ============ -->
+<div class="grain"></div>
+<div class="vignette"></div>
+<div class="bg-parallax" id="bgParallax">
+  <div class="bg-scroll" data-bg-scroll>
+    <div class="bg-layer l1" data-bg-layer="0.15"></div>
+    <div class="bg-layer l2" data-bg-layer="0.30"></div>
+    <div class="bg-layer l3" data-bg-layer="0.55"></div>
+  </div>
+</div>
+<div class="bg-bookshelf"></div>
+<canvas id="particles"></canvas>
+
+<!-- ============ CURSOR ============ -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-brand">DL</a>
+  <div class="nav-links">
+    <a href="#manifesto">Manifesto</a>
+    <a href="#bilancia">Bilancia</a>
+    <a href="#domini">Ambientazioni</a>
+    <a href="#personaggi">Personaggi</a>
+    <a href="#identita">Identità</a>
+  </div>
+  <a href="#sostieni" class="nav-cta">Sostieni</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="layers">
+    <div class="layer ornament" data-depth="0.05"></div>
+    <div class="layer rays" data-depth="0.08"></div>
+    <div class="layer moon" data-depth="0.15"></div>
+    <div class="layer fog-1" data-depth="0.3"></div>
+    <div class="layer fog-2" data-depth="0.45"></div>
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow"><span class="line"></span><span>Un Gioco di Narrazione Horror</span><span class="line"></span></div>
+    <h1 id="heroTitle">DARKLORE</h1>
+    <p class="tagline">Un racconto corale plasmato turno dopo turno, dove ogni scelta inclina <br>
+                l'ago della bilancia verso l'unico esito possibile.</p>
+    <div class="sub-tag">Cooperativo <span>✦</span> Competitivo </div>
+  </div>
+  <div class="scroll-cue">
+    <span>prosegui</span>
+    <div class="stem"></div>
+  </div>
+</section>
+
+<!-- ============ MANIFESTO ============ -->
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <p class="quote" id="manifestoQuote">
+      <span class="word">Ogni</span> <span class="word">storia</span> <span class="word">ha</span> <span class="word">sempre</span> 
+      <br>
+      <span class="word">un</span> <span class="word gold">inizio</span> <span class="word">e una</span> <span class="word gold">fine</span>
+    </p>
+
+    <div class="reveal">
+      <p class="section-lede" style="text-align: center">Al centro del tavolo, l'ago della bilancia è l'unico arbitro della storia. <br> Un verdetto fisico che farà pendere la sorte verso la gloria o verso il baratro.</p>
+    </div>
+
+    <div class="bilancia-stage reveal">
+      <div class="bilancia" id="bilancia">
+        <div class="post"></div>
+        <div class="beam-wrap" id="beamWrap">
+          <div class="beam"></div>
+          <div class="pan left" id="panLeft">
+            <div class="chains"></div>
+            <div class="dish"><span class="symbol"><svg class="sun-glyph" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="10" fill="currentColor" stroke="none"/><line x1="30" y1="4" x2="30" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="45" x2="30" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="15" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="45" y1="30" x2="56" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="11" y1="11" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="41" y1="41" x2="49" y2="49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="49" y1="11" x2="41" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="49" x2="19" y2="41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></div>
+            <div class="label">Finale Positivo</div>
+          </div>
+          <div class="pan right" id="panRight">
+            <div class="chains"></div>
+            <div class="dish"><span class="symbol">☾</span></div>
+            <div class="label">Finale Negativo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- ============ DOMINI ============ -->
+<section class="domini-section" id="domini">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow">Ambientazioni</div>
+      <h2 class="section-title">Il <span class="accent">Dominio</span> dell'<span class="accent">Entità</span></h2>
+      <p class="section-lede" style="margin-left:auto;margin-right:auto;">Di tutti i sentieri, solo uno diventerà il palcoscenico di questo tetro racconto.</p>
+    </div>
+
+    <div class="domini-grid reveal-stagger" id="dominiGrid">
+      <!-- populated by JS -->
+    </div>
+    <div class="divider"><span class="line"></span><span class="glyph">✠</span><span class="line"></span></div>
+  </div>
+</section>
+
+<!-- ============ PERSONAGGI ============ -->
+<section class="personaggi-section" id="personaggi">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow">Personaggi</div>
+      <h2 class="section-title">I <span class="accent">Protagonisti</span> del <span class="accent">Racconto</span></h2>
+      <p class="section-lede" style="margin-left:auto;margin-right:auto;">Le figure che faranno luce sui misteri, ognuna portatrice di un dono raro.</p>
+    </div>
+    <div class="personaggi-grid reveal-stagger" id="personaggiGrid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ IDENTITÀ ============ -->
+<section class="identita-section" id="identita">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow">Identità</div>
+      <h2 class="section-title"><span class="accent">Innocenti</span> o <span class="blood">Traditori</span></h2>
+      <p class="section-lede" style="margin-left:auto;margin-right:auto;">Il Fato decide chi sei, ma tu deciderai come esserlo.</p>
+    </div>
+
+    <div class="identita-grid">
+      <div class="faction innocenti reveal">
+        <div class="symbol"><svg class="sun-glyph" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="10" fill="currentColor" stroke="none"/><line x1="30" y1="4" x2="30" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="45" x2="30" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="15" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="45" y1="30" x2="56" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="11" y1="11" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="41" y1="41" x2="49" y2="49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="49" y1="11" x2="41" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="49" x2="19" y2="41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>Innocenti</h3>
+        <p>Usano le loro abilità per scoprire la verità <br> e impedire ai Traditori di sabotarla.</p>
+      </div>
+      <div class="faction traditori reveal">
+        <div class="symbol">☾</div>
+        <h3>Traditori</h3>
+        <p>Si nascondono dietro eventi plausibili <br>  per ostacolare chi cerca una soluzione.</p>
+      </div>
+    </div>
+
+</section>
+
+
+<!-- ============ PEGNI OSCURI ============ -->
+<section class="pegni-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow">Dedizione e Sacrificio</div>
+      <h2 class="section-title">i Pegni Oscuri </h2>
+      <p class="section-lede" style="margin-left:auto;margin-right:auto;">A volte è necessario camminare nell'Oscurità per trovare la Luce. <br> Sacrifica i tuoi Pegni per ottenere dei privilegi. </p>
+    </div>
+
+    <div class="pegni-ladder reveal-stagger">
+      <div class="pegno">
+        <div class="coin-stack"><div class="coin">☾</div></div>
+        <h4>1 Pegno</h4>
+        <p>Un piccolo sacrificio, per un piccolo aiuto.</p>
+      </div>
+      <div class="pegno">
+        <div class="coin-stack"><div class="coin">☾</div><div class="coin">☾</div></div>
+        <h4>2 Pegni</h4>
+        <p>Un discreto sacrificio, per un discreto aiuto.</p>
+      </div>
+      <div class="pegno">
+        <div class="coin-stack"><div class="coin">☾</div><div class="coin">☾</div><div class="coin">☾</div></div>
+        <h4>3 Pegni</h4>
+        <p>Un enorme sacrificio, per un enorme aiuto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPONENTI ============ -->
+<section class="componenti-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow">Gli strumenti del Racconto</div>
+      <h2 class="section-title">Componenti</h2>
+    </div>
+    <div class="componenti-grid reveal-stagger" id="componentiGrid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section" id="sostieni">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" style="justify-content:center;display:flex;">Il Progetto cerca i suoi Narratori</div>
+      <h2>Porta <span class="accent">Darklore</span><br>al tuo tavolo.</h2>
+      <p>
+        Darklore è un progetto indipendente. Ogni sostenitore è un Narratore in più che apre una porta verso un racconto sempre nuovo.
+      </p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-primary">Sostieni il Progetto</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="tagline">«Le storie mentono. Le scelte no.»</div>
+  <div class="meta">Darklore — Un Gioco di Narrazione Horror</div>
+</footer>
+
+<!-- ============ DATA + JS ============ -->
+<script>
+/* ========== DATA ========== */
+const DOMINI = [
+  { num: 'I',    name: 'Magione',     glyph: '⌂', img: 'https://i.pinimg.com/736x/52/0c/3d/520c3d3a52f7d9e60e1d8b8c4f8e5a8e.jpg', desc: 'Le porte cigolano sui cardini come fossero vive. Qualcuno ha già acceso le candele.' },
+  { num: 'II',   name: 'Cimitero',    glyph: '✟', img: 'https://i.pinimg.com/736x/8c/4a/9e/8c4a9e3a2d5c1f7b9e0a4c8d6e2f1a3b.jpg', desc: 'La nebbia conosce i nomi sulle lapidi. Tu non vorresti conoscerli.' },
+  { num: 'III',  name: 'Manicomio',   glyph: '☩', img: 'https://i.pinimg.com/736x/3a/9c/2e/3a9c2e8d4f7b1c5a9e0d6c8f2b4a1e7d.jpg', desc: 'Le cinghie sono state aperte da poco. Le pareti ricordano ogni urlo.' },
+  { num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://i.pinimg.com/736x/7f/2b/8c/7f2b8c4d1a9e6f3b5c8d2e7a4f1b9c6d.jpg', desc: 'Le luci si accendono a intermittenza. La giostra gira, ma non c\'è nessuno a girarla.' },
+  { num: 'V',    name: 'Orfanotrofio',glyph: '❦', img: 'https://i.pinimg.com/736x/4d/8e/3a/4d8e3a7b2c9f1e6d5a8c4b7e2f9d1a3c.jpg', desc: 'I letti sono troppi. I bambini, troppo pochi. Qualcuno canta in fondo al corridoio.' },
+  { num: 'VI',   name: 'Villaggio',   glyph: '⛧', img: 'https://i.pinimg.com/736x/9e/5c/1d/9e5c1d8a4f7b3c2e6d9a8c5b4f1e7d2a.jpg', desc: 'Le imposte sono chiuse. Sui muri, lo stesso simbolo, ripetuto. Nessuno apre.' },
+  { num: 'VII',  name: 'Castello',    glyph: '♛', img: 'https://i.pinimg.com/736x/2c/7d/5e/2c7d5e9a3b8f1c6d4e7a9c2b5f8d3e1a.jpg', desc: 'Le sale eco di passi che non sono i tuoi. La corona attende sul trono vuoto.' },
+  { num: 'VIII', name: 'Crociera',    glyph: '♆', img: 'https://i.pinimg.com/736x/6b/4e/8d/6b4e8d2a9c5f1e7d3a8c6b4f9e2d5a1c.jpg', desc: 'L\'oceano è nero e silenzioso. Il ponte è troppo lungo. Manca qualcuno all\'appello.' },
+  { num: 'IX',   name: 'Albergo',     glyph: '✦', img: 'https://i.pinimg.com/736x/1a/8c/4f/1a8c4f7e2d9b5c3a6e8d4b7f2c1a9e5d.jpg', desc: 'La stanza 237 è prenotata a tuo nome. Tu non l\'hai prenotata.' },
+  { num: 'X',    name: 'Museo',       glyph: '☥', img: 'https://i.pinimg.com/736x/5d/2a/9e/5d2a9e7c4b8f1a6d3e9c5b8f2a4d7e1c.jpg', desc: 'Le statue sono state spostate stanotte. Le fototessere sui pannelli ti riconoscono.' }
+];
+
+const PERSONAGGI = [
+  { sigil: '✦', role: 'Veggente',    name: 'La <em>Medium</em>',        img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Medium_spkprx.png',        ability: 'Sussurra una domanda a un altro Personaggio, attendendo una risposta sincera. Solo l\'Identità resta velata: nessuno spirito può rivelarla.' },
+  { sigil: '✧', role: 'Indagatore',  name: 'L\'<em>Investigatore</em>', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Investigatore_fh1hkg.png', ability: 'Una volta per round scruta le due carte in cima al Reliquiario e ne trattiene una. Sa che la verità affiora soltanto a chi ha il coraggio di guardarla per primo.' },
+  { sigil: '⚜', role: 'Estraneo',    name: 'Il <em>Forestiero</em>',    img: null,                                                                                       ability: 'Anche dopo aver narrato in Puro Luce, può prendere in segreto un Pegno Oscuro. Nessuno è mai davvero ciò che dice di essere.' },
+  { sigil: '❦', role: 'Innocente',   name: 'Il <em>Bambino</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Bambino_qvhkh7.png',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
+  { sigil: '✠', role: 'Officiante',  name: 'Il <em>Sacerdote</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Sacerdote_megyge.png',      ability: 'Comincia la partita stringendo la Protezione fra le mani. Quando la invoca, non la consuma: la fede vera non si scarta mai.' },
+  { sigil: '☙', role: 'Cronista',    name: 'La <em>Giornalista</em>',   img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Giornalista_tcv69j.png',    ability: 'Una volta per round osserva le due carte in cima al mazzo Indizi e ne sceglie una. Le notizie, come le verità, vengono sempre selezionate prima di essere stampate.' },
+  { sigil: '☾', role: 'Errante',     name: 'Il <em>Vagabondo</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Vagabondo_jkp1jc.png',      ability: 'In fase di pesca, può recuperare un Indizio dalla pila degli scarti. Ciò che gli altri rifiutano, lui lo conserva come un tesoro.' },
+  { sigil: '⚔', role: 'Combattente', name: 'Il <em>Soldato</em>',       img: null,                                                                                       ability: 'Durante il turno altrui può entrare in scena o congedarsi narrando un breve momento. Arriva quando serve, e mai per caso.' }
+];
+
+const COMPONENTI = [
+  { count: '10', label: 'Carte Dominio' },
+  { count: '8',  label: 'Carte Personaggio' },
+  { count: '8',  label: 'Carte Identità' },
+  { count: '40', label: 'Carte Indizio' },
+  { count: '20', label: 'Carte Reliquia' },
+  { count: '13', label: 'Missioni Personali' },
+  { count: '10', label: 'Carte Maleficio' },
+  { count: '10', label: 'Carte Presagio' },
+  { count: '60', label: 'Segnalini Sole / Luna' }
+];
+
+/* ========== POPULATE GRIDS ========== */
+const dominiGrid = document.getElementById('dominiGrid');
+DOMINI.forEach(d => {
+  const card = document.createElement('div');
+  card.className = 'dominio-card';
+  const imgLayer = d.img
+    ? `<div class="dominio-img" style="background-image:url('${d.img}');"></div>`
+    : '';
+  card.innerHTML = `
+    <div class="dominio-inner">
+      <div class="dominio-face dominio-front">
+        ${imgLayer}
+        <div class="dominio-front-content">
+          <div class="num">Dominio ${d.num}</div>
+          <div class="glyph">${d.glyph}</div>
+          <div class="name">${d.name}</div>
+        </div>
+      </div>
+      <div class="dominio-face dominio-back">
+        <div class="dominio-back-content">
+          <div class="name-small">${d.name}</div>
+          <div class="seal">✠</div>
+          <p>${d.desc}</p>
+        </div>
+      </div>
+    </div>`;
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+  dominiGrid.appendChild(card);
+});
+
+const personaggiGrid = document.getElementById('personaggiGrid');
+PERSONAGGI.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'persona';
+  const portrait = p.img
+    ? `<img src="${p.img}" alt="${p.name.replace(/<[^>]+>/g,'')}" loading="lazy" />`
+    : `<div class="portrait-fallback"><span class="glyph">${p.sigil}</span></div>`;
+  card.innerHTML = `
+    <div class="portrait">
+      ${portrait}
+    </div>
+    <div class="body">
+      <div class="role">${p.role}</div>
+      <h3>${p.name}</h3>
+      <p class="ability">${p.ability}</p>
+    </div>`;
+  personaggiGrid.appendChild(card);
+});
+
+const componentiGrid = document.getElementById('componentiGrid');
+COMPONENTI.forEach(c => {
+  const el = document.createElement('div');
+  el.className = 'componente';
+  el.innerHTML = `<div class="count" data-target="${c.count}">0</div><div class="label">${c.label}</div>`;
+  componentiGrid.appendChild(el);
+});
+
+/* ========== LOADER ========== */
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  setTimeout(() => {
+    loader.style.transition = 'opacity 1.4s ease';
+    loader.style.opacity = '0';
+    setTimeout(() => { loader.style.display = 'none'; initHero(); }, 1400);
+  }, 900);
+});
+
+/* ========== HERO ENTRANCE ========== */
+function initHero() {
+  const title = document.getElementById('heroTitle');
+  const text = title.textContent;
+  title.innerHTML = '';
+  text.split('').forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.className = 'char';
+    s.textContent = ch;
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(60px) rotate(8deg)';
+    s.style.filter = 'blur(20px)';
+    s.style.transition = `opacity 1.2s ease ${i*0.05}s, transform 1.4s cubic-bezier(.2,.7,.2,1) ${i*0.05}s, filter 1.6s ease ${i*0.05}s`;
+    title.appendChild(s);
+  });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      title.querySelectorAll('.char').forEach(c => {
+        c.style.opacity = '1';
+        c.style.transform = 'translateY(0) rotate(0)';
+        c.style.filter = 'blur(0)';
+      });
+    });
+  });
+
+  const eyebrow = document.querySelector('.hero .eyebrow');
+  const tagline = document.querySelector('.hero .tagline');
+  const subtag = document.querySelector('.hero .sub-tag');
+  [eyebrow, tagline, subtag].forEach((el, i) => {
+    if (!el) return;
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = `opacity 1.2s ease ${1.2 + i*0.25}s, transform 1.2s ease ${1.2 + i*0.25}s`;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.opacity = '1'; el.style.transform = 'none';
+    }));
+  });
+}
+
+/* ========== CUSTOM CURSOR ========== */
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+let ringX = mouseX, ringY = mouseY;
+window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+function tickCursor() {
+  ringX += (mouseX - ringX) * 0.18;
+  ringY += (mouseY - ringY) * 0.18;
+  dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%,-50%)`;
+  ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
+  requestAnimationFrame(tickCursor);
+}
+tickCursor();
+document.querySelectorAll('a, .dominio-card, .btn-primary, .btn-secondary, .persona, .pegno').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+/* ========== NAV SCROLLED ========== */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+}, { passive: true });
+
+/* ========== LENIS SMOOTH SCROLL ========== */
+let lenis;
+if (window.Lenis) {
+  lenis = new Lenis({ duration: 1.4, smoothWheel: true, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id === '#') return;
+      const target = document.querySelector(id);
+      if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -40, duration: 1.6 }); }
+    });
+  });
+}
+
+/* ========== HERO PARALLAX ========== */
+const layers = document.querySelectorAll('.hero .layer');
+const bgLayers = document.querySelectorAll('[data-bg-layer]');
+const bookshelfEl = document.querySelector('.bg-bookshelf');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  layers.forEach(l => {
+    const d = parseFloat(l.dataset.depth || 0.1);
+    l.style.transform = `translate3d(0, ${y * d}px, 0)`;
+  });
+  bgLayers.forEach(l => {
+    const d = parseFloat(l.dataset.bgLayer || 0.2);
+    l.style.transform = `translate3d(0, ${-y * d}px, 0)`;
+  });
+  if (bookshelfEl) bookshelfEl.style.backgroundPositionY = `${y * 0.38}px`;
+}, { passive: true });
+window.addEventListener('mousemove', e => {
+  const cx = (e.clientX / window.innerWidth - 0.5) * 2;
+  const cy = (e.clientY / window.innerHeight - 0.5) * 2;
+  layers.forEach(l => {
+    const d = parseFloat(l.dataset.depth || 0.1) * 30;
+    const cur = l.style.transform || '';
+    const yMatch = cur.match(/translate3d\(0,\s*([\-0-9.]+)px/);
+    const baseY = yMatch ? parseFloat(yMatch[1]) : 0;
+    l.style.transform = `translate3d(${cx*d}px, ${baseY}px, 0)`;
+  });
+});
+
+/* ========== REVEAL OBSERVER ========== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      en.target.classList.add('in');
+      io.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+/* ========== MANIFESTO WORD-BY-WORD LIGHT ========== */
+const manifestoQuote = document.getElementById('manifestoQuote');
+const words = manifestoQuote.querySelectorAll('.word');
+const manifestoIO = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      words.forEach((w, i) => {
+        setTimeout(() => w.classList.add('lit'), i * 120);
+      });
+      manifestoIO.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.4 });
+manifestoIO.observe(manifestoQuote);
+
+/* ========== BILANCIA — DYNAMIC MOUSE FOLLOW ========== */
+(function bilanciaMouse() {
+  const beamWrap = document.getElementById('beamWrap');
+  const panLeft = document.getElementById('panLeft');
+  const panRight = document.getElementById('panRight');
+  if (!beamWrap || !panLeft || !panRight) return;
+
+  const MAX_ANGLE = 14;       // degrees — how much the beam can tip
+  const MAX_PAN_Y = 36;       // px — how far the lower pan drops
+  let targetAngle = 0;
+  let currentAngle = 0;
+  let resetTimer;
+
+  // Track horizontal mouse position relative to viewport center.
+  // Mouse on the right → angle positive → right pan tips down (Ombra).
+  // Mouse on the left  → angle negative → left pan tips down (Luce).
+  window.addEventListener('mousemove', (e) => {
+    const cx = window.innerWidth / 2;
+    const dx = (e.clientX - cx) / cx; // -1 .. 1
+    // Soft easing curve so it's not linear — mid-range is gentler, edges bite harder.
+    const eased = Math.sign(dx) * Math.pow(Math.abs(dx), 1.3);
+    targetAngle = eased * MAX_ANGLE;
+    clearTimeout(resetTimer);
+    // If the mouse stops moving for a moment, drift gently back to balance.
+    resetTimer = setTimeout(() => { targetAngle *= 0.2; }, 1400);
+  }, { passive: true });
+
+  // Touch fallback
+  window.addEventListener('touchmove', (e) => {
+    if (!e.touches[0]) return;
+    const cx = window.innerWidth / 2;
+    const dx = (e.touches[0].clientX - cx) / cx;
+    targetAngle = dx * MAX_ANGLE;
+  }, { passive: true });
+
+  function tick() {
+    // Smooth lerp toward target
+    currentAngle += (targetAngle - currentAngle) * 0.08;
+    const norm = currentAngle / MAX_ANGLE;     // -1 .. 1
+    const yOffset = norm * MAX_PAN_Y;
+
+    // Beam tips
+    beamWrap.style.transform = `rotate(${currentAngle.toFixed(3)}deg)`;
+    // Pans counter-rotate so they always hang vertical
+    panLeft.style.transform  = `rotate(${(-currentAngle).toFixed(3)}deg) translateY(${(-yOffset).toFixed(2)}px)`;
+    panRight.style.transform = `rotate(${(-currentAngle).toFixed(3)}deg) translateY(${(yOffset).toFixed(2)}px)`;
+
+    // Subtle glow shift on the pans depending on which side leads
+    const leftGlow = Math.max(0, -norm) * 0.6;
+    const rightGlow = Math.max(0, norm) * 0.6;
+    const dishL = panLeft.querySelector('.dish');
+    const dishR = panRight.querySelector('.dish');
+    if (dishL) dishL.style.boxShadow = `0 6px 24px rgba(0,0,0,.5), inset 0 -4px 8px rgba(0,0,0,.3), 0 0 ${30*leftGlow}px rgba(233,201,122,${leftGlow})`;
+    if (dishR) dishR.style.boxShadow = `0 6px 24px rgba(0,0,0,.5), inset 0 -4px 8px rgba(0,0,0,.3), 0 0 ${30*rightGlow}px rgba(138,36,36,${rightGlow})`;
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+if (window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Domini cards entrance
+  ScrollTrigger.batch('.dominio-card', {
+    onEnter: batch => gsap.fromTo(batch,
+      { opacity: 0, y: 60, rotationY: -25, transformPerspective: 1000 },
+      { opacity: 1, y: 0, rotationY: 0, duration: 1.1, stagger: 0.07, ease: 'power3.out', overwrite: true }),
+    start: 'top 85%'
+  });
+
+  // Persona cards entrance
+  ScrollTrigger.batch('.persona', {
+    onEnter: batch => gsap.fromTo(batch,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: 'power3.out', overwrite: true }),
+    start: 'top 88%'
+  });
+
+  // Componenti count-up
+  ScrollTrigger.batch('.componente .count', {
+    onEnter: batch => batch.forEach(el => {
+      const target = parseInt(el.dataset.target, 10);
+      gsap.fromTo(el, { innerText: 0 }, {
+        innerText: target, duration: 1.6, ease: 'power2.out',
+        snap: { innerText: 1 },
+        onUpdate() { el.innerText = Math.floor(el.innerText); }
+      });
+    }),
+    start: 'top 90%'
+  });
+}
+
+/* ========== CANVAS PARTICLES (EMBERS + DUST) ========== */
+(function particles() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    w = canvas.width = window.innerWidth * dpr;
+    h = canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+  resize(); window.addEventListener('resize', resize);
+
+  const N_EMBER = 14, N_DUST = 35;
+  const embers = Array.from({length: N_EMBER}, () => spawnEmber(true));
+  const dusts = Array.from({length: N_DUST}, () => spawnDust(true));
+
+  function spawnEmber(initial) {
+    return {
+      x: Math.random() * w,
+      y: initial ? Math.random() * h : h + 20,
+      r: (1 + Math.random() * 2.5) * dpr,
+      vy: -(0.10 + Math.random() * 0.30) * dpr,
+      vx: (Math.random() - 0.5) * 0.15 * dpr,
+      a: 0.15 + Math.random() * 0.2,
+      flick: Math.random() * Math.PI * 2,
+      hue: 30 + Math.random() * 20
+    };
+  }
+  function spawnDust(initial) {
+    return {
+      x: Math.random() * w,
+      y: initial ? Math.random() * h : -10,
+      r: (.3 + Math.random() * 1.2) * dpr,
+      vy: (0.025 + Math.random() * 0.13) * dpr,
+      vx: (Math.random() - 0.5) * 0.07 * dpr,
+      a: 0.02 + Math.random() * 0.07
+    };
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+
+    // dust first
+    for (const p of dusts) {
+      p.x += p.vx; p.y += p.vy;
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(216,205,182,${p.a})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+      if (p.y > h + 20) Object.assign(p, spawnDust(false));
+    }
+
+    // embers
+    for (const p of embers) {
+      p.x += p.vx; p.y += p.vy;
+      p.flick += 0.1;
+      const flicker = 0.6 + Math.sin(p.flick) * 0.4;
+      const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+      grad.addColorStop(0, `hsla(${p.hue}, 90%, 70%, ${0.5 * p.a * flicker})`);
+      grad.addColorStop(.4, `hsla(${p.hue}, 90%, 50%, ${0.2 * p.a * flicker})`);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI*2); ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${p.hue}, 100%, 80%, ${p.a * flicker})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+
+      if (p.y < -20) Object.assign(p, spawnEmber(false));
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ========== TITLE FLICKER (subtle) ========== */
+setInterval(() => {
+  const t = document.getElementById('heroTitle');
+  if (!t) return;
+  if (Math.random() < 0.15) {
+    t.style.textShadow = '0 0 1px rgba(216,205,182,.5), 0 0 24px rgba(201,165,88,.05), 0 4px 0 rgba(0,0,0,.6)';
+    setTimeout(() => {
+      t.style.textShadow = '0 0 1px rgba(216,205,182,.5), 0 0 24px rgba(201,165,88,.18), 0 4px 0 rgba(0,0,0,.6)';
+    }, 90);
+  }
+}, 1800);
+</script>
+</body>
+</html>
