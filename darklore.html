@@ -599,12 +599,12 @@ section { position: relative; padding: 5rem 1.5rem; }
 .persona:hover::before { opacity: 1; }
 .persona .role {
   font-family: var(--display-2); font-size: .62rem; letter-spacing: .5em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: .6rem;
+  color: var(--gold); margin-bottom: .6rem; text-align: center;
 }
 .persona h3 {
   font-family: var(--display); font-weight: 600;
   font-size: clamp(.9rem, 1.1vw, 1.2rem); letter-spacing: .03em;
-  color: var(--bone); margin-bottom: .4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: var(--bone); margin-bottom: .4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center;
 }
 .persona h3 em { font-style: italic; color: var(--gold-bright); font-weight: 700; }
 .persona .ability { display: none; }
@@ -1103,14 +1103,14 @@ const DOMINI = [
 ];
 
 const PERSONAGGI = [
-  { sigil: '✦', role: 'Veggente',    name: 'La <em>Medium</em>',        img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Medium_spkprx.png',        ability: 'Sussurra una domanda a un altro Personaggio, attendendo una risposta sincera. Solo l\'Identità resta velata: nessuno spirito può rivelarla.' },
-  { sigil: '✧', role: 'Indagatore',  name: 'L\'<em>Investigatore</em>', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Investigatore_fh1hkg.png', ability: 'Una volta per round scruta le due carte in cima al Reliquiario e ne trattiene una. Sa che la verità affiora soltanto a chi ha il coraggio di guardarla per primo.' },
-  { sigil: '⚜', role: 'Estraneo',    name: 'Il <em>Forestiero</em>',    img: null,                                                                                       ability: 'Anche dopo aver narrato in Puro Luce, può prendere in segreto un Pegno Oscuro. Nessuno è mai davvero ciò che dice di essere.' },
-  { sigil: '❦', role: 'Innocente',   name: 'Il <em>Bambino</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Bambino_qvhkh7.png',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
-  { sigil: '✠', role: 'Officiante',  name: 'Il <em>Sacerdote</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Sacerdote_megyge.png',      ability: 'Comincia la partita stringendo la Protezione fra le mani. Quando la invoca, non la consuma: la fede vera non si scarta mai.' },
-  { sigil: '☙', role: 'Cronista',    name: 'La <em>Giornalista</em>',   img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Giornalista_tcv69j.png',    ability: 'Una volta per round osserva le due carte in cima al mazzo Indizi e ne sceglie una. Le notizie, come le verità, vengono sempre selezionate prima di essere stampate.' },
-  { sigil: '☾', role: 'Errante',     name: 'Il <em>Vagabondo</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777323129/Vagabondo_jkp1jc.png',      ability: 'In fase di pesca, può recuperare un Indizio dalla pila degli scarti. Ciò che gli altri rifiutano, lui lo conserva come un tesoro.' },
-  { sigil: '⚔', role: 'Combattente', name: 'Il <em>Soldato</em>',       img: null,                                                                                       ability: 'Durante il turno altrui può entrare in scena o congedarsi narrando un breve momento. Arriva quando serve, e mai per caso.' }
+  { sigil: '✦', role: 'Veggenza',    name: 'La <em>Medium</em>',        img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Indovina_zsq73e.jpg',        ability: 'Sussurra una domanda a un altro Personaggio, attendendo una risposta sincera. Solo l\'Identità resta velata: nessuno spirito può rivelarla.' },
+  { sigil: '✧', role: 'Ispezione',  name: 'L\'<em>Investigatore</em>', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Investigatore_gxkiua.jpg', ability: 'Una volta per round scruta le due carte in cima al Reliquiario e ne trattiene una. Sa che la verità affiora soltanto a chi ha il coraggio di guardarla per primo.' },
+  { sigil: '⚜', role: 'Baratto',    name: 'Il <em>Forestiero</em>',    img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777405311/Forestiero_shpzsp.jpg',                                                                                       ability: 'Anche dopo aver narrato in Puro Luce, può prendere in segreto un Pegno Oscuro. Nessuno è mai davvero ciò che dice di essere.' },
+  { sigil: '❦', role: 'Complicità',   name: 'Il <em>Bambino</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Bambino_mcex1v.jpg',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
+  { sigil: '✠', role: 'Grazia',  name: 'Il <em>Sacerdote</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Sacerdote_swfvfc.jpg',      ability: 'Comincia la partita stringendo la Protezione fra le mani. Quando la invoca, non la consuma: la fede vera non si scarta mai.' },
+  { sigil: '☙', role: 'Fiuto',    name: 'La <em>Giornalista</em>',   img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Giornalista_x8dfdn.jpg',    ability: 'Una volta per round osserva le due carte in cima al mazzo Indizi e ne sceglie una. Le notizie, come le verità, vengono sempre selezionate prima di essere stampate.' },
+  { sigil: '☾', role: 'Recupero',     name: 'Il <em>Vagabondo</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404967/Vagabondo_syv1nn.jpg',      ability: 'In fase di pesca, può recuperare un Indizio dalla pila degli scarti. Ciò che gli altri rifiutano, lui lo conserva come un tesoro.' },
+  { sigil: '⚔', role: 'Affiancamento', name: 'Il <em>Soldato</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404535/Soldato_b6xyxl.jpg',                                                                                       ability: 'Durante il turno altrui può entrare in scena o congedarsi narrando un breve momento. Arriva quando serve, e mai per caso.' }
 ];
 
 const COMPONENTI = [
