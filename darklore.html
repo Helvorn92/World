@@ -479,7 +479,7 @@ section { position: relative; padding: 5rem 1.5rem; }
 }
 .dominio-front .dominio-img {
   position: absolute; inset: 0; background-size: cover; background-position: center;
-  filter: grayscale(.55) contrast(.92) brightness(.55) sepia(.18); opacity: .75;
+  opacity: .75;
   transition: opacity .8s, filter .8s, transform 1.6s ease;
 }
 .dominio-front::before {
@@ -505,7 +505,7 @@ section { position: relative; padding: 5rem 1.5rem; }
   font-family: var(--gothic);
 }
 .dominio-front .name {
-  font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: .2em;
+  font-family: var(--display); font-weight: 700; font-size: 1rem; letter-spacing: .2em;
   color: var(--bone); text-transform: uppercase; text-shadow: 0 2px 8px rgba(0,0,0,.9);
 }
 .dominio-back {
@@ -930,7 +930,7 @@ footer .meta {
     </p>
 
     <div class="reveal">
-      <p class="section-lede" style="text-align: center">Darklore è un gioco di narrazione horror per 4-8 giocatori. A turno, ciascuno prende la parola e costruisce la storia attraverso il proprio Protagonista. <br> Ogni Indizio usato, sposta la Bilancia verso la Luce o verso l'Ombra.</p>
+      <p class="section-lede" style="text-align: center">Darklore è un gioco di narrazione horror per 4-8 giocatori. A turno, ciascuno prende la parola e costruisce la storia <br> attraverso il proprio Protagonista. Ogni Indizio usato, sposta la Bilancia verso la Luce o verso l'Ombra.</p>
     </div>
 
     <div class="bilancia-stage reveal">
@@ -1090,16 +1090,16 @@ footer .meta {
 <script>
 /* ========== DATA ========== */
 const DOMINI = [
-  { num: 'I',    name: 'Magione',     glyph: '⌂', img: 'https://i.pinimg.com/736x/52/0c/3d/520c3d3a52f7d9e60e1d8b8c4f8e5a8e.jpg', desc: 'Le porte cigolano sui cardini come fossero vive. Qualcuno ha già acceso le candele.' },
-  { num: 'II',   name: 'Cimitero',    glyph: '✟', img: 'https://i.pinimg.com/736x/8c/4a/9e/8c4a9e3a2d5c1f7b9e0a4c8d6e2f1a3b.jpg', desc: 'La nebbia conosce i nomi sulle lapidi. Tu non vorresti conoscerli.' },
-  { num: 'III',  name: 'Manicomio',   glyph: '☩', img: 'https://i.pinimg.com/736x/3a/9c/2e/3a9c2e8d4f7b1c5a9e0d6c8f2b4a1e7d.jpg', desc: 'Le cinghie sono state aperte da poco. Le pareti ricordano ogni urlo.' },
-  { num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://i.pinimg.com/736x/7f/2b/8c/7f2b8c4d1a9e6f3b5c8d2e7a4f1b9c6d.jpg', desc: 'Le luci si accendono a intermittenza. La giostra gira, ma non c\'è nessuno a girarla.' },
-  { num: 'V',    name: 'Orfanotrofio',glyph: '❦', img: 'https://i.pinimg.com/736x/4d/8e/3a/4d8e3a7b2c9f1e6d5a8c4b7e2f9d1a3c.jpg', desc: 'I letti sono troppi. I bambini, troppo pochi. Qualcuno canta in fondo al corridoio.' },
-  { num: 'VI',   name: 'Villaggio',   glyph: '⛧', img: 'https://i.pinimg.com/736x/9e/5c/1d/9e5c1d8a4f7b3c2e6d9a8c5b4f1e7d2a.jpg', desc: 'Le imposte sono chiuse. Sui muri, lo stesso simbolo, ripetuto. Nessuno apre.' },
-  { num: 'VII',  name: 'Castello',    glyph: '♛', img: 'https://i.pinimg.com/736x/2c/7d/5e/2c7d5e9a3b8f1c6d4e7a9c2b5f8d3e1a.jpg', desc: 'Le sale eco di passi che non sono i tuoi. La corona attende sul trono vuoto.' },
-  { num: 'VIII', name: 'Nave',    glyph: '♆', img: 'https://i.pinimg.com/736x/6b/4e/8d/6b4e8d2a9c5f1e7d3a8c6b4f9e2d5a1c.jpg', desc: 'L\'oceano è nero e silenzioso. Il ponte è troppo lungo. Manca qualcuno all\'appello.' },
-  { num: 'IX',   name: 'Albergo',     glyph: '✦', img: 'https://i.pinimg.com/736x/1a/8c/4f/1a8c4f7e2d9b5c3a6e8d4b7f2c1a9e5d.jpg', desc: 'La stanza 237 è prenotata a tuo nome. Tu non l\'hai prenotata.' },
-  { num: 'X',    name: 'Museo',       glyph: '☥', img: 'https://i.pinimg.com/736x/5d/2a/9e/5d2a9e7c4b8f1a6d3e9c5b8f2a4d7e1c.jpg', desc: 'Le statue sono state spostate stanotte. Le fototessere sui pannelli ti riconoscono.' }
+  { num: 'I',    name: 'Magione',     glyph: '⌂', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Magione_sl7a7m.png', desc: 'Le porte cigolano sui cardini come fossero vive. Qualcuno ha già acceso le candele.' },
+{ num: 'II',   name: 'Cimitero',    glyph: '✟', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412340/Cimitero_ll3kiu.png', desc: 'La nebbia conosce i nomi sulle lapidi. Tu non vorresti conoscerli.' },
+{ num: 'III',  name: 'Manicomio',   glyph: '☩', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412325/Manicomio_okpjch.png', desc: 'Le cinghie sono state aperte da poco. Le pareti ricordano ogni urlo.' },
+{ num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412540/Luna_Park_k1jiiv.png', desc: 'La musica suona ancora, distorta e lenta. I pagliacci dipinti ti seguono con gli occhi.' },
+{ num: 'V',    name: 'Orfanotrofio',glyph: '...', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412541/Orfanotrofio_sjmhtp.png', desc: 'I letti sono troppi. I bambini, troppo pochi. Qualcuno canta in fondo al corridoio.' },
+{ num: 'VI',   name: 'Villaggio',   glyph: '⛧', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Villaggio_aae8tq.png', desc: 'Le imposte sono chiuse. Sui muri, lo stesso simbolo ripetuto. Nessuno apre.' },
+{ num: 'VII',  name: 'Castello',    glyph: '♛', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412325/Castello_w0jpcf.png', desc: 'Nelle sale l\'eco di passi che non sono i tuoi, e una corona attende sul trono vuoto.' },
+{ num: 'VIII', name: 'Nave',        glyph: '♆', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Nave_evmmhg.png', desc: 'Sotto coperta l\'acqua sale lentamente. In sala da pranzo, i piatti sono ancora caldi.' },
+{ num: 'IX',   name: 'Albergo',     glyph: '✦', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Hotel_uucytf.png', desc: 'La stanza 237 è prenotata a tuo nome. Tu non l\'hai prenotata.' },
+{ num: 'X',    name: 'Museo',       glyph: '☥', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412335/Museo_pgwazp.png', desc: 'Le statue cambiano posizione, e alcune teche non dovrebbero essere vuote.' },
 ];
 
 const PERSONAGGI = [
@@ -1139,7 +1139,6 @@ DOMINI.forEach(d => {
         ${imgLayer}
         <div class="dominio-front-content">
           <div class="num">Dominio ${d.num}</div>
-          <div class="glyph">${d.glyph}</div>
           <div class="name">${d.name}</div>
         </div>
       </div>
