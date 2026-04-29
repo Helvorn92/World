@@ -194,11 +194,7 @@ body {
     justify-content: center;
     padding-bottom: 4rem;
 }
-.hero::after { content: none; }
-.hero .layers { position: absolute; inset: 0; }
-.hero .layer {
-  position: absolute; inset: 0; will-change: transform; pointer-events: none;
-}
+
 .hero .layer.fog-1 {
   background: radial-gradient(ellipse 60% 40% at 30% 30%, rgba(60,40,80,.18), transparent 70%),
               radial-gradient(ellipse 80% 50% at 70% 70%, rgba(20,30,50,.15), transparent 70%);
@@ -221,7 +217,7 @@ body {
 .hero-content { position: relative; z-index: 5; text-align: center; padding: 0 1.5rem; max-width: 1200px; }
 .hero .eyebrow {
   display: inline-flex; align-items: center; gap: 1rem; font-family: var(--display-2); font-size: .72rem;
-  letter-spacing: .55em; text-transform: uppercase; color: var(--gold); margin-bottom: 2.4rem;
+  letter-spacing: .55em; text-transform: uppercase; color: var(--gold); margin-bottom: 4rem;
 }
 .hero .eyebrow .line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .hero h1 {
@@ -240,7 +236,7 @@ body {
 .hero h1::before, .hero h1::after { content: none; }
 .hero .tagline {
   font-family: var(--book); font-style: italic; font-size: clamp(1.05rem, 2.2vw, 1.55rem);
-  color: var(--bone-dim); margin-top: 2rem; max-width: 760px; margin-left: auto; margin-right: auto;
+  color: var(--bone-dim); margin-top: 3.5rem; max-width: 760px; margin-left: auto; margin-right: auto;
   letter-spacing: .02em;
 }
 .hero .sub-tag {
@@ -255,19 +251,7 @@ section {
     position: relative;
     padding: 13rem 1.5rem;
 }
-.domini-section::before,
-.personaggi-section::before,
-.identita-section::before,
-.pegni-section::before,
-.componenti-section::before,
-.cta-section::before {
-  content: '';
-  display: block;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(201,165,88,.18) 28%, rgba(201,165,88,.30) 50%, rgba(201,165,88,.18) 72%, transparent 100%);
-  max-width: 500px;
-  margin: 0 auto 3.5rem;
-}
+
 .container { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
 .section-eyebrow {
     font-family: var(--display-2);
@@ -1045,7 +1029,6 @@ section::after {
   position: absolute;
   inset: 6% max(1rem, 8vw);
   pointer-events: none;
-  border: 1px solid rgba(201,165,88,.12);
   clip-path: polygon(2.4rem 0, calc(100% - 2.4rem) 0, 100% 2.4rem, 100% calc(100% - 2.4rem), calc(100% - 2.4rem) 100%, 2.4rem 100%, 0 calc(100% - 2.4rem), 0 2.4rem);
 }
 .bilancia-stage::after {
@@ -1725,7 +1708,7 @@ const DOMINI = [
   { num: 'I',    name: 'Magione',     glyph: '⌂', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Magione_sl7a7m.png', desc: 'Le porte cigolano sui cardini come fossero vive. Qualcuno ha già acceso le candele.' },
 { num: 'II',   name: 'Cimitero',    glyph: '✟', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412340/Cimitero_ll3kiu.png', desc: 'La nebbia conosce i nomi sulle lapidi. Tu non vorresti conoscerli.' },
 { num: 'III',  name: 'Manicomio',   glyph: '☩', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412325/Manicomio_okpjch.png', desc: 'Le cinghie sono state aperte da poco. Le pareti ricordano ogni urlo.' },
-{ num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777455369/Luna_Park_bsqwjx.png', desc: 'La musica suona ancora, distorta e lenta. I pagliacci dipinti ti seguono con gli occhi.' },
+{ num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777455369/Luna_Park_bsqwjx.png', desc: 'La musica suona distorta e lenta. I pagliacci dipinti ti seguono con gli occhi.' },
 { num: 'V',    name: 'Orfanotrofio',glyph: '...', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412541/Orfanotrofio_sjmhtp.png', desc: 'I letti sono troppi. I bambini, troppo pochi. Qualcuno canta in fondo al corridoio.' },
 { num: 'VI',   name: 'Villaggio',   glyph: '⛧', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Villaggio_aae8tq.png', desc: 'Le imposte sono chiuse. Sui muri, lo stesso simbolo ripetuto. Nessuno apre.' },
 { num: 'VII',  name: 'Castello',    glyph: '♛', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412325/Castello_w0jpcf.png', desc: 'Nelle sale l\'eco di passi che non sono i tuoi, e una corona attende sul trono vuoto.' },
