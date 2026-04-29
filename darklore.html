@@ -360,8 +360,13 @@ section {
   transform: translateX(-50%); z-index: 1;
 }
 .bilancia .beam {
-  position: absolute; left: 50%; top: 145px; width: 100%; height: auto;
-  transform: translate(-50%, -50%); z-index: 2;
+    position: absolute;
+    left: 50%;
+    top: 155px;
+    width: 100%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
 /* beam-wrap copre l'intero contenitore; pivot al punto di giunzione (25% dall'alto) */
 .bilancia .beam-wrap {
@@ -820,6 +825,640 @@ footer .meta {
   color: var(--bone-deep); opacity: .45;
 }
 
+/* ---------------- GOTHIC ORNAMENTATION PASS ---------------- */
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,165,88,.055), transparent 38rem),
+    radial-gradient(ellipse at 12% 28%, rgba(138,42,170,.055), transparent 34rem),
+    radial-gradient(ellipse at 88% 64%, rgba(201,165,88,.035), transparent 30rem),
+    linear-gradient(180deg, #050409 0%, #0b0710 48%, #050409 100%);
+}
+.bg-bookshelf {
+  opacity: .88;
+  background-size: 320px 320px;
+  filter: contrast(1.18);
+}
+.bg-bookshelf::before,
+.bg-bookshelf::after {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  pointer-events: none;
+  background-repeat: repeat;
+  opacity: .32;
+}
+.bg-bookshelf::before {
+  background-size: 180px 180px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.22' stroke-width='.8'%3E%3Cpath d='M90 8 C78 32 78 50 90 68 C102 50 102 32 90 8Z'/%3E%3Cpath d='M90 172 C78 148 78 130 90 112 C102 130 102 148 90 172Z'/%3E%3Cpath d='M8 90 C32 78 50 78 68 90 C50 102 32 102 8 90Z'/%3E%3Cpath d='M172 90 C148 78 130 78 112 90 C130 102 148 102 172 90Z'/%3E%3Ccircle cx='90' cy='90' r='28'/%3E%3Cpath d='M68 68 L112 112 M112 68 L68 112'/%3E%3C/g%3E%3C/svg%3E");
+}
+.bg-bookshelf::after {
+  background-size: 520px 520px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520'%3E%3Cg fill='none' stroke='%236e5424' stroke-opacity='.18' stroke-width='1'%3E%3Cpath d='M260 24 L496 260 L260 496 L24 260Z'/%3E%3Cpath d='M260 88 L432 260 L260 432 L88 260Z'/%3E%3Cpath d='M260 24 C214 116 214 174 260 232 C306 174 306 116 260 24Z'/%3E%3Cpath d='M260 496 C214 404 214 346 260 288 C306 346 306 404 260 496Z'/%3E%3Ccircle cx='260' cy='260' r='92'/%3E%3Ccircle cx='260' cy='260' r='14'/%3E%3C/g%3E%3C/svg%3E");
+}
+.nav.scrolled {
+  border-bottom: 1px solid rgba(201,165,88,.28);
+  box-shadow: 0 18px 42px rgba(0,0,0,.34), inset 0 -1px 0 rgba(201,165,88,.08);
+}
+.nav-brand::before,
+.nav-brand::after {
+  content: '✦';
+  font-family: var(--gothic);
+  color: var(--gold-dark);
+  font-size: .9rem;
+  text-indent: 0;
+  margin: 0 .55rem;
+  text-shadow: 0 0 12px rgba(201,165,88,.28);
+}
+.nav-links a::before {
+  content: '⌁';
+  position: absolute;
+  left: 50%;
+  top: -1rem;
+  transform: translateX(-50%);
+  color: var(--gold-dark);
+  opacity: 0;
+  transition: opacity .25s, top .25s;
+}
+.nav-links a:hover::before { opacity: .8; top: -.75rem; }
+.hero {
+  min-height: 86vh;
+  min-height: 86svh;
+  overflow: hidden;
+}
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+.hero::before {
+  inset: clamp(1rem, 3vw, 2.4rem);
+  border: 1px solid rgba(201,165,88,.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(201,165,88,.08),
+    inset 0 0 42px rgba(201,165,88,.035),
+    0 0 50px rgba(0,0,0,.48);
+  clip-path: polygon(3rem 0, calc(100% - 3rem) 0, 100% 3rem, 100% calc(100% - 3rem), calc(100% - 3rem) 100%, 3rem 100%, 0 calc(100% - 3rem), 0 3rem);
+}
+.hero::after {
+  left: 50%;
+  bottom: 2.1rem;
+  width: min(560px, 72vw);
+  height: 42px;
+  transform: translateX(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 560 42'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.68' stroke-width='1.2'%3E%3Cpath d='M12 21 H188 C220 21 230 4 250 4 C270 4 268 21 280 21 C292 21 290 4 310 4 C330 4 340 21 372 21 H548'/%3E%3Cpath d='M280 21 C260 28 250 38 230 36 C246 26 260 21 280 21 C300 21 314 26 330 36 C310 38 300 28 280 21Z'/%3E%3Cpath d='M58 21 C72 8 90 8 104 21 C90 34 72 34 58 21Z M456 21 C470 8 488 8 502 21 C488 34 470 34 456 21Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: .68;
+}
+.hero .layer.ornament {
+  opacity: 1;
+  background-size: 94vmin 94vmin;
+  filter: drop-shadow(0 0 18px rgba(201,165,88,.08));
+}
+.hero-content::before,
+.hero-content::after {
+  content: '☩';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--gothic);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  color: rgba(201,165,88,.2);
+  text-shadow: 0 0 24px rgba(201,165,88,.12);
+}
+.hero-content::before { left: -4rem; }
+.hero-content::after { right: -4rem; }
+.hero h1 {
+  font-family: 'Cinzel Decorative', var(--display);
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+.hero h1::before,
+.hero h1::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92%, 760px);
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  opacity: .78;
+}
+.hero h1::before { top: -2.2rem; }
+.hero h1::after { bottom: -2.25rem; transform: translateX(-50%) scaleY(-1); }
+.hero h1::before,
+.hero h1::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 18'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.78' stroke-width='1'%3E%3Cpath d='M0 9 H285 C326 9 333 2 350 2 C368 2 366 9 380 9 C394 9 392 2 410 2 C427 2 434 9 475 9 H760'/%3E%3Cpath d='M380 9 C364 14 350 16 332 15 C350 9 360 7 380 9 C400 7 410 9 428 15 C410 16 396 14 380 9Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+section {
+  isolation: isolate;
+}
+section::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 2.5rem;
+  width: min(980px, calc(100% - 3rem));
+  height: 1px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(90deg, transparent, rgba(201,165,88,.18) 18%, rgba(201,165,88,.55) 50%, rgba(201,165,88,.18) 82%, transparent),
+    radial-gradient(circle at center, rgba(201,165,88,.75) 0 2px, transparent 3px);
+  opacity: .75;
+}
+.container::before,
+.container::after {
+  content: '';
+  position: absolute;
+  width: 92px;
+  height: 92px;
+  pointer-events: none;
+  opacity: .5;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 92 92'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.8' stroke-width='1.1'%3E%3Cpath d='M4 88 V28 C4 12 12 4 28 4 H88'/%3E%3Cpath d='M14 88 V36 C14 22 22 14 36 14 H88'/%3E%3Cpath d='M4 54 C22 50 36 36 40 18'/%3E%3Cpath d='M28 88 C30 68 44 54 64 52'/%3E%3Cpath d='M22 22 C34 28 40 38 40 52 C52 40 62 34 76 32'/%3E%3C/g%3E%3C/svg%3E");
+}
+.container::before { left: -1.6rem; top: -1.6rem; }
+.container::after { right: -1.6rem; bottom: -1.6rem; transform: rotate(180deg); }
+.section-eyebrow {
+  position: relative;
+  padding: .45rem 1.1rem .45rem calc(1.1rem + .55em);
+  border-top: 1px solid rgba(201,165,88,.22);
+  border-bottom: 1px solid rgba(201,165,88,.22);
+  background: linear-gradient(90deg, transparent, rgba(201,165,88,.045), transparent);
+}
+.section-eyebrow::before,
+.section-eyebrow::after {
+  content: '✦';
+  color: var(--gold-dark);
+  font-family: var(--gothic);
+  font-size: .86rem;
+}
+.section-title {
+  font-family: 'Cinzel Decorative', var(--display);
+  text-shadow: 0 0 20px rgba(201,165,88,.08), 0 2px 0 rgba(0,0,0,.5);
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: min(420px, 70vw);
+  height: 34px;
+  margin: 1.15rem auto 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 34'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.58' stroke-width='1'%3E%3Cpath d='M0 17 H132 C160 17 168 4 188 4 C204 4 202 17 210 17 C218 17 216 4 232 4 C252 4 260 17 288 17 H420'/%3E%3Cpath d='M210 17 C190 20 180 28 160 30 C176 18 194 16 210 17 C226 16 244 18 260 30 C240 28 230 20 210 17Z'/%3E%3Cpath d='M50 17 C58 8 70 8 78 17 C70 26 58 26 50 17Z M342 17 C350 8 362 8 370 17 C362 26 350 26 342 17Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+}
+.manifesto .container,
+.bilancia-stage,
+.bilancia-info,
+.identita-grid,
+.pegni-ladder,
+.componenti-grid,
+.cta-buttons,
+.cta-pillars {
+  position: relative;
+}
+.manifesto .quote {
+  text-shadow: 0 0 22px rgba(201,165,88,.08), 0 2px 0 rgba(0,0,0,.45);
+}
+.manifesto .quote::before,
+.manifesto .quote::after {
+  content: none;
+  display: block;
+  font-family: var(--gothic);
+  font-style: normal;
+  color: rgba(201,165,88,.38);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1;
+  margin: 0 auto 1.4rem;
+  text-shadow: 0 0 20px rgba(201,165,88,.18);
+}
+.manifesto .quote::after {
+  margin: 1.4rem auto 0;
+  transform: rotate(180deg);
+}
+.bilancia-stage::before,
+.bilancia-stage::after {
+  content: '';
+  position: absolute;
+  inset: 6% max(1rem, 8vw);
+  pointer-events: none;
+  border: 1px solid rgba(201,165,88,.12);
+  clip-path: polygon(2.4rem 0, calc(100% - 2.4rem) 0, 100% 2.4rem, 100% calc(100% - 2.4rem), calc(100% - 2.4rem) 100%, 2.4rem 100%, 0 calc(100% - 2.4rem), 0 2.4rem);
+}
+.bilancia-stage::after {
+  inset: 9% max(2rem, 12vw);
+  border-color: rgba(201,165,88,.07);
+}
+.dominio-face,
+.persona,
+.faction,
+.pegno,
+.componente,
+.players-table,
+.threshold-table,
+.forza,
+.btn-primary,
+.btn-secondary,
+.pillar {
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+}
+.dominio-face::before,
+.persona::before,
+.faction::before,
+.pegno::before,
+.componente::before,
+.players-table::before,
+.threshold-table::before,
+.forza::before,
+.pillar::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  border: 1px solid rgba(201,165,88,.16);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+  z-index: 5;
+}
+.dominio-face::after,
+.persona::after,
+.faction::after,
+.pegno::after,
+.componente::after,
+.players-table::after,
+.threshold-table::after,
+.forza::after,
+.pillar::after {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  font-family: var(--gothic);
+  font-size: .85rem;
+  color: rgba(201,165,88,.42);
+  z-index: 6;
+  pointer-events: none;
+  text-shadow: 0 0 12px rgba(201,165,88,.18);
+}
+.dominio-front::after {
+  inset: 12px;
+  border-color: rgba(201,165,88,.34);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+}
+.dominio-back .seal {
+  width: 4rem;
+  height: 4rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(138,42,170,.38);
+  background: radial-gradient(circle, rgba(138,42,170,.16), transparent 68%);
+  clip-path: polygon(50% 0, 62% 30%, 100% 50%, 62% 70%, 50% 100%, 38% 70%, 0 50%, 38% 30%);
+}
+.persona .portrait::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgba(201,165,88,.22);
+  box-shadow: inset 0 0 26px rgba(0,0,0,.48);
+}
+.persona .body,
+.faction,
+.pegno,
+.componente,
+.forza,
+.players-table,
+.threshold-table,
+.pillar {
+  background-image:
+    linear-gradient(135deg, rgba(201,165,88,.045), transparent 34%, rgba(138,42,170,.04) 72%, transparent),
+    radial-gradient(ellipse at top, rgba(201,165,88,.05), transparent 62%);
+}
+.faction.traditori,
+.pegno {
+  background-image:
+    linear-gradient(135deg, rgba(138,42,170,.12), transparent 38%, rgba(201,165,88,.035) 74%, transparent),
+    radial-gradient(ellipse at top, rgba(138,42,170,.22), transparent 68%);
+}
+.pegno .coin {
+  position: relative;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 1px rgba(201,165,88,.16), 0 6px 14px rgba(0,0,0,.55);
+}
+.pegno .coin::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201,165,88,.22);
+  border-radius: 50%;
+}
+.componente .count,
+.forza .num {
+  font-family: 'Cinzel Decorative', var(--display);
+}
+.btn-primary,
+.btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before,
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(7,6,10,.32);
+  pointer-events: none;
+}
+.btn-secondary::before { border-color: rgba(201,165,88,.18); }
+footer {
+  position: relative;
+  border-top-color: rgba(201,165,88,.22);
+}
+footer::before {
+  content: '';
+  display: block;
+  width: min(520px, 80vw);
+  height: 34px;
+  margin: 0 auto 1rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 34'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.45' stroke-width='1'%3E%3Cpath d='M0 17 H170 C198 17 210 4 230 4 C250 4 246 17 260 17 C274 17 270 4 290 4 C310 4 322 17 350 17 H520'/%3E%3Cpath d='M260 17 C242 22 228 28 206 29 C224 17 244 14 260 17 C276 14 296 17 314 29 C292 28 278 22 260 17Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+}
+@media (max-width: 720px) {
+  .hero-content::before,
+  .hero-content::after,
+  .container::before,
+  .container::after { display: none; }
+  .hero::before { inset: .8rem; clip-path: polygon(1.4rem 0, calc(100% - 1.4rem) 0, 100% 1.4rem, 100% calc(100% - 1.4rem), calc(100% - 1.4rem) 100%, 1.4rem 100%, 0 calc(100% - 1.4rem), 0 1.4rem); }
+  .section-eyebrow { letter-spacing: .32em; padding-left: .9rem; padding-right: .9rem; }
+  .dominio-face,
+  .persona,
+  .faction,
+  .pegno,
+  .componente,
+  .players-table,
+  .threshold-table,
+  .forza,
+  .btn-primary,
+  .btn-secondary,
+  .pillar { clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px); }
+}
+/* Domini keep their image veil separate from the generic gothic frame. */
+.dominio-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  border: 0;
+  clip-path: none;
+  background:
+    radial-gradient(ellipse at top, rgba(0,0,0,0) 30%, rgba(0,0,0,.55) 100%),
+    linear-gradient(180deg, rgba(15,12,20,.6) 0%, rgba(8,7,11,0) 25%, rgba(8,7,11,0) 60%, rgba(8,7,11,.92) 100%);
+}
+.dominio-front::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: auto;
+  height: auto;
+  transform: none;
+  border: 1px solid rgba(201,165,88,.34);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+  background: none;
+  color: transparent;
+  font-size: 0;
+}
+/* ---------------- SURGICAL REFINEMENTS ---------------- */
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,165,88,.035), transparent 34rem),
+    radial-gradient(ellipse at 50% 70%, rgba(138,42,170,.025), transparent 42rem),
+    linear-gradient(180deg, #050409 0%, #09070d 46%, #050409 100%);
+}
+.bg-bookshelf {
+  opacity: .42;
+  background-size: 360px 360px;
+  filter: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%23c9a558' stroke-opacity='.18' stroke-width='.9'%3E%3Cpath d='M180 24 L336 180 L180 336 L24 180Z'/%3E%3Cpath d='M180 70 L290 180 L180 290 L70 180Z'/%3E%3Cpath d='M180 24 C154 82 154 122 180 158 C206 122 206 82 180 24Z'/%3E%3Cpath d='M180 336 C154 278 154 238 180 202 C206 238 206 278 180 336Z'/%3E%3Cpath d='M24 180 C82 154 122 154 158 180 C122 206 82 206 24 180Z'/%3E%3Cpath d='M336 180 C278 154 238 154 202 180 C238 206 278 206 336 180Z'/%3E%3Ccircle cx='180' cy='180' r='58'/%3E%3Ccircle cx='180' cy='180' r='18'/%3E%3Cpath d='M122 122 L238 238 M238 122 L122 238' stroke-opacity='.1'/%3E%3C/g%3E%3C/svg%3E");
+}
+.bg-bookshelf::before,
+.bg-bookshelf::after { content: none; }
+.nav-brand::before,
+.nav-brand::after,
+.nav-links a::before { content: none; }
+.nav-brand {
+  color: var(--gold-bright);
+  text-shadow:
+    0 0 10px rgba(233,201,122,.8),
+    0 0 26px rgba(201,165,88,.55),
+    0 0 52px rgba(201,165,88,.25);
+}
+.nav-cta {
+  background: linear-gradient(180deg, #f3d98d 0%, #d2ad58 100%);
+  border-color: #f4dfa3;
+  box-shadow: 0 0 18px rgba(233,201,122,.45), 0 8px 24px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.38);
+}
+.nav-cta:hover {
+  background: linear-gradient(180deg, #fff0ba 0%, #e2bf68 100%);
+  box-shadow: 0 0 28px rgba(233,201,122,.72), 0 12px 30px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.hero::before,
+.hero-content::before,
+.hero-content::after { content: none; }
+.container::before,
+.container::after { content: none; }
+.manifesto .quote::before,
+.manifesto .quote::after { content: none; }
+.persona::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  height: auto;
+  pointer-events: none;
+  border: 1px solid rgba(201,165,88,.16);
+  background: none;
+  opacity: .75;
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+  z-index: 5;
+  transition: border-color .45s, box-shadow .45s, opacity .45s;
+}
+.persona:hover::before {
+  opacity: 1;
+  border-color: rgba(233,201,122,.72);
+  box-shadow: inset 0 0 18px rgba(233,201,122,.12), 0 0 18px rgba(233,201,122,.12);
+}
+.persona::after,
+.faction::after,
+.pegno::after,
+.componente::after,
+.players-table::after,
+.threshold-table::after,
+.forza::after,
+.pillar::after { content: none; }
+.pegno {
+  border-color: rgba(195,184,159,.46);
+  background:
+    linear-gradient(135deg, rgba(216,205,182,.08), transparent 36%, rgba(138,42,170,.08) 78%, transparent),
+    radial-gradient(ellipse at top, rgba(216,205,182,.10), transparent 68%),
+    linear-gradient(180deg, rgba(17,13,22,.98), rgba(8,6,13,.98));
+  box-shadow:
+    0 14px 42px rgba(0,0,0,.62),
+    0 0 0 1px rgba(216,205,182,.08),
+    inset 0 0 32px rgba(216,205,182,.035);
+}
+.pegno::before { border-color: rgba(216,205,182,.22); }
+.pegno:hover {
+  border-color: var(--bone-dim);
+  box-shadow:
+    0 20px 52px rgba(0,0,0,.68),
+    0 0 26px rgba(216,205,182,.14),
+    inset 0 0 38px rgba(216,205,182,.055);
+}
+.pegno h4 { color: var(--bone); text-shadow: 0 0 16px rgba(216,205,182,.18); }
+.pegno p { color: var(--bone-dim); }
+.pegno .coin {
+  color: var(--bone-dim);
+  border-color: rgba(216,205,182,.38);
+  background: radial-gradient(circle at 30% 30%, rgba(216,205,182,.22), rgba(42,16,80,.52) 48%, #100828 100%);
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 1px rgba(216,205,182,.16), 0 0 18px rgba(216,205,182,.10), 0 6px 14px rgba(0,0,0,.55);
+}
+/* ---------------- SURGICAL REFINEMENTS II ---------------- */
+:root {
+  --blood: #2b1640;
+  --blood-bright: #9f72c5;
+  --violet-soft: #b99ad6;
+  --violet-deep: #170d24;
+  --violet-veil: rgba(82,45,118,.34);
+}
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,165,88,.026), transparent 34rem),
+    radial-gradient(ellipse at 50% 68%, rgba(159,114,197,.018), transparent 44rem),
+    linear-gradient(180deg, #050407 0%, #09070c 48%, #050407 100%);
+}
+.bg-bookshelf {
+  opacity: .30;
+  background-size: 300px 300px;
+  background-position: center top;
+  filter: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='none' stroke='%23d8cdb6' stroke-opacity='.18' stroke-width='1.05' stroke-linecap='round'%3E%3Cpath d='M150 16 C120 48 119 84 150 116 C181 84 180 48 150 16Z'/%3E%3Cpath d='M150 284 C120 252 119 216 150 184 C181 216 180 252 150 284Z'/%3E%3Cpath d='M34 150 C66 120 102 119 134 150 C102 181 66 180 34 150Z'/%3E%3Cpath d='M266 150 C234 120 198 119 166 150 C198 181 234 180 266 150Z'/%3E%3Cpath d='M150 58 C134 86 132 112 150 136 C168 112 166 86 150 58Z'/%3E%3Cpath d='M150 242 C134 214 132 188 150 164 C168 188 166 214 150 242Z'/%3E%3Cpath d='M70 150 C98 134 124 132 148 150 C124 168 98 166 70 150Z'/%3E%3Cpath d='M230 150 C202 134 176 132 152 150 C176 168 202 166 230 150Z'/%3E%3Cpath d='M82 50 C112 58 132 76 142 104 M218 50 C188 58 168 76 158 104 M82 250 C112 242 132 224 142 196 M218 250 C188 242 168 224 158 196' stroke-opacity='.13'/%3E%3Cpath d='M52 82 C74 112 104 126 138 138 M248 82 C226 112 196 126 162 138 M52 218 C74 188 104 174 138 162 M248 218 C226 188 196 174 162 162' stroke-opacity='.12'/%3E%3Ccircle cx='150' cy='150' r='30' stroke-opacity='.14'/%3E%3Ccircle cx='150' cy='150' r='7' stroke-opacity='.18'/%3E%3C/g%3E%3C/svg%3E");
+}
+.nav {
+  mix-blend-mode: normal;
+  background: linear-gradient(180deg, rgba(5,4,8,.96), rgba(5,4,8,.82));
+  border-bottom: 1px solid rgba(201,165,88,.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.34);
+}
+.nav-links a::after { content: none; }
+.nav-cta {
+  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
+  color: var(--bg-0);
+  border: 1px solid var(--gold-bright);
+  box-shadow: 0 12px 30px -8px rgba(201,165,88,.72), 0 0 26px rgba(233,201,122,.55), inset 0 1px 0 rgba(255,255,255,.38);
+}
+.nav-cta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #fff0ba 0%, var(--gold-bright) 48%, var(--gold) 100%);
+  box-shadow: 0 18px 42px -8px rgba(201,165,88,.9), 0 0 38px rgba(233,201,122,.72), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: .22em;
+}
+.section-eyebrow {
+  border-top: 0;
+  border-bottom: 0;
+  background: none;
+}
+.section-eyebrow::before,
+.section-eyebrow::after { color: rgba(201,165,88,.72); }
+.persona {
+  border-color: rgba(201,165,88,.22);
+}
+.persona::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  height: auto;
+  pointer-events: none;
+  border: 1px solid rgba(201,165,88,.22);
+  background: none;
+  opacity: .78;
+  clip-path: none;
+  z-index: 5;
+  transition: border-color .45s, box-shadow .45s, opacity .45s;
+}
+.persona .portrait::before {
+  inset: 18px;
+  border-color: rgba(201,165,88,.16);
+  box-shadow: inset 0 0 18px rgba(0,0,0,.42);
+}
+.persona:hover {
+  border-color: rgba(233,201,122,.84);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.66), 0 0 30px rgba(201,165,88,.12);
+}
+.persona:hover::before {
+  border-color: rgba(233,201,122,.82);
+  box-shadow: 0 0 18px rgba(233,201,122,.16), inset 0 0 18px rgba(233,201,122,.08);
+}
+.persona:hover .portrait::before {
+  border-color: rgba(233,201,122,.46);
+}
+.faction.traditori {
+  border-color: rgba(195,184,159,.46);
+  background:
+    linear-gradient(135deg, rgba(216,205,182,.08), transparent 36%, rgba(159,114,197,.10) 78%, transparent),
+    radial-gradient(ellipse at top, rgba(216,205,182,.09), transparent 68%),
+    linear-gradient(180deg, rgba(17,13,22,.98), rgba(8,6,13,.98));
+  box-shadow:
+    0 14px 42px rgba(0,0,0,.62),
+    0 0 0 1px rgba(216,205,182,.08),
+    inset 0 0 32px rgba(216,205,182,.035);
+}
+.faction.traditori::before { border-color: rgba(216,205,182,.22); }
+.faction.traditori h3,
+.faction.traditori .symbol,
+.bilancia .pan.right .symbol,
+.section-title .blood,
+.manifesto .quote .word.blood,
+.bilancia-info h4 .blood,
+.players-table td:last-child {
+  color: var(--violet-soft);
+}
+.faction.traditori h3,
+.faction.traditori .symbol {
+  text-shadow: 0 0 18px rgba(185,154,214,.20);
+}
+.pegno .coin {
+  background: radial-gradient(circle at 30% 30%, rgba(216,205,182,.22), rgba(159,114,197,.34) 48%, #11091c 100%);
+}
+/* Protagonists frame cleanup: outer card + inner portrait only. */
+.persona::before { content: none; }
+.persona .portrait::before {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid rgba(201,165,88,.24);
+  box-shadow: inset 0 0 18px rgba(0,0,0,.42);
+  transition: border-color .45s, box-shadow .45s;
+}
+.persona:hover .portrait::before {
+  border-color: rgba(233,201,122,.72);
+  box-shadow: inset 0 0 18px rgba(233,201,122,.08), 0 0 18px rgba(233,201,122,.14);
+}
 /* ---------------- ANIM CLASSES ---------------- */
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
@@ -924,18 +1563,18 @@ footer .meta {
 
     <div class="bilancia-stage reveal">
       <div class="bilancia" id="bilancia">
-        <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777460013/asta-verticale_uplgl1.svg" class="post" alt="">
+        <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777469208/Asta_Verticale_id91ov.png" class="post" alt="">
         <div class="beam-wrap" id="beamWrap">
-          <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777460012/asta-orizzontale_dazccs.svg" class="beam" alt="">
+          <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777469199/Asta_Orizzontale_bd8g7a.png" class="beam" alt="">
           <div class="pan left" id="panLeft">
             <div class="pan-inner">
-              <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777460013/piatto_tkldzj.svg" class="dish" alt="">
+              <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777469214/Piazzo_zoorf1.png" class="dish" alt="">
               <span class="symbol"><svg class="sun-glyph" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="10" fill="currentColor"/><line x1="30" y1="4" x2="30" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="45" x2="30" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="15" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="45" y1="30" x2="56" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="11" y1="11" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="41" y1="41" x2="49" y2="49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="49" y1="11" x2="41" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="49" x2="19" y2="41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
             </div>
           </div>
           <div class="pan right" id="panRight">
             <div class="pan-inner">
-              <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777460013/piatto_tkldzj.svg" class="dish" alt="">
+              <img src="https://res.cloudinary.com/dkvotcvo6/image/upload/v1777469214/Piazzo_zoorf1.png" class="dish" alt="">
               <span class="symbol">☾</span>
             </div>
           </div>
@@ -1099,7 +1738,7 @@ const PERSONAGGI = [
   { sigil: '✦', role: 'Veggenza',    name: 'La <em>Medium</em>',        img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Indovina_zsq73e.jpg',        ability: 'Sussurra una domanda a un altro Personaggio, attendendo una risposta sincera. Solo l\'Identità resta velata: nessuno spirito può rivelarla.' },
   { sigil: '✧', role: 'Ispezione',  name: 'L\'<em>Investigatore</em>', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777406075/Investigatore_ac2seg.jpg', ability: 'Una volta per round scruta le due carte in cima al Reliquiario e ne trattiene una. Sa che la verità affiora soltanto a chi ha il coraggio di guardarla per primo.' },
   { sigil: '⚜', role: 'Baratto',    name: 'Il <em>Forestiero</em>',    img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777405311/Forestiero_shpzsp.jpg',                                                                                       ability: 'Anche dopo aver narrato in Puro Luce, può prendere in segreto un Pegno Oscuro. Nessuno è mai davvero ciò che dice di essere.' },
-  { sigil: '❦', role: 'Complicità',   name: 'Il <em>Bambino</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Bambino_mcex1v.jpg',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
+  { sigil: '✧', role: 'Complicità',   name: 'Il <em>Bambino</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Bambino_mcex1v.jpg',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
   { sigil: '✠', role: 'Grazia',  name: 'Il <em>Sacerdote</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Sacerdote_swfvfc.jpg',      ability: 'Comincia la partita stringendo la Protezione fra le mani. Quando la invoca, non la consuma: la fede vera non si scarta mai.' },
   { sigil: '☙', role: 'Fiuto',    name: 'La <em>Giornalista</em>',   img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Giornalista_x8dfdn.jpg',    ability: 'Una volta per round osserva le due carte in cima al mazzo Indizi e ne sceglie una. Le notizie, come le verità, vengono sempre selezionate prima di essere stampate.' },
   { sigil: '☾', role: 'Recupero',     name: 'Il <em>Vagabondo</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404967/Vagabondo_syv1nn.jpg',      ability: 'In fase di pesca, può recuperare un Indizio dalla pila degli scarti. Ciò che gli altri rifiutano, lui lo conserva come un tesoro.' },
