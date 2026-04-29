@@ -251,7 +251,10 @@ body {
 .hero .scroll-cue { display: none; }
 
 /* ---------------- SECTIONS GENERIC ---------------- */
-section { position: relative; padding: 5rem 1.5rem; }
+section {
+    position: relative;
+    padding: 13rem 1.5rem;
+}
 .domini-section::before,
 .personaggi-section::before,
 .identita-section::before,
@@ -315,8 +318,19 @@ section { position: relative; padding: 5rem 1.5rem; }
   font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.25; color: var(--bone);
   letter-spacing: .01em;
 }
-.manifesto .quote .word { display: inline-block; opacity: .15; transition: opacity .4s ease; will-change: opacity; }
-.manifesto .quote .word.lit { opacity: 1; color: var(--bone); }
+.manifesto .quote .word {
+    display: inline-block;
+    opacity: .15;
+    transition: opacity .4s ease;
+    will-change: opacity;
+    padding-bottom: 0px;
+    min-height: 90px;
+}
+.manifesto .quote .word.lit {
+    opacity: 1;
+    color: var(--bone);
+    padding-bottom: 0px;
+}
 .manifesto .quote .word.gold { color: var(--gold-bright); }
 .manifesto .quote .word.blood { color: var(--blood-bright); font-style: italic; }
 .manifesto .signature {
