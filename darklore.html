@@ -334,81 +334,56 @@ section { position: relative; padding: 5rem 1.5rem; }
   display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: center;
 }
 .bilancia-stage {
-  position: relative; height: clamp(420px, 60vh, 680px); width: 100%;
+  position: relative; height: clamp(480px, 68vh, 760px); width: 100%;
   display: flex; justify-content: center; align-items: center;
 }
 .bilancia {
   position: relative; width: min(100%, 720px); height: 100%;
 }
+/* Asta verticale */
 .bilancia .post {
-  position: absolute; top: 0; bottom: 0; left: 50%; width: 6px; transform: translateX(-50%);
-  background: linear-gradient(180deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-  border-radius: 3px;
-  box-shadow: 0 0 12px rgba(201,165,88,.3);
-}
-.bilancia .post::before, .bilancia .post::after {
-  content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-  background: var(--gold); border-radius: 50%;
-}
-.bilancia .post::before { top: 0; width: 26px; height: 26px; box-shadow: 0 0 18px var(--gold), inset 0 0 8px var(--gold-dark); }
-.bilancia .post::after  { bottom: 0; width: 50px; height: 18px; border-radius: 4px; background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); }
-.bilancia .beam-wrap {
-  position: absolute; top: 24px; left: 0; right: 0; height: 2px; transform-origin: 50% 50%;
+  position: absolute; left: 50%; top: 0; height: 100%; width: auto;
+  transform: translateX(-50%); z-index: 1;
 }
 .bilancia .beam {
-  position: absolute; top: 0; left: 5%; right: 5%; height: 4px;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold), var(--gold-dark));
-  border-radius: 2px; box-shadow: 0 0 12px rgba(201,165,88,.4);
+  position: absolute; left: 50%; top: 145px; width: 100%; height: auto;
+  transform: translate(-50%, -50%); z-index: 2;
 }
+/* beam-wrap copre l'intero contenitore; pivot al punto di giunzione (25% dall'alto) */
+.bilancia .beam-wrap {
+  position: absolute; inset: 0;
+  transform-origin: 50% 25%; z-index: 3;
+}
+/* Piatti appesi alle estremità della trave */
 .bilancia .pan {
-  position: absolute; top: 100px; width: 220px; height: 220px;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: .4rem;
-  transition: top .4s ease;
+  position: absolute; top: 25%;
+  display: flex; justify-content: center;
+  margin-top: 50px;
 }
-.bilancia .pan.left { left: 0; }
-.bilancia .pan.right { right: 0; }
-.bilancia .pan .chains {
-  display: flex; gap: 80px; height: 80px; position: relative;
+.bilancia .pan.left  { left:  0%; }
+.bilancia .pan.right { right: 0%; }
+/* Wrapper interno: consente il posizionamento del simbolo sopra il piatto */
+.bilancia .pan-inner {
+  position: relative; display: flex; flex-direction: column; align-items: center;
 }
-.bilancia .pan .chains::before, .bilancia .pan .chains::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 1px;
-  background: repeating-linear-gradient(180deg, var(--gold-dark) 0 4px, transparent 4px 8px);
+/* Piatto SVG */
+.bilancia .dish {
+  display: block; width: 130px; height: auto;
+  border: none; outline: none; box-shadow: none;
 }
-.bilancia .pan .chains::before { left: 30px; }
-.bilancia .pan .chains::after  { right: 30px; }
-.bilancia .pan .dish {
-  width: 220px; height: 60px; border-radius: 0 0 110px 110px / 0 0 60px 60px;
-  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
-  border: 1px solid var(--gold-bright);
-  box-shadow: 0 6px 24px rgba(0,0,0,.5), inset 0 -4px 8px rgba(0,0,0,.3);
-  position: relative;
-}
-.bilancia .pan .dish::before {
-  content: ''; position: absolute; top: 0; left: 4px; right: 4px; height: 6px;
-  background: linear-gradient(180deg, rgba(255,255,255,.2), transparent); border-radius: 4px;
-}
-.bilancia .pan .label {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--display);
-    font-size: 1.15rem;
-    letter-spacing: .35em;
-    text-transform: uppercase;
-    color: var(--bone);
-    white-space: nowrap;
-}
-.bilancia .pan.left .label { color: var(--bone); }
-.bilancia .pan.right .label { color: var(--blood-bright); }
-.bilancia .pan .symbol {
-  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-  font-size: 2.4rem; line-height: 1; color: var(--bg-0);
+.bilancia .pan.right .dish { transform: scaleX(-1); }
+/* Simbolo sovrapposto al piatto (coppa in basso nel SVG, ~11% dal bordo) */
+.bilancia .symbol {
+  position: absolute; bottom: 11%; left: 50%;
+  transform: translateX(-50%);
   display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
 }
+.bilancia .pan.left  .symbol { color: var(--gold); line-height: 1.1; }
+.bilancia .pan.right .symbol { color: var(--blood-bright); font-size: 8rem; line-height: 1.1; }
 .sun-glyph {
-  display: block; width: 2.4rem; height: 2.4rem;
-  fill: none; stroke: currentColor; overflow: visible;
+  display: block; width: 8rem; height: 8rem;
+  fill: currentColor; overflow: visible;
 }
 .bilancia-info {
   display: flex; justify-content: space-between; gap: 2rem;
@@ -935,16 +910,20 @@ footer .meta {
 
     <div class="bilancia-stage reveal">
       <div class="bilancia" id="bilancia">
-        <div class="post"></div>
+        <img src="Bilancia/asta-verticale.svg" class="post" alt="">
         <div class="beam-wrap" id="beamWrap">
-          <div class="beam"></div>
+          <img src="Bilancia/asta-orizzontale.svg" class="beam" alt="">
           <div class="pan left" id="panLeft">
-            <div class="chains"></div>
-            <div class="dish"><span class="symbol"><svg class="sun-glyph" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="10" fill="currentColor" stroke="none"/><line x1="30" y1="4" x2="30" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="45" x2="30" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="15" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="45" y1="30" x2="56" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="11" y1="11" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="41" y1="41" x2="49" y2="49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="49" y1="11" x2="41" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="49" x2="19" y2="41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></div>
+            <div class="pan-inner">
+              <img src="Bilancia/piatto.svg" class="dish" alt="">
+              <span class="symbol"><svg class="sun-glyph" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="10" fill="currentColor"/><line x1="30" y1="4" x2="30" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="30" y1="45" x2="30" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="30" x2="15" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="45" y1="30" x2="56" y2="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="11" y1="11" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="41" y1="41" x2="49" y2="49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="49" y1="11" x2="41" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="49" x2="19" y2="41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            </div>
           </div>
           <div class="pan right" id="panRight">
-            <div class="chains"></div>
-            <div class="dish"><span class="symbol">☾</span></div>
+            <div class="pan-inner">
+              <img src="Bilancia/piatto.svg" class="dish" alt="">
+              <span class="symbol">☾</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1093,7 +1072,7 @@ const DOMINI = [
   { num: 'I',    name: 'Magione',     glyph: '⌂', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Magione_sl7a7m.png', desc: 'Le porte cigolano sui cardini come fossero vive. Qualcuno ha già acceso le candele.' },
 { num: 'II',   name: 'Cimitero',    glyph: '✟', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412340/Cimitero_ll3kiu.png', desc: 'La nebbia conosce i nomi sulle lapidi. Tu non vorresti conoscerli.' },
 { num: 'III',  name: 'Manicomio',   glyph: '☩', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412325/Manicomio_okpjch.png', desc: 'Le cinghie sono state aperte da poco. Le pareti ricordano ogni urlo.' },
-{ num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412540/Luna_Park_k1jiiv.png', desc: 'La musica suona ancora, distorta e lenta. I pagliacci dipinti ti seguono con gli occhi.' },
+{ num: 'IV',   name: 'Luna Park',   glyph: '✶', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777455369/Luna_Park_bsqwjx.png', desc: 'La musica suona ancora, distorta e lenta. I pagliacci dipinti ti seguono con gli occhi.' },
 { num: 'V',    name: 'Orfanotrofio',glyph: '...', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412541/Orfanotrofio_sjmhtp.png', desc: 'I letti sono troppi. I bambini, troppo pochi. Qualcuno canta in fondo al corridoio.' },
 { num: 'VI',   name: 'Villaggio',   glyph: '⛧', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412326/Villaggio_aae8tq.png', desc: 'Le imposte sono chiuse. Sui muri, lo stesso simbolo ripetuto. Nessuno apre.' },
 { num: 'VII',  name: 'Castello',    glyph: '♛', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777412325/Castello_w0jpcf.png', desc: 'Nelle sale l\'eco di passi che non sono i tuoi, e una corona attende sul trono vuoto.' },
@@ -1333,8 +1312,8 @@ manifestoIO.observe(manifestoQuote);
   const panRight = document.getElementById('panRight');
   if (!beamWrap || !panLeft || !panRight) return;
 
-  const MAX_ANGLE = 14;       // degrees — how much the beam can tip
-  const MAX_PAN_Y = 36;       // px — how far the lower pan drops
+  const MAX_ANGLE = 10;       // degrees - keeps the beam tilt believable
+  const MAX_PAN_Y = 8;        // px - only a small chain-length correction
   let targetAngle = 0;
   let currentAngle = 0;
   let resetTimer;
@@ -1366,20 +1345,24 @@ manifestoIO.observe(manifestoQuote);
     currentAngle += (targetAngle - currentAngle) * 0.08;
     const norm = currentAngle / MAX_ANGLE;     // -1 .. 1
     const yOffset = norm * MAX_PAN_Y;
+    const counterAngle = -currentAngle;
+    const angleRad = currentAngle * Math.PI / 180;
 
-    // Beam tips
+    function horizontalCounterOffset(pan) {
+      const pivotX = beamWrap.clientWidth * 0.5;
+      const pivotY = beamWrap.clientHeight * 0.25;
+      const x = pan.offsetLeft + pan.offsetWidth * 0.5 - pivotX;
+      const y = pan.offsetTop + pan.offsetHeight * 0.5 - pivotY;
+      const rotatedX = x * Math.cos(angleRad) - y * Math.sin(angleRad);
+      return x - rotatedX;
+    }
+
+    const leftX = horizontalCounterOffset(panLeft);
+    const rightX = horizontalCounterOffset(panRight);
+
     beamWrap.style.transform = `rotate(${currentAngle.toFixed(3)}deg)`;
-    // Pans counter-rotate so they always hang vertical
-    panLeft.style.transform  = `rotate(${(-currentAngle).toFixed(3)}deg) translateY(${(-yOffset).toFixed(2)}px)`;
-    panRight.style.transform = `rotate(${(-currentAngle).toFixed(3)}deg) translateY(${(yOffset).toFixed(2)}px)`;
-
-    // Subtle glow shift on the pans depending on which side leads
-    const leftGlow = Math.max(0, -norm) * 0.6;
-    const rightGlow = Math.max(0, norm) * 0.6;
-    const dishL = panLeft.querySelector('.dish');
-    const dishR = panRight.querySelector('.dish');
-    if (dishL) dishL.style.boxShadow = `0 6px 24px rgba(0,0,0,.5), inset 0 -4px 8px rgba(0,0,0,.3), 0 0 ${30*leftGlow}px rgba(233,201,122,${leftGlow})`;
-    if (dishR) dishR.style.boxShadow = `0 6px 24px rgba(0,0,0,.5), inset 0 -4px 8px rgba(0,0,0,.3), 0 0 ${30*rightGlow}px rgba(138,36,36,${rightGlow})`;
+    panLeft.style.transform  = `rotate(${counterAngle.toFixed(3)}deg) translate(${leftX.toFixed(2)}px, ${(-yOffset).toFixed(2)}px)`;
+    panRight.style.transform = `rotate(${counterAngle.toFixed(3)}deg) translate(${rightX.toFixed(2)}px, ${(yOffset).toFixed(2)}px)`;
 
     requestAnimationFrame(tick);
   }
