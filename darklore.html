@@ -194,7 +194,9 @@ body {
     justify-content: center;
     padding-bottom: 4rem;
 }
-
+#heroTitle {
+  opacity: 0;
+}
 .hero .layer.fog-1 {
   background: radial-gradient(ellipse 60% 40% at 30% 30%, rgba(60,40,80,.18), transparent 70%),
               radial-gradient(ellipse 80% 50% at 70% 70%, rgba(20,30,50,.15), transparent 70%);
@@ -221,6 +223,8 @@ body {
 }
 .hero .eyebrow .line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .hero h1 {
+  opacity: 0;
+  transition: opacity 0.8s ease;
   font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 7.5vw, 5.4rem);
   letter-spacing: .22em; color: var(--bone); line-height: 1;
   text-indent: .22em;
@@ -229,6 +233,7 @@ body {
     0 0 22px rgba(201,165,88,.12),
     0 2px 0 rgba(0,0,0,.5);
   position: relative; display: inline-block;
+	
 }
 .hero h1 .char {
   display: inline-block; will-change: transform, opacity, filter;
@@ -1345,12 +1350,12 @@ body {
   background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 100%);
   color: var(--bg-0);
   border: 1px solid var(--gold-bright);
-  box-shadow: 0 12px 30px -8px rgba(201,165,88,.72), 0 0 26px rgba(233,201,122,.55), inset 0 1px 0 rgba(255,255,255,.38);
+
 }
 .nav-cta:hover {
   transform: translateY(-2px);
   background: linear-gradient(180deg, #fff0ba 0%, var(--gold-bright) 48%, var(--gold) 100%);
-  box-shadow: 0 18px 42px -8px rgba(201,165,88,.9), 0 0 38px rgba(233,201,122,.72), inset 0 1px 0 rgba(255,255,255,.5);
+  
 }
 .hero h1 {
   font-family: var(--display);
@@ -1718,14 +1723,14 @@ const DOMINI = [
 ];
 
 const PERSONAGGI = [
-  { sigil: '✦', role: 'Veggenza',    name: 'La <em>Medium</em>',        img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Indovina_zsq73e.jpg',        ability: 'Sussurra una domanda a un altro Personaggio, attendendo una risposta sincera. Solo l\'Identità resta velata: nessuno spirito può rivelarla.' },
-  { sigil: '✧', role: 'Ispezione',  name: 'L\'<em>Investigatore</em>', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777406075/Investigatore_ac2seg.jpg', ability: 'Una volta per round scruta le due carte in cima al Reliquiario e ne trattiene una. Sa che la verità affiora soltanto a chi ha il coraggio di guardarla per primo.' },
-  { sigil: '⚜', role: 'Baratto',    name: 'Il <em>Forestiero</em>',    img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777405311/Forestiero_shpzsp.jpg',                                                                                       ability: 'Anche dopo aver narrato in Puro Luce, può prendere in segreto un Pegno Oscuro. Nessuno è mai davvero ciò che dice di essere.' },
-  { sigil: '✧', role: 'Complicità',   name: 'Il <em>Bambino</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Bambino_mcex1v.jpg',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
-  { sigil: '✠', role: 'Grazia',  name: 'Il <em>Sacerdote</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404534/Sacerdote_swfvfc.jpg',      ability: 'Comincia la partita stringendo la Protezione fra le mani. Quando la invoca, non la consuma: la fede vera non si scarta mai.' },
+  { sigil: '✦', role: 'Veggenza',    name: 'La <em>Medium</em>',        img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777479017/Indovina_zsq73e.jpg',        ability: 'Sussurra una domanda a un altro Personaggio, attendendo una risposta sincera. Solo l\'Identità resta velata: nessuno spirito può rivelarla.' },
+  { sigil: '✧', role: 'Ispezione',  name: 'il <em>Detective</em>', img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777479026/Investigatore_ac2seg.jpg', ability: 'Una volta per round scruta le due carte in cima al Reliquiario e ne trattiene una. Sa che la verità affiora soltanto a chi ha il coraggio di guardarla per primo.' },
+  { sigil: '⚜', role: 'Baratto',    name: 'Il <em>Turista</em>',    img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777405311/Forestiero_shpzsp.jpg',                                                                                       ability: 'Anche dopo aver narrato in Puro Luce, può prendere in segreto un Pegno Oscuro. Nessuno è mai davvero ciò che dice di essere.' },
+  { sigil: '✧', role: 'Complicità',   name: 'Il <em>Fanciullo</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Bambino_mcex1v.jpg',        ability: 'Una volta per round scambia di nascosto un Indizio della propria mano con quello del giocatore accanto. I bambini vedono ciò che gli adulti hanno imparato a ignorare.' },
+  { sigil: '✠', role: 'Grazia',  name: 'Il <em>Sacerdote</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777472614/Sacerdote_swfvfc.jpg',      ability: 'Comincia la partita stringendo la Protezione fra le mani. Quando la invoca, non la consuma: la fede vera non si scarta mai.' },
   { sigil: '☙', role: 'Fiuto',    name: 'La <em>Giornalista</em>',   img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404521/Giornalista_x8dfdn.jpg',    ability: 'Una volta per round osserva le due carte in cima al mazzo Indizi e ne sceglie una. Le notizie, come le verità, vengono sempre selezionate prima di essere stampate.' },
-  { sigil: '☾', role: 'Recupero',     name: 'Il <em>Vagabondo</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404967/Vagabondo_syv1nn.jpg',      ability: 'In fase di pesca, può recuperare un Indizio dalla pila degli scarti. Ciò che gli altri rifiutano, lui lo conserva come un tesoro.' },
-  { sigil: '⚔', role: 'Affiancamento', name: 'Il <em>Soldato</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777404535/Soldato_b6xyxl.jpg',                                                                                       ability: 'Durante il turno altrui può entrare in scena o congedarsi narrando un breve momento. Arriva quando serve, e mai per caso.' }
+  { sigil: '☾', role: 'Recupero',     name: 'Il <em>Ramingo</em>',     img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777472624/Vagabondo_syv1nn.jpg',      ability: 'In fase di pesca, può recuperare un Indizio dalla pila degli scarti. Ciò che gli altri rifiutano, lui lo conserva come un tesoro.' },
+  { sigil: '⚔', role: 'Affiancamento', name: 'Il <em>Soldato</em>',       img: 'https://res.cloudinary.com/dkvotcvo6/image/upload/v1777479169/Soldato_b6xyxl.jpg',                                                                                       ability: 'Durante il turno altrui può entrare in scena o congedarsi narrando un breve momento. Arriva quando serve, e mai per caso.' }
 ];
 
 const COMPONENTI = [
@@ -1802,7 +1807,7 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     loader.style.transition = 'opacity 1.4s ease';
     loader.style.opacity = '0';
-    setTimeout(() => { loader.style.display = 'none'; initHero(); }, 1400);
+    setTimeout(() => { loader.style.display = 'none'; initHero(); }, 400);
   }, 900);
 });
 
@@ -1820,6 +1825,7 @@ function initHero() {
     s.style.filter = 'blur(20px)';
     s.style.transition = `opacity 1.2s ease ${i*0.05}s, transform 1.4s cubic-bezier(.2,.7,.2,1) ${i*0.05}s, filter 1.6s ease ${i*0.05}s`;
     title.appendChild(s);
+	  title.style.opacity = '1';
   });
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -1933,7 +1939,7 @@ const manifestoIO = new IntersectionObserver((entries) => {
   entries.forEach(en => {
     if (en.isIntersecting) {
       words.forEach((w, i) => {
-        setTimeout(() => w.classList.add('lit'), i * 120);
+        setTimeout(() => w.classList.add('lit'), i * 20);
       });
       manifestoIO.unobserve(en.target);
     }
