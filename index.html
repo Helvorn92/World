@@ -6165,7 +6165,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   const startPage = document.getElementById('page-'+startId);
   if(startPage){startPage.classList.add('active');startPage.style.opacity='1';}
   /* stesso blocco anche all'apertura, non solo navigando */
-  document.body.style.overflow = (startId === 'ravenholm' || startId === 'mappa' || startId === 'home') ? 'hidden' : '';
+  document.body.style.overflow = (startId === 'ravenholm' || startId === 'mappa' || startId === 'home' || (startPage && startPage.classList.contains('gw-page') && window.innerWidth > 820)) ? 'hidden' : '';
   initReveal();
 });
 
