@@ -4732,6 +4732,11 @@ canvas.gw-motes {
   font-style: inherit !important;
 }
 
+/* finestre dei personaggi: niente barra di scorrimento durante le animazioni di entrata */
+.gw-card-body:has(> .gw-figwrap) {
+  overflow: hidden;
+}
+
 /* ═══ Telefono e schermi bassi: le pagine scorrono in verticale, il PC resta invariato ═══ */
 @media (max-width: 820px), (max-height: 500px) {
   /* impianto generale */
@@ -7378,13 +7383,30 @@ window.addEventListener('admin-state-changed', e => {
     while (over() > 28 && over() < 320 && w < panel.clientWidth && n++ < 14) { w = Math.min(panel.clientWidth, w + 80); card.style.maxWidth = w + 'px'; }
   }
 
+  /* ritratti dei personaggi: si rimpiccioliscono quanto basta per stare nella finestra senza scorrimento */
+  function fitFigs(panel) {
+    const figs = panel && panel.querySelector('.gw-figs');
+    if (!figs) return;
+    const banners = $$('.gw-banner.gw-fig', figs);
+    banners.forEach(b => b.style.removeProperty('--w'));
+    if (!desktop()) return;
+    const body = figs.closest('.gw-card-body'), wrap = figs.parentNode;
+    const extra = () => Array.from(wrap.children).filter(c => c !== figs).reduce((h, c) => h + c.offsetHeight + parseFloat(getComputedStyle(c).marginTop), 0);
+    const need = () => figs.offsetHeight + extra() + parseFloat(getComputedStyle(wrap).rowGap || 0) * (wrap.children.length - 1);
+    let w = banners[0] ? banners[0].offsetWidth : 0, n = 0;
+    while (w > 110 && need() > body.clientHeight + 0.5 && n++ < 40) {
+      w = Math.floor(w * 0.97);
+      banners.forEach(b => b.style.setProperty('--w', w + 'px'));
+    }
+  }
+
   /* sfumatura in fondo alle aree scorrevoli quando il testo continua */
   function fades(scope) {
     $$('.gw-card-body, .gw-box', scope).forEach(b => b.classList.toggle('gw-more', b.scrollHeight - b.clientHeight - b.scrollTop > 6));
   }
 
   function refresh(g, panel) {
-    fitTitles(g); widen(panel); fades(g);
+    fitTitles(g); widen(panel); fitFigs(panel); fades(g);
     setTimeout(() => fades(g), 900); /* dopo le animazioni di entrata */
   }
 
