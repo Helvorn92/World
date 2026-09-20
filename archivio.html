@@ -1472,6 +1472,7 @@ nav::after {
     gap: 0.4rem;
   }
 }
+/* @@COMMON */
 /* ═══ VESTE COERENTE CON L'INDEX (solo estetica) ═══ */
 body { background: #06060f; }
 
@@ -1480,7 +1481,7 @@ body { background: #06060f; }
   background:
     radial-gradient(120% 70% at 50% -8%, rgba(255, 214, 150, .12) 0%, transparent 55%),
     radial-gradient(80% 55% at 50% 108%, rgba(0, 0, 0, .6) 0%, transparent 60%),
-    linear-gradient(180deg, #0c0a14 0%, #14100d 26%, #0b0910 62%, #05050c 100%);
+    linear-gradient(180deg, #0a0912 0%, #0c0b15 28%, #08070f 64%, #05050c 100%);
 }
 #wall-left, #wall-right { background: linear-gradient(180deg, #0a0810, #120e12 45%, #08070e); }
 #wall-center { background: linear-gradient(180deg, #0a0810, #151019 50%, #0a0810); }
@@ -1554,6 +1555,13 @@ body { background: #06060f; }
 nav { position: relative; z-index: 1000; }
 .archive-wrap { z-index: 10; }
 
+
+/* la lente del menu vale solo sull'index: qui non c'è una ricerca */
+nav #search-btn { display: none; }
+/* il tasto del profilo della pagina è sostituito da quello del menu */
+.admin-login-btn { display: none !important; }
+
+/* @@ARCHIVIO */
 /* ═══ ARCHIVIO: legno e finestre nella stessa gamma dell'index ═══ */
 #wall-left, #wall-right { background: #07060e; }
 #wall-center { background: linear-gradient(180deg, #08070f, #0d0b14 50%, #08070f); }
@@ -1604,6 +1612,8 @@ nav { position: relative; z-index: 1000; }
     inset 0 0 0 1px rgba(201, 168, 76, .12),
     0 1px 0 rgba(232, 201, 122, .18) !important;
 }
+
+
 
 </style>
 </head>

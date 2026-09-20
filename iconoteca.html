@@ -1468,6 +1468,7 @@ nav::after {
     gap: 0.4rem;
   }
 }
+/* @@COMMON */
 /* ═══ VESTE COERENTE CON L'INDEX (solo estetica) ═══ */
 body { background: #06060f; }
 
@@ -1476,7 +1477,7 @@ body { background: #06060f; }
   background:
     radial-gradient(120% 70% at 50% -8%, rgba(255, 214, 150, .12) 0%, transparent 55%),
     radial-gradient(80% 55% at 50% 108%, rgba(0, 0, 0, .6) 0%, transparent 60%),
-    linear-gradient(180deg, #0c0a14 0%, #14100d 26%, #0b0910 62%, #05050c 100%);
+    linear-gradient(180deg, #0a0912 0%, #0c0b15 28%, #08070f 64%, #05050c 100%);
 }
 #wall-left, #wall-right { background: linear-gradient(180deg, #0a0810, #120e12 45%, #08070e); }
 #wall-center { background: linear-gradient(180deg, #0a0810, #151019 50%, #0a0810); }
@@ -1550,56 +1551,12 @@ body { background: #06060f; }
 nav { position: relative; z-index: 1000; }
 .archive-wrap { z-index: 10; }
 
-/* ═══ ARCHIVIO: legno e finestre nella stessa gamma dell'index ═══ */
-#wall-left, #wall-right { background: #07060e; }
-#wall-center { background: linear-gradient(180deg, #08070f, #0d0b14 50%, #08070f); }
 
-/* finestre: bronzo scuro con filo d'oro, vetro di notte blu.
-   L'arco parte sotto il menu, così la curva si vede tutta. */
-.win-inner {
-  top: 78px;
-  border-color: #241a12;
-  box-shadow:
-    inset 0 0 0 3px #0d0a06,
-    inset 0 0 0 6px #302418,
-    inset 0 0 0 7px rgba(232, 201, 122, .26),
-    inset 0 0 0 13px #17100a,
-    inset 0 0 70px rgba(0, 0, 0, .75),
-    0 0 46px rgba(0, 0, 0, .9);
-}
-.win-sky { background: linear-gradient(180deg, rgba(14, 20, 44, .55), rgba(6, 8, 20, .35)); }
-.win-bar-h1, .win-bar-h2 {
-  background: linear-gradient(180deg, #33261a 0%, #221a11 45%, #120d08 100%);
-  box-shadow: inset 0 1px 0 rgba(232, 201, 122, .3), 0 4px 10px rgba(0, 0, 0, .85);
-}
-.win-bar-v {
-  background: linear-gradient(90deg, #33261a 0%, #221a11 45%, #120d08 100%);
-  box-shadow: inset 1px 0 0 rgba(232, 201, 122, .26), 4px 0 10px rgba(0, 0, 0, .85);
-}
-.win-frame { border-color: #17100a; box-shadow: inset 0 0 0 2px rgba(232, 201, 122, .14); }
+/* la lente del menu vale solo sull'index: qui non c'è una ricerca */
+nav #search-btn { display: none; }
+/* il tasto del profilo della pagina è sostituito da quello del menu */
+.admin-login-btn { display: none !important; }
 
-/* scaffali: noce scuro invece dell'arancio, con il filo d'oro sul bordo */
-.shelf-row {
-  background: linear-gradient(180deg, #2a2016 0%, #201810 55%, #150f09 100%) !important;
-  border-left-color: #100b07 !important;
-  border-right-color: #100b07 !important;
-}
-.shelf-row::before, .shelf-row:last-child::after {
-  background: linear-gradient(180deg, #3d2e1e 0%, #281d12 45%, #130d07 100%) !important;
-  box-shadow: inset 0 1px 0 rgba(232, 201, 122, .35), 0 6px 16px rgba(0, 0, 0, .7) !important;
-}
-.niche {
-  background:
-    radial-gradient(ellipse at 50% 30%, rgba(0, 0, 0, .12), rgba(0, 0, 0, .58) 90%),
-    linear-gradient(180deg, #140f0a, #0c0906) !important;
-  box-shadow:
-    inset 0 4px 12px rgba(0, 0, 0, .85),
-    inset 0 -3px 8px rgba(0, 0, 0, .7),
-    inset 4px 0 9px rgba(0, 0, 0, .6),
-    inset -4px 0 9px rgba(0, 0, 0, .6),
-    inset 0 0 0 1px rgba(201, 168, 76, .12),
-    0 1px 0 rgba(232, 201, 122, .18) !important;
-}
 
 </style>
 </head>
