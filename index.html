@@ -5860,6 +5860,41 @@ nav::after {
   #page-ravenholm,
   #page-mappa { height: calc(100dvh - 64px); }
 }
+
+/* ═══ Emblemi delle organizzazioni: medaglione intero, niente cerchio che taglia ═══ */
+.gw-intro.gw-org .gw-emblem {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 0.7rem;
+}
+.gw-intro.gw-org .gw-emblem .gw-em-in {
+  inset: -18%;
+  border-radius: 0;
+  overflow: visible;
+  background: none;
+  box-shadow: none;
+}
+.gw-intro.gw-org .gw-emblem .gw-em-in img {
+  object-fit: contain;
+  filter:
+    drop-shadow(0 6px 16px rgba(0, 0, 0, 0.75))
+    drop-shadow(0 0 26px rgba(201, 168, 76, 0.3));
+}
+@media (max-width: 1024px), (max-height: 500px) and (pointer: coarse) {
+  .gw .gw-intro.gw-org .gw-emblem {
+    width: 104px;
+    height: 104px;
+  }
+  .gw .gw-intro.gw-org .gw-emblem .gw-em-in {
+    inset: -18%;
+  }
+}
+@media (max-height: 500px) {
+  .gw .gw-intro.gw-org .gw-emblem {
+    width: 76px;
+    height: 76px;
+  }
+}
 </style>
 </head>
 <body>
