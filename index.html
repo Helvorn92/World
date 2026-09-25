@@ -5919,7 +5919,7 @@ nav::after {
 .cz-veil{position:absolute;inset:0;z-index:4;pointer-events:none;
   background:radial-gradient(130% 110% at 50% 45%,transparent 60%,rgba(2,2,8,.45) 88%,rgba(2,2,8,.75) 100%)}
 .cz-labels{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
-.cz-lbl{position:absolute;left:0;top:0;pointer-events:auto;cursor:pointer;white-space:nowrap;padding:4px 6px 4px 0;
+.cz-lbl{position:absolute;left:0;top:0;will-change:transform;backface-visibility:hidden;pointer-events:auto;cursor:pointer;white-space:nowrap;padding:4px 6px 4px 0;
   display:flex;align-items:center;gap:7px;transition:opacity .35s,color .25s;color:#f1dfae;text-shadow:0 0 12px rgba(0,0,0,.95),0 0 3px #000}
 .cz-lbl::before{content:"";width:16px;height:1px;background:linear-gradient(90deg,transparent,rgba(232,201,122,.85))}
 .cz-lbl span{display:flex;flex-direction:column;line-height:1.25}
@@ -8454,7 +8454,9 @@ window.addEventListener('admin-state-changed', e => {
     if (coarse) canvas.style.touchAction = 'pan-y';
 
     const scene = new T.Scene();
-    const camera = new T.PerspectiveCamera(50, 0.7, 0.1, 6000);
+    // obiettivo stretto (teleobiettivo): i mondi ai bordi non si deformano
+    const FOV = 28, FK = Math.tan(T.MathUtils.degToRad(25)) / Math.tan(T.MathUtils.degToRad(FOV / 2));
+    const camera = new T.PerspectiveCamera(FOV, 0.7, 0.5, 9000);
     const loader = new T.TextureLoader();
     let pending = 0, readyShown = false;
     const loaded = () => { pending--; };
@@ -8641,7 +8643,7 @@ window.addEventListener('admin-state-changed', e => {
         pos[i*3] = x; pos[i*3+1] = y; pos[i*3+2] = z; ph[i] = Math.random();
       }
       const g = new T.BufferGeometry(); g.setAttribute('position', new T.BufferAttribute(pos,3)); g.setAttribute('phase', new T.BufferAttribute(ph,1));
-      const m = new T.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uR: { value: w.r }, uScale: { value: DPR }, uCol: { value: new T.Color(color) } },
+      const m = new T.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uR: { value: w.r }, uScale: { value: DPR * FK }, uCol: { value: new T.Color(color) } },
         vertexShader: 'attribute float phase; uniform float uTime; uniform float uR; uniform float uScale; varying float vA;' +
           'void main(){ vec3 p = position;' +
           (mode === 'disk'
@@ -8660,7 +8662,7 @@ window.addEventListener('admin-state-changed', e => {
     for (let i = 0; i < dustN; i++){ const a = Math.random()*Math.PI*2, r = 8 + Math.random()*50;
       dpos[i*3] = Math.cos(a)*r; dpos[i*3+1] = (Math.random()-.5)*14*(1 - r/90); dpos[i*3+2] = Math.sin(a)*r; dph[i] = Math.random(); }
     const dg = new T.BufferGeometry(); dg.setAttribute('position', new T.BufferAttribute(dpos,3)); dg.setAttribute('phase', new T.BufferAttribute(dph,1));
-    const dustMat = new T.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uScale: { value: DPR } },
+    const dustMat = new T.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uScale: { value: DPR * FK } },
       vertexShader: 'attribute float phase; uniform float uTime; uniform float uScale; varying float vA; void main(){ vec3 p = position; float a = uTime * 0.012 * (1.0 + phase);' +
         'p.xz = mat2(cos(a),-sin(a),sin(a),cos(a)) * p.xz; p.y += sin(uTime * 0.4 + phase * 20.0) * 0.6; vec4 mv = modelViewMatrix * vec4(p,1.0); gl_Position = projectionMatrix * mv;' +
         'vA = 0.35 + 0.65 * (0.5 + 0.5 * sin(uTime * 1.1 + phase * 50.0)); gl_PointSize = uScale * (18.0 + phase * 26.0) / -mv.z; }',
@@ -8676,22 +8678,22 @@ window.addEventListener('admin-state-changed', e => {
 
     /* camera: perno sul Sole; la vista iniziale coincide con la tavola e gira insieme ai mondi */
     let HOME_PH = 1.22, WIDE = true, BAR = 0, BX = 0, BY = 0;
-    const cam = { uth: 0, uph: HOME_PH, vth: 0, vph: 0, tr: 100, homeR: 100, focus: null, lock: false };
+    const cam = { uth: 0, uph: HOME_PH, sth: 0, sph: HOME_PH, vth: 0, vph: 0, tr: 100, homeR: 100, focus: null, lock: false };
     const cur = { t: new T.Vector3(), th: 0, ph: HOME_PH, r: 100, off: 0, roll: 0 };
     const G = { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0, roll: 0 };
-    const MAXR = 420, minR = () => 16;
+    const MAXR = 420 * FK, minR = () => 16 * FK;
     const fly = { t: 1, dur: 1.9, w: null, from: { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0, roll: 0 }, done: null };
     const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3)/2;
     const wrap = d => ((d + Math.PI) % (Math.PI*2) + Math.PI*2) % (Math.PI*2) - Math.PI;
     function goal(w, o){
-      if (w){ w.holder.getWorldPosition(o.t); o.th = Math.atan2(-o.t.z, -o.t.x) + (w.view || .8); o.ph = 1.12; o.r = w.r * (w.dist || 5.6) * (WIDE ? .85 : 1); o.off = w.map ? 0 : 1; o.roll = 0; }
-      else { o.t.set(0, 0, 0); o.th = A + Math.PI/2 + cam.uth; o.ph = cam.uph; o.r = cam.tr; o.off = 0; o.roll = WIDE ? 0 : 1; }
+      if (w){ w.holder.getWorldPosition(o.t); o.th = Math.atan2(-o.t.z, -o.t.x) + (w.view || .8); o.ph = 1.12; o.r = w.r * (w.dist || 5.6) * (WIDE ? .85 : 1) * FK; o.off = w.map ? 0 : 1; o.roll = 0; }
+      else { o.t.set(0, 0, 0); o.th = A + Math.PI/2 + cam.sth; o.ph = cam.sph; o.r = cam.tr; o.off = 0; o.roll = WIDE ? 0 : 1; }
       return o;
     }
     function startFly(w, dur, done){
       Object.assign(fly.from, { th: cur.th, ph: cur.ph, r: cur.r, off: cur.off, roll: cur.roll }); fly.from.t.copy(cur.t);
       fly.w = w; fly.t = 0; fly.dur = dur || 1.9; fly.done = done || null; cam.vth = cam.vph = 0;
-      if (!w){ cam.tr = cam.homeR; cam.uth = 0; cam.uph = HOME_PH; }
+      if (!w){ cam.tr = cam.homeR; cam.uth = cam.sth = 0; cam.uph = cam.sph = HOME_PH; }
     }
     const ptrs = new Map(); let moved = 0, pinch0 = 0, pinchR0 = 0, last = null;
     const busy = () => !!(cam.focus || cam.lock || fly.t < 1);
@@ -8750,7 +8752,7 @@ window.addEventListener('admin-state-changed', e => {
     card.querySelector('.cz-back').addEventListener('click', back);
     function reset(){   // torna alla vista d'insieme senza animazione
       cam.focus = null; cam.lock = false; card.classList.remove('on'); box.classList.remove('focus');
-      fly.t = 1; fly.done = null; cam.uth = 0; cam.uph = HOME_PH; cam.tr = cam.homeR; goal(null, G);
+      fly.t = 1; fly.done = null; cam.uth = cam.sth = 0; cam.uph = cam.sph = HOME_PH; cam.tr = cam.homeR; goal(null, G);
       cur.t.copy(G.t); cur.th = G.th; cur.ph = G.ph; cur.r = G.r; cur.off = 0; cur.roll = G.roll;
     }
 
@@ -8761,7 +8763,8 @@ window.addEventListener('admin-state-changed', e => {
       // distanza e spostamento che fanno coincidere il 3D con la tavola: stessa scala, Sole nello stesso punto
       cam.homeR = (m.H / 2) / (Math.tan(T.MathUtils.degToRad(camera.fov / 2)) * m.ppu);
       BX = m.W / 2 - m.sunX; BY = m.H / 2 - m.sunY;
-      if (wasWide !== WIDE && !cam.focus){ cam.uph = HOME_PH; cam.uth = 0; }
+      worlds.forEach(w => { w.lw = 0; });   // rimisura le etichette
+      if (wasWide !== WIDE && !cam.focus){ cam.uph = cam.sph = HOME_PH; cam.uth = cam.sth = 0; }
       if (!cam.focus && fly.t >= 1 && !cam.lock && Math.abs(cam.uth) < 1e-3) cam.tr = cam.homeR;
     }
     new ResizeObserver(resize).observe(box); resize(); reset();
@@ -8788,7 +8791,8 @@ window.addEventListener('admin-state-changed', e => {
       const ab = 1 + Math.sin(t * .8) * .05; auraGlow.scale.set(solv.r*5.4*ab, solv.r*5.4*ab, 1);
 
       // camera
-      if (!ptrs.size){ cam.uth += cam.vth; cam.uph = T.MathUtils.clamp(cam.uph + cam.vph, .18, 1.5); cam.vth *= .93; cam.vph *= .93; }
+      if (!ptrs.size){ const k = Math.pow(.93, dt * 60); cam.uth += cam.vth * dt * 60; cam.uph = T.MathUtils.clamp(cam.uph + cam.vph * dt * 60, .18, 1.5); cam.vth *= k; cam.vph *= k; }
+      { const k = 1 - Math.exp(-dt * 16); cam.sth += (cam.uth - cam.sth) * k; cam.sph += (cam.uph - cam.sph) * k; }
       const fw = fly.t < 1 ? fly.w : (cam.focus || (cam.lock ? gwernia : null));
       goal(fw, G);
       if (fly.t < 1){
@@ -8809,7 +8813,13 @@ window.addEventListener('admin-state-changed', e => {
       camera.up.copy(upv); camera.lookAt(cur.t);
       const W = box.clientWidth, H = box.clientHeight, VH = Math.max(1, H - BAR);
       // Sole nello stesso punto della tavola; con la scheda aperta la vista scivola di lato (o in alto sul telefono)
-      camera.setViewOffset(W, H, BX * (1 - cur.off) + (WIDE ? cur.off * W * .17 : 0), BY * (1 - cur.off) + BAR / 2 * cur.off + (WIDE ? 0 : cur.off * VH * .2), W, H);
+      camera.setViewOffset(W, H, BX * (1 - cur.off), BY * (1 - cur.off), W, H);
+      if (cur.off > 0){
+        const tf = Math.tan(T.MathUtils.degToRad(FOV / 2));
+        const nx = WIDE ? .34 * cur.off : 0, ny = ((WIDE ? 0 : VH * .4) + BAR) / H * cur.off;
+        camera.rotateY(-Math.atan(nx * tf * W / H));
+        camera.rotateX(-Math.atan(ny * tf));
+      }
       goldLine.opacity = .3 * (1 - .75*cur.off); goldTick.opacity = .38 * (1 - .75*cur.off);
 
       // etichette, a destra di ogni mondo così non si sovrappongono mai
@@ -8821,8 +8831,11 @@ window.addEventListener('admin-state-changed', e => {
         else { prj2.copy(tmp).addScaledVector(right, w.r * 1.05).project(camera); x = (prj2.x*.5+.5)*W + 8; y = (-prj.y*.5+.5)*H; }
         let o = prj.z > 1 ? 0 : 1;
         if (busy()) o = 0;
-        w.label.style.opacity = o; w.label.style.pointerEvents = o ? 'auto' : 'none';
-        w.label.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)' + (WIDE ? ' translate(-50%,-100%)' : ' translateY(-50%)');
+        if (o !== w.lo){ w.lo = o; w.label.style.opacity = o; w.label.style.pointerEvents = o ? 'auto' : 'none'; }
+        if (!w.lw || w.lwWide !== WIDE){ w.lw = w.label.offsetWidth; w.lh = w.label.offsetHeight; w.lwWide = WIDE; }
+        x -= WIDE ? w.lw / 2 : 0; y -= WIDE ? w.lh : w.lh / 2;
+        const rx = Math.round(x), ry = Math.round(y);
+        if (rx !== w.rx || ry !== w.ry){ w.rx = rx; w.ry = ry; w.label.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)'; }
       });
 
       renderer.render(scene, camera);
