@@ -5901,17 +5901,20 @@ nav::after {
 
 <style id="cz-style">
 /* ═══ IL COSMO IN 3D (finestra della Cosmologia) ═══ */
-.cz{position:relative;height:100%;aspect-ratio:1403/1992;max-width:100%;margin:0 auto;overflow:hidden;background:#04040a;
-  border:1px solid var(--gold-dim);
-  box-shadow:0 0 0 6px rgba(6,6,15,.85),0 0 0 7px rgba(201,168,76,.35),0 30px 80px rgba(0,0,0,.7)}
+/* la finestra del Cosmo occupa tutta la panoramica, anche sotto la barra delle schede */
+.gw-stage:has(#gw-origini-mappa.gw-on){bottom:0}
+#gw-origini-mappa{inset:0}
+#gw-origini-mappa .gw-plate{height:100%;width:100%;padding:0}
+.cz{position:relative;width:100%;height:100%;overflow:hidden;background:#04040a;--czbar:0px}
 .cz canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 .cz canvas.drag{cursor:grabbing}
 .cz canvas.hot{cursor:pointer}
 .cz.focus canvas{cursor:default}
-.cz-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;pointer-events:none;transition:opacity 1.4s ease}
+.cz-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:5;pointer-events:none;transition:opacity 1.4s ease;
+  padding:3% 0 calc(var(--czbar) + 3%);background:#04040a}
 .cz.ready .cz-poster{opacity:0}
 .cz-veil{position:absolute;inset:0;z-index:4;pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 50%,transparent 58%,rgba(2,2,8,.5) 90%,rgba(2,2,8,.8) 100%)}
+  background:radial-gradient(130% 110% at 50% 45%,transparent 60%,rgba(2,2,8,.45) 88%,rgba(2,2,8,.75) 100%)}
 .cz-labels{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
 .cz-lbl{position:absolute;left:0;top:0;pointer-events:auto;cursor:pointer;white-space:nowrap;padding:4px 6px 4px 0;
   display:flex;align-items:center;gap:7px;transition:opacity .35s,color .25s;color:#f1dfae;text-shadow:0 0 12px rgba(0,0,0,.95),0 0 3px #000}
@@ -5920,11 +5923,11 @@ nav::after {
 .cz-lbl b{font-family:'Cinzel',serif;font-weight:600;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase}
 .cz-lbl:hover{color:#fff4d0}
 .cz-lbl small{font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;font-size:.74rem;letter-spacing:.04em;color:#cbbd9f}
-.cz-hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;pointer-events:none;width:92%;text-align:center;
+.cz-hint{position:absolute;left:50%;bottom:calc(var(--czbar) + 14px);transform:translateX(-50%);z-index:6;pointer-events:none;width:92%;text-align:center;
   font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:#cbbd9f;line-height:1.9;
   text-shadow:0 1px 8px #000;opacity:.9;transition:opacity .8s}
 .cz-hint.gone,.cz.focus .cz-hint,.cz.fail .cz-hint{opacity:0}
-.cz-plate-btn{position:absolute;top:12px;right:12px;z-index:9;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;
+.cz-plate-btn{position:absolute;top:16px;right:clamp(14px,3vw,48px);z-index:9;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;
   padding:.5rem .8rem;border:1px solid rgba(201,168,76,.45);background:rgba(6,6,15,.72);color:#f6e2a8;
   font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;
   -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:box-shadow .25s,background .25s}
@@ -5933,7 +5936,7 @@ nav::after {
 .cz.focus .cz-plate-btn{opacity:0;pointer-events:none}
 
 /* scheda del mondo, dentro la finestra */
-.cz-card{position:absolute;left:12px;right:12px;bottom:12px;z-index:8;padding:1.35rem 1.3rem 1.2rem;max-height:52%;overflow:auto;
+.cz-card{position:absolute;left:12px;right:12px;bottom:calc(var(--czbar) + 12px);z-index:8;padding:1.35rem 1.3rem 1.2rem;max-height:52%;overflow:auto;
   opacity:0;transform:translateY(26px);pointer-events:none;transition:opacity .5s ease,transform .5s ease;
   border:1px solid rgba(201,168,76,.34);
   background:radial-gradient(ellipse 60% 50% at 18% 0%,rgba(201,168,76,.09),transparent 60%),linear-gradient(160deg,rgba(16,12,26,.92),rgba(7,6,14,.95));
@@ -5953,6 +5956,16 @@ nav::after {
   background:linear-gradient(180deg,rgba(201,168,76,.16),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.45);padding:.62rem 1.05rem;transition:box-shadow .25s}
 .cz-back:hover{box-shadow:0 0 18px rgba(201,168,76,.25)}
 
+/* panoramica larga */
+.cz.wide .cz-card{left:auto;right:clamp(16px,3.5vw,56px);bottom:auto;top:calc((100% - var(--czbar)) / 2);width:min(400px,36%);
+  max-height:calc(100% - var(--czbar) - 48px);transform:translate(26px,-50%)}
+.cz.wide .cz-card.on{transform:translate(0,-50%)}
+.cz.wide .cz-lbl{flex-direction:column;gap:3px;padding:0 6px 2px}
+.cz.wide .cz-lbl::before{display:none}
+.cz.wide .cz-lbl::after{content:"";width:1px;height:14px;background:linear-gradient(180deg,rgba(232,201,122,.85),transparent)}
+.cz.wide .cz-lbl span{align-items:center;text-align:center}
+.cz.wide .cz-hint{width:auto;white-space:nowrap}
+
 /* tavola illustrata a tutto schermo */
 .cz-lightbox{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:clamp(12px,4vh,40px);
   background:rgba(3,3,8,.92);opacity:0;pointer-events:none;transition:opacity .45s ease;cursor:zoom-out}
@@ -5965,7 +5978,8 @@ nav::after {
   color:#f6e2a8;background:rgba(6,6,15,.7);border:1px solid rgba(201,168,76,.45);padding:.55rem .9rem;cursor:pointer}
 
 @media (max-width: 820px), (max-height: 500px){
-  .gw .cz{height:auto;width:100%}
+  .gw #gw-origini-mappa .gw-plate{padding-top:0}
+  .gw .cz{width:calc(100% + 32px);margin:0 -16px;height:calc(100svh - 64px - var(--mbar, 62px))}
   .cz-lbl small{display:none}
   .cz-lbl b{font-size:.54rem;letter-spacing:.2em}
   .cz-card{padding:1.1rem 1rem 1rem;max-height:58%}
@@ -8565,7 +8579,7 @@ window.addEventListener('admin-state-changed', e => {
       kick: 'Il Reame delle Divinità', text: 'Un Mondo dove ogni Divinità ha plasmato il proprio Dominio a propria immagine. Per i mortali, questi Domini rappresentano la promessa più alta a cui aspirare in vita.' });
     const cald = world({ id: 'calderoth', name: 'Calderoth', sub: 'reame dei Diavoli', tex: 'calderoth', emap: 'calderoth_em', eStr: 1.7,
       r: 1.6, orbit: 35, side: 1, spin: .16, axial: .22, rim: 0xff7a3a, rimStr: .7, atmo: 0xff5a1e, atmoStr: .8, amb: 0x160907,
-      view: 1.45, dist: 7.5, kick: 'Il Reame dei Diavoli', text: 'Un Mondo di ordine tirannico e crudeltà calcolata. I Diavoli vi regnano con gerarchia ferrea, perseguendo piani millenari di conquista e corruzione. Ogni Anima dannata diventa risorsa, ogni accordo uno strumento di potere. È un luogo dove anche la sofferenza obbedisce a regole precise.' });
+      view: -1.35, dist: 9, kick: 'Il Reame dei Diavoli', text: 'Un Mondo di ordine tirannico e crudeltà calcolata. I Diavoli vi regnano con gerarchia ferrea, perseguendo piani millenari di conquista e corruzione. Ogni Anima dannata diventa risorsa, ogni accordo uno strumento di potere. È un luogo dove anche la sofferenza obbedisce a regole precise.' });
     const vora = world({ id: 'voraxia', name: 'Voraxia', sub: 'reame dei Demoni', tex: 'voraxia', emap: 'voraxia_em', eStr: 1.6,
       r: 3.7, orbit: 50, side: 1, spin: .09, axial: .5, rim: 0xc890ff, rimStr: .85, atmo: 0x9a58ff, atmoStr: 1, amb: 0x0c0614,
       kick: 'Il Reame dei Demoni', text: 'Un Mondo fatto di caos e corruzione, dove ogni Dominio è plasmato dalla follia del Demone che lo governa. Finire qui è la sorte peggiore in cui un Mortale possa imbattersi.' });
@@ -8630,7 +8644,7 @@ window.addEventListener('admin-state-changed', e => {
       el.addEventListener('click', e => { e.stopPropagation(); choose(w); }); labels.appendChild(el); w.label = el; });
 
     /* camera: nella vista d'insieme gira insieme ai mondi, come nella tavola */
-    const CENTER = 14, HOME_PH = .44;
+    const CENTER = 15; let HOME_PH = .44, WIDE = false, BAR = 0;
     const cam = { uth: 0, uph: HOME_PH, vth: 0, vph: 0, tr: 150, homeR: 150, focus: null, lock: false };
     const cur = { t: new T.Vector3(), th: 0, ph: HOME_PH, r: 150, off: 0 };
     const G = { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0 };
@@ -8639,8 +8653,8 @@ window.addEventListener('admin-state-changed', e => {
     const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3)/2;
     const wrap = d => ((d + Math.PI) % (Math.PI*2) + Math.PI*2) % (Math.PI*2) - Math.PI;
     function goal(w, o){
-      if (w){ w.holder.getWorldPosition(o.t); o.th = Math.atan2(-o.t.z, -o.t.x) + (w.view || .8); o.ph = 1.12; o.r = w.r * (w.dist || 6.2); o.off = w.map ? 0 : 1; }
-      else { o.t.set(Math.cos(A)*CENTER, 0, Math.sin(A)*CENTER); o.th = A + Math.PI + cam.uth; o.ph = cam.uph; o.r = cam.tr; o.off = 0; }
+      if (w){ w.holder.getWorldPosition(o.t); o.th = Math.atan2(-o.t.z, -o.t.x) + (w.view || .8); o.ph = 1.12; o.r = w.r * (w.dist || 6.2) * (WIDE ? .85 : 1); o.off = w.map ? 0 : 1; }
+      else { o.t.set(Math.cos(A)*CENTER, 0, Math.sin(A)*CENTER); o.th = A + (WIDE ? Math.PI/2 : Math.PI) + cam.uth; o.ph = cam.uph; o.r = cam.tr; o.off = 0; }
       return o;
     }
     function startFly(w, dur, done){
@@ -8648,12 +8662,15 @@ window.addEventListener('admin-state-changed', e => {
       fly.w = w; fly.t = 0; fly.dur = dur || 1.9; fly.done = done || null; cam.vth = cam.vph = 0;
       if (!w){ cam.tr = cam.homeR; cam.uth = 0; cam.uph = HOME_PH; }
     }
-    function fitR(){   // distanza per far stare in verticale tutta la fila, da Gwernia a Voraxia
+    function fitR(){   // distanza per far stare tutta la fila: in orizzontale su schermi larghi, in verticale sul telefono
       const c = camera.clone(); c.clearViewOffset(); const pv = new T.Vector3(), pg = new T.Vector3();
+      const far = vora.orbit + vora.r*1.4, near = -gwernia.orbit - gwernia.r*1.6;
       for (let rr = 30; rr < MAXR; rr += 2){
-        c.position.set(CENTER - rr*Math.sin(HOME_PH), rr*Math.cos(HOME_PH), 0); c.lookAt(CENTER, 0, 0); c.updateMatrixWorld();
-        pv.set(vora.orbit + vora.r*1.2, 0, 0).project(c); pg.set(-gwernia.orbit - gwernia.r*1.6, 0, 0).project(c);
-        if (pv.y < .7 && pg.y > -.74) return rr;
+        if (WIDE){ c.position.set(CENTER, rr*Math.cos(HOME_PH), rr*Math.sin(HOME_PH)); }
+        else { c.position.set(CENTER - rr*Math.sin(HOME_PH), rr*Math.cos(HOME_PH), 0); }
+        c.lookAt(CENTER, 0, 0); c.updateMatrixWorld();
+        pv.set(far, 0, 0).project(c); pg.set(near, 0, 0).project(c);
+        if (WIDE ? (pv.x < .84 && pg.x > -.86) : (pv.y < .7 && pg.y > -.74)) return rr;
       }
       return 200;
     }
@@ -8688,7 +8705,7 @@ window.addEventListener('admin-state-changed', e => {
 
     const ray = new T.Raycaster(), ndc = new T.Vector2(), hits = worlds.map(w => w.hit);
     function worldAt(e){ const r = canvas.getBoundingClientRect();
-      ndc.set((e.clientX - r.left)/r.width*2 - 1, -(e.clientY - r.top)/r.height*2 + 1); ray.setFromCamera(ndc, camera);
+      ndc.set((e.clientX - r.left)/r.width*2 - 1, -(e.clientY - r.top)/Math.max(1, r.height - BAR)*2 + 1); ray.setFromCamera(ndc, camera);
       const h = ray.intersectObjects(hits, false)[0]; return h ? h.object.userData.w : null; }
     function hover(e){ if (coarse || busy()) return; canvas.classList.toggle('hot', !!worldAt(e)); }
     function pick(e){ const w = worldAt(e); if (w) choose(w); }
@@ -8720,14 +8737,25 @@ window.addEventListener('admin-state-changed', e => {
 
     function resize(){
       const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
-      renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix();
+      // quanta parte della finestra finisce sotto la barra delle schede
+      const gw = box.closest('.gw'), bar = gw && gw.querySelector('.gw-bar');
+      BAR = 0;
+      if (bar && getComputedStyle(bar).position !== 'fixed'){
+        const br = box.getBoundingClientRect(), bb = bar.getBoundingClientRect();
+        BAR = Math.max(0, Math.min(br.bottom, bb.bottom) - bb.top);
+      }
+      box.style.setProperty('--czbar', BAR + 'px');
+      const wasWide = WIDE; WIDE = w / Math.max(1, h - BAR) > 1.05; box.classList.toggle('wide', WIDE);
+      HOME_PH = WIDE ? 1.1 : .44;
+      if (wasWide !== WIDE && !cam.focus){ cam.uph = HOME_PH; cam.uth = 0; }
+      renderer.setSize(w, h, false); camera.aspect = w / Math.max(1, h - BAR); camera.updateProjectionMatrix();
       cam.homeR = fitR();
       if (!cam.focus && fly.t >= 1 && !cam.lock) cam.tr = cam.homeR;
     }
     new ResizeObserver(resize).observe(box); resize(); reset();
 
     /* animazione */
-    const clock = new T.Clock(); const tmp = new T.Vector3(), prj = new T.Vector3(), prj2 = new T.Vector3(), sp = new T.Vector3(), right = new T.Vector3();
+    const clock = new T.Clock(); const tmp = new T.Vector3(), prj = new T.Vector3(), prj2 = new T.Vector3(), sp = new T.Vector3(), right = new T.Vector3(), upv = new T.Vector3();
     let raf = 0, running = false;
     function frame(){
       raf = requestAnimationFrame(frame);
@@ -8767,21 +8795,22 @@ window.addEventListener('admin-state-changed', e => {
       const s = Math.sin(cur.ph);
       camera.position.set(cur.t.x + cur.r*s*Math.cos(cur.th), cur.t.y + cur.r*Math.cos(cur.ph), cur.t.z + cur.r*s*Math.sin(cur.th));
       camera.lookAt(cur.t);
-      const W = box.clientWidth, H = box.clientHeight;
-      if (cur.off > .001) camera.setViewOffset(W, H, 0, cur.off * H * .2, W, H);
-      else if (camera.view && camera.view.enabled) camera.clearViewOffset();
+      const W = box.clientWidth, H = box.clientHeight, VH = Math.max(1, H - BAR);
+      // la scena sta nella parte visibile, sopra la barra; con la scheda aperta scivola di lato (o in alto sul telefono)
+      camera.setViewOffset(W, VH, WIDE ? cur.off * W * .17 : 0, WIDE ? 0 : cur.off * VH * .2, W, VH);
       goldLine.opacity = .3 * (1 - .75*cur.off); goldTick.opacity = .38 * (1 - .75*cur.off);
 
       // etichette, a destra di ogni mondo così non si sovrappongono mai
-      right.set(1, 0, 0).applyQuaternion(camera.quaternion);
+      right.set(1, 0, 0).applyQuaternion(camera.quaternion); upv.set(0, 1, 0).applyQuaternion(camera.quaternion);
       worlds.forEach(w => {
         w.holder.getWorldPosition(tmp); prj.copy(tmp).project(camera);
-        prj2.copy(tmp).addScaledVector(right, w.r * 1.05).project(camera);
-        const x = (prj2.x*.5+.5)*W + 8, y = (-prj.y*.5+.5)*H;
+        let x, y;
+        if (WIDE){ prj2.copy(tmp).addScaledVector(upv, w.r * 1.12).project(camera); x = (prj.x*.5+.5)*W; y = (-prj2.y*.5+.5)*VH - 4; }
+        else { prj2.copy(tmp).addScaledVector(right, w.r * 1.05).project(camera); x = (prj2.x*.5+.5)*W + 8; y = (-prj.y*.5+.5)*VH; }
         let o = prj.z > 1 ? 0 : 1;
         if (busy()) o = 0;
         w.label.style.opacity = o; w.label.style.pointerEvents = o ? 'auto' : 'none';
-        w.label.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translateY(-50%)';
+        w.label.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)' + (WIDE ? ' translate(-50%,-100%)' : ' translateY(-50%)');
       });
 
       renderer.render(scene, camera);
