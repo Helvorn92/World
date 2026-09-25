@@ -5910,9 +5910,12 @@ nav::after {
 .cz canvas.drag{cursor:grabbing}
 .cz canvas.hot{cursor:pointer}
 .cz.focus canvas{cursor:default}
-.cz-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:5;pointer-events:none;transition:opacity 1.4s ease;
-  padding:3% 0 calc(var(--czbar) + 3%);background:#04040a}
-.cz.ready .cz-poster{opacity:0}
+.cz .cz-plate{position:absolute;left:0;top:0;width:100% !important;height:100% !important;max-width:none !important;max-height:none !important;object-fit:cover;z-index:5;opacity:0;pointer-events:none;transition:opacity 1.6s ease;background:#04040a}
+.cz.show-plate .cz-plate{opacity:1;pointer-events:auto}
+.cz .cz-plate-v,.cz.wide .cz-plate-w{display:block}
+.cz .cz-plate-w,.cz.wide .cz-plate-v{display:none}
+.cz.show-plate .cz-labels,.cz.show-plate .cz-hint{visibility:hidden;opacity:0}
+.cz-labels,.cz-hint{transition:opacity .8s,visibility .8s}
 .cz-veil{position:absolute;inset:0;z-index:4;pointer-events:none;
   background:radial-gradient(130% 110% at 50% 45%,transparent 60%,rgba(2,2,8,.45) 88%,rgba(2,2,8,.75) 100%)}
 .cz-labels{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}
@@ -5927,13 +5930,15 @@ nav::after {
   font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:#cbbd9f;line-height:1.9;
   text-shadow:0 1px 8px #000;opacity:.9;transition:opacity .8s}
 .cz-hint.gone,.cz.focus .cz-hint,.cz.fail .cz-hint{opacity:0}
-.cz-plate-btn{position:absolute;top:16px;right:clamp(14px,3vw,48px);z-index:9;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;
-  padding:.5rem .8rem;border:1px solid rgba(201,168,76,.45);background:rgba(6,6,15,.72);color:#f6e2a8;
-  font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;
-  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:box-shadow .25s,background .25s}
-.cz-plate-btn:hover{box-shadow:0 0 16px rgba(201,168,76,.28);background:rgba(20,16,10,.8)}
-.cz-plate-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.4}
-.cz.focus .cz-plate-btn{opacity:0;pointer-events:none}
+.cz-switch{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:9;display:flex;
+  border:1px solid rgba(201,168,76,.45);background:rgba(6,6,15,.72);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.cz-switch button{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:#cbbd9f;
+  background:transparent;border:0;padding:.6rem 1.15rem;cursor:pointer;transition:color .25s,background .25s}
+.cz-switch button+button{border-left:1px solid rgba(201,168,76,.3)}
+.cz-switch button:hover{color:#f6e2a8}
+.cz-switch button.on{color:#f6e2a8;background:linear-gradient(180deg,rgba(201,168,76,.22),rgba(201,168,76,.05));box-shadow:inset 0 -1px 0 rgba(232,201,122,.7)}
+.cz.fail .cz-switch{display:none}
 
 /* scheda del mondo, dentro la finestra */
 .cz-card{position:absolute;left:12px;right:12px;bottom:calc(var(--czbar) + 12px);z-index:8;padding:1.35rem 1.3rem 1.2rem;max-height:52%;overflow:auto;
@@ -5965,17 +5970,6 @@ nav::after {
 .cz.wide .cz-lbl::after{content:"";width:1px;height:14px;background:linear-gradient(180deg,rgba(232,201,122,.85),transparent)}
 .cz.wide .cz-lbl span{align-items:center;text-align:center}
 .cz.wide .cz-hint{width:auto;white-space:nowrap}
-
-/* tavola illustrata a tutto schermo */
-.cz-lightbox{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:clamp(12px,4vh,40px);
-  background:rgba(3,3,8,.92);opacity:0;pointer-events:none;transition:opacity .45s ease;cursor:zoom-out}
-.cz-lightbox.on{opacity:1;pointer-events:auto}
-.cz-lightbox img{max-width:100%;max-height:100%;object-fit:contain;border:1px solid var(--gold-dim);
-  box-shadow:0 0 0 6px rgba(6,6,15,.85),0 0 0 7px rgba(201,168,76,.35),0 40px 120px rgba(0,0,0,.8);
-  transform:scale(.97);transition:transform .45s ease}
-.cz-lightbox.on img{transform:scale(1)}
-.cz-lightbox .cz-close{position:absolute;top:18px;right:22px;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
-  color:#f6e2a8;background:rgba(6,6,15,.7);border:1px solid rgba(201,168,76,.45);padding:.55rem .9rem;cursor:pointer}
 
 @media (max-width: 820px), (max-height: 500px){
   .gw #gw-origini-mappa .gw-plate{padding-top:0}
@@ -6059,7 +6053,7 @@ nav::after {
         <div class="dd-group">
           <span class="dd-title">Il Principio</span>
           <div class="dd-sub">
-          <a class="dd-link" onclick="showPage(&#39;origini&#39;)">Origini del Cosmo</a>
+          <a class="dd-link" onclick="showPage(&#39;origini&#39;)">Il Cosmo</a>
           </div>
         </div>
         <div class="dd-group">
@@ -6097,6 +6091,12 @@ nav::after {
           <a class="dd-link" onclick="showPage(&#39;nihilsar&#39;)">Oracolo di Nihilsar</a>
           </div>
         </div>
+        <div class="dd-group">
+          <span class="dd-title">Magia</span>
+          <div class="dd-sub">
+          <a class="dd-link" onclick="showPage(&#39;trama-magica&#39;)">Trama Magica</a>
+          </div>
+        </div>
       </div>
       <div class="dd-col">
         <div class="dd-group">
@@ -6107,12 +6107,6 @@ nav::after {
           <a class="dd-link" onclick="showPage(&#39;piani-elementali&#39;)">Piani Elementali</a>
           <a class="dd-link" onclick="showPage(&#39;piani-transizione&#39;)">Piani di Transizione</a>
           <a class="dd-link" onclick="showPage(&#39;dal-quor&#39;)">Dal Quor</a>
-          </div>
-        </div>
-        <div class="dd-group">
-          <span class="dd-title">Magia</span>
-          <div class="dd-sub">
-          <a class="dd-link" onclick="showPage(&#39;trama-magica&#39;)">Trama Magica</a>
           </div>
         </div>
       </div>
@@ -6259,7 +6253,7 @@ nav::after {
 
 <!-- ═══════════ PAGE: ORIGINI DEL COSMO ═══════════ -->
 <div class="page gw-page" id="page-origini">
-<div class="gw" data-title="Origini del Cosmo" data-motes="255,228,170|-1|0"><div class="gw-bg gw-bgl gw-stars gw-on" data-p="gw-origini-mappa"></div><div class="gw-bg gw-bgl" data-p="gw-origini-1" style="background-image:url('images/1.png');--mp:68%"></div><div class="gw-bg gw-bgl" data-p="gw-origini-2" style="background-image:url('images/2.png');--mp:87%"></div><div class="gw-bg gw-bgl" data-p="gw-origini-3" style="background-image:url('images/3.png');--mp:85%"></div><div class="gw-bg gw-bgl" data-p="gw-origini-4" style="background-image:url('images/4.png');--mp:78%"></div><div class="gw-shade"></div><canvas class="gw-motes"></canvas><div class="gw-stage"><div class="gw-panel gw-on" id="gw-origini-mappa"><div class="gw-plate gw-rv" style="--i:1"><div class="cz" id="cz"><img class="cz-poster" src="images/Cosmologia_3_ihjofh.webp" alt="La tavola del Cosmo"><div class="cz-veil"></div><div class="cz-labels"></div><button class="cz-plate-btn" type="button" title="Apri la tavola del Cosmo"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 17h8M12 9.5l1 2 2 .3-1.5 1.4.4 2-1.9-1-1.9 1 .4-2L9 11.8l2-.3z"/></svg>Tavola</button><div class="cz-hint">Trascina per ruotare · Rotella per lo zoom · Clicca un mondo</div><div class="cz-card"><svg class="gw-corner gw-tl"><use href="#gwi-corner"/></svg><svg class="gw-corner gw-tr"><use href="#gwi-corner"/></svg><svg class="gw-corner gw-bl"><use href="#gwi-corner"/></svg><svg class="gw-corner gw-br"><use href="#gwi-corner"/></svg><div class="cz-kick"></div><h3></h3><div class="cz-badge">🔒 Mistero da Svelare</div><p></p><button class="cz-back" type="button">✦ Torna al Cosmo</button></div></div></div></div><div class="gw-panel" id="gw-origini-1"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Il Principio <i></i></span><h1 class="gw-title">Origini del Cosmo</h1><span class="gw-subtitle gw-rv" style="--i:4">L'Origine del Cosmo</span><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Prima dell'inizio di tutto esisteva soltanto il vuoto. Fu <em>Kosmir</em> a colmarlo, e da quel gesto nacquero il Cosmo e ogni cosa che venne dopo. Per prima cosa diede forma allo <em>Spazio</em>, e dallo Spazio nacque il <em>Tempo</em>. Poi creò la Luce, e dalla Luce nacque l'<em>Oscurità</em>. Infine generò <em>Magia e Antimagia</em>, due facce della stessa Medaglia. I mortali chiamarono queste forze <em>Oscure Materie</em>.</p></div></div></div></div><div class="gw-panel" id="gw-origini-2"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Origini del Cosmo <i></i></span><h1 class="gw-title">L'Alba della Vita</h1><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Con il passare del tempo furono creati i primi <em>Corpi Celesti</em>, separati dal <em>Piano Astrale</em>. Su di essi nacquero le prime forme di vita, che assorbirono la coscienza di <em>Kosmir</em>, diventando senzienti. I primi furono gli <em>Antichi</em>, poi vennero le <em>Divinità</em> e a seguire <em>Diavoli</em> e <em>Demoni</em>. Solo infine nacquero i <em>Mortali</em>. Nel Cosmo, ogni creatura dotata di vita e coscienza porta con sé un'impronta chiamata <em>Anima</em>. Quando la creatura muore, la sua Anima si ricongiunge con il Cosmo, ma non sempre questo accade.</p></div></div></div></div><div class="gw-panel" id="gw-origini-3"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Origini del Cosmo <i></i></span><h1 class="gw-title">La Contesa delle Anime</h1><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Furono i Diavoli a scoprire per primi che le Anime dei Mortali potevano essere sfruttate come fonte di potere. Tuttavia, per reclamarle era necessaria la volontà del mortale stesso, e hanno imparato a farlo attraverso patti, promesse o giuramenti. Le Divinità fecero lo stesso, offrendo però ai mortali un'esistenza ultraterrena nel proprio <em>Dominio</em>. Solo in questo modo un Mortale poteva impedire alla propria Anima di dissolversi nel Cosmo dopo la morte, e ambire così a una sorta di immortalità.</p></div></div></div></div><div class="gw-panel" id="gw-origini-4"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Origini del Cosmo <i></i></span><h1 class="gw-title">La Guerra dei Mondi</h1><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Sulle Anime dei Mortali gravava una tensione crescente, che col tempo sfociò in una terribile guerra, combattuta nel Piano Astrale. Nessuna delle due fazioni, però, poteva immaginare che allo scontro si sarebbero uniti anche i <em>Demoni</em>, che a differenza di Diavoli e Divinità, cercavano le Anime con l'unico scopo di divorarle. Solo così potevano accrescere la propria potenza.</p></div></div></div></div></div><div class="gw-bar"><div class="gw-bar-in" style="--n:5"><button class="gw-tab gw-on" data-p="gw-origini-mappa"><svg class="gw-ico"><use href="#gwi-i-ring"/></svg>Il Cosmo</button><button class="gw-tab" data-p="gw-origini-1"><svg class="gw-ico"><use href="#gwi-i-meteor"/></svg>L'Origine del Cosmo</button><button class="gw-tab" data-p="gw-origini-2"><svg class="gw-ico"><use href="#gwi-i-tree"/></svg>L'Alba della Vita</button><button class="gw-tab" data-p="gw-origini-3"><svg class="gw-ico"><use href="#gwi-i-scroll"/></svg>La Contesa delle Anime</button><button class="gw-tab" data-p="gw-origini-4"><svg class="gw-ico"><use href="#gwi-i-swords"/></svg>La Guerra dei Mondi</button></div></div></div>
+<div class="gw" data-title="Origini del Cosmo" data-motes="255,228,170|-1|0"><div class="gw-bg gw-bgl gw-stars gw-on" data-p="gw-origini-mappa"></div><div class="gw-bg gw-bgl" data-p="gw-origini-1" style="background-image:url('images/1.png');--mp:68%"></div><div class="gw-bg gw-bgl" data-p="gw-origini-2" style="background-image:url('images/2.png');--mp:87%"></div><div class="gw-bg gw-bgl" data-p="gw-origini-3" style="background-image:url('images/3.png');--mp:85%"></div><div class="gw-bg gw-bgl" data-p="gw-origini-4" style="background-image:url('images/4.png');--mp:78%"></div><div class="gw-shade"></div><canvas class="gw-motes"></canvas><div class="gw-stage"><div class="gw-panel gw-on" id="gw-origini-mappa"><div class="gw-plate gw-rv" style="--i:1"><div class="cz show-plate" id="cz"><img class="cz-plate cz-plate-w" src="images/cz_tavola.webp" alt="La tavola del Cosmo" loading="lazy"><img class="cz-plate cz-plate-v" src="images/Cosmologia_3_ihjofh.webp" alt="La tavola del Cosmo" loading="lazy"><div class="cz-veil"></div><div class="cz-labels"></div><div class="cz-switch"><button type="button" data-v="plate" class="on">Tavola</button><button type="button" data-v="3d">3D</button></div><div class="cz-hint">Trascina per ruotare · Rotella per lo zoom · Clicca un mondo</div><div class="cz-card"><svg class="gw-corner gw-tl"><use href="#gwi-corner"/></svg><svg class="gw-corner gw-tr"><use href="#gwi-corner"/></svg><svg class="gw-corner gw-bl"><use href="#gwi-corner"/></svg><svg class="gw-corner gw-br"><use href="#gwi-corner"/></svg><div class="cz-kick"></div><h3></h3><div class="cz-badge">🔒 Mistero da Svelare</div><p></p><button class="cz-back" type="button">✦ Torna al Cosmo</button></div></div></div></div><div class="gw-panel" id="gw-origini-1"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Il Principio <i></i></span><h1 class="gw-title">Origini del Cosmo</h1><span class="gw-subtitle gw-rv" style="--i:4">L'Origine del Cosmo</span><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Prima dell'inizio di tutto esisteva soltanto il vuoto. Fu <em>Kosmir</em> a colmarlo, e da quel gesto nacquero il Cosmo e ogni cosa che venne dopo. Per prima cosa diede forma allo <em>Spazio</em>, e dallo Spazio nacque il <em>Tempo</em>. Poi creò la Luce, e dalla Luce nacque l'<em>Oscurità</em>. Infine generò <em>Magia e Antimagia</em>, due facce della stessa Medaglia. I mortali chiamarono queste forze <em>Oscure Materie</em>.</p></div></div></div></div><div class="gw-panel" id="gw-origini-2"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Origini del Cosmo <i></i></span><h1 class="gw-title">L'Alba della Vita</h1><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Con il passare del tempo furono creati i primi <em>Corpi Celesti</em>, separati dal <em>Piano Astrale</em>. Su di essi nacquero le prime forme di vita, che assorbirono la coscienza di <em>Kosmir</em>, diventando senzienti. I primi furono gli <em>Antichi</em>, poi vennero le <em>Divinità</em> e a seguire <em>Diavoli</em> e <em>Demoni</em>. Solo infine nacquero i <em>Mortali</em>. Nel Cosmo, ogni creatura dotata di vita e coscienza porta con sé un'impronta chiamata <em>Anima</em>. Quando la creatura muore, la sua Anima si ricongiunge con il Cosmo, ma non sempre questo accade.</p></div></div></div></div><div class="gw-panel" id="gw-origini-3"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Origini del Cosmo <i></i></span><h1 class="gw-title">La Contesa delle Anime</h1><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Furono i Diavoli a scoprire per primi che le Anime dei Mortali potevano essere sfruttate come fonte di potere. Tuttavia, per reclamarle era necessaria la volontà del mortale stesso, e hanno imparato a farlo attraverso patti, promesse o giuramenti. Le Divinità fecero lo stesso, offrendo però ai mortali un'esistenza ultraterrena nel proprio <em>Dominio</em>. Solo in questo modo un Mortale poteva impedire alla propria Anima di dissolversi nel Cosmo dopo la morte, e ambire così a una sorta di immortalità.</p></div></div></div></div><div class="gw-panel" id="gw-origini-4"><div class="gw-intro"><div class="gw-intro-in"><span class="gw-kicker gw-rv" style="--i:2">Origini del Cosmo <i></i></span><h1 class="gw-title">La Guerra dei Mondi</h1><div class="gw-desc gw-box gw-rv" style="--i:5"><p>Sulle Anime dei Mortali gravava una tensione crescente, che col tempo sfociò in una terribile guerra, combattuta nel Piano Astrale. Nessuna delle due fazioni, però, poteva immaginare che allo scontro si sarebbero uniti anche i <em>Demoni</em>, che a differenza di Diavoli e Divinità, cercavano le Anime con l'unico scopo di divorarle. Solo così potevano accrescere la propria potenza.</p></div></div></div></div></div><div class="gw-bar"><div class="gw-bar-in" style="--n:5"><button class="gw-tab gw-on" data-p="gw-origini-mappa"><svg class="gw-ico"><use href="#gwi-i-ring"/></svg>Il Cosmo</button><button class="gw-tab" data-p="gw-origini-1"><svg class="gw-ico"><use href="#gwi-i-meteor"/></svg>L'Origine del Cosmo</button><button class="gw-tab" data-p="gw-origini-2"><svg class="gw-ico"><use href="#gwi-i-tree"/></svg>L'Alba della Vita</button><button class="gw-tab" data-p="gw-origini-3"><svg class="gw-ico"><use href="#gwi-i-scroll"/></svg>La Contesa delle Anime</button><button class="gw-tab" data-p="gw-origini-4"><svg class="gw-ico"><use href="#gwi-i-swords"/></svg>La Guerra dei Mondi</button></div></div></div>
 </div>
 
 <!-- ═══════════ PAGE: COSMOLOGIA INDEX ═══════════ -->
@@ -8376,26 +8370,57 @@ window.addEventListener('admin-state-changed', e => {
   const hint = box.querySelector('.cz-hint');
   if (coarse && hint) hint.textContent = 'Scorri di lato per ruotare · Pizzica per lo zoom · Tocca un mondo';
 
-  /* ─── tavola illustrata ─── */
-  let lb = null;
-  function openPlate(){
-    if (!lb) {
-      lb = document.createElement('div'); lb.className = 'cz-lightbox';
-      lb.innerHTML = '<button class="cz-close" type="button">✕ Chiudi</button><img src="images/Cosmologia_3_ihjofh.webp" alt="La tavola del Cosmo">';
-      lb.addEventListener('click', () => lb.classList.remove('on'));
-      document.body.appendChild(lb);
-      requestAnimationFrame(() => lb.classList.add('on'));
-    } else lb.classList.add('on');
+  /* ─── tavola e interruttore Tavola / 3D ─── */
+  // dove stanno il Sole e la scala nelle due tavole (orizzontale per schermi larghi, verticale per il telefono)
+  const PLATES = {
+    w: { el: box.querySelector('.cz-plate-w'), IW: 2976, IH: 1296, sx: 1487.8, sy: 646.5, ppu: 16.995 },
+    v: { el: box.querySelector('.cz-plate-v'), IW: 842, IH: 1200, sx: 420.0, sy: 657.8, ppu: 11.042 }
+  };
+  const L = { W: 0, H: 0, VH: 0, BAR: 0, wide: true, k: 1, sunX: 0, sunY: 0, ppu: 1 };
+  function measure(){
+    const W = box.clientWidth, H = box.clientHeight; if (!W || !H) return L;
+    const gw = box.closest('.gw'), bar = gw && gw.querySelector('.gw-bar'); let B = 0;
+    if (bar && getComputedStyle(bar).position !== 'fixed'){ const br = box.getBoundingClientRect(), bb = bar.getBoundingClientRect(); B = Math.max(0, Math.min(br.bottom, bb.bottom) - bb.top); }
+    const VH = Math.max(1, H - B), wide = W / VH > 1.05, P = wide ? PLATES.w : PLATES.v;
+    box.style.setProperty('--czbar', B + 'px'); box.classList.toggle('wide', wide);
+    // la tavola copre tutta la finestra e il suo Sole cade al centro della parte visibile
+    // sul telefono lascio in alto lo spazio per l'interruttore, così non copre Voraxia
+    const top = wide ? 0 : 58, EH = H - top;
+    const k = Math.max(W / P.IW, EH / P.IH);
+    const ox = Math.min(0, Math.max(W - P.IW*k, W/2 - P.sx*k));
+    const oy = Math.min(0, Math.max(EH - P.IH*k, (VH - top)/2 - P.sy*k));
+    if (P.el){ P.el.style.setProperty('top', top + 'px', 'important'); P.el.style.setProperty('height', EH + 'px', 'important');
+      P.el.style.objectPosition = ox.toFixed(1) + 'px ' + oy.toFixed(1) + 'px'; }
+    Object.assign(L, { W, H, VH, BAR: B, wide, k, sunX: ox + P.sx*k, sunY: top + oy + P.sy*k, ppu: k * P.ppu });
+    return L;
   }
-  box.querySelector('.cz-plate-btn').addEventListener('click', openPlate);
-  addEventListener('keydown', e => { if (e.key === 'Escape' && lb && lb.classList.contains('on')) lb.classList.remove('on'); });
+  const sw = box.querySelector('.cz-switch');
+  let introT = 0, userChose = false;
+  function setMode(m){
+    box.classList.toggle('show-plate', m === 'plate');
+    sw.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === m));
+  }
+  function to3D(){ if (failed) return; clearTimeout(introT); setMode('3d'); }
+  function toPlate(){ clearTimeout(introT); if (S && S.home) S.home(() => setMode('plate')); else setMode('plate'); }
+  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; userChose = true; b.dataset.v === 'plate' ? toPlate() : to3D(); });
+  // appena si entra: la tavola resta qualche secondo, poi si dissolve nel 3D
+  let wasOn = false;
+  function intro(){
+    userChose = false; setMode('plate'); measure(); clearTimeout(introT);
+    const t0 = Date.now();
+    (function wait(){ introT = setTimeout(() => { if (userChose) return; if (S && S.ready && Date.now() - t0 >= 3200) to3D(); else if (!failed) wait(); }, 250); })();
+  }
+  new ResizeObserver(() => measure()).observe(box);
 
   const isOn = () => page && panel && page.classList.contains('active') && panel.classList.contains('gw-on') && !document.hidden && box.offsetWidth > 0;
   let S = null, loading = false, failed = false;
-  function fail(){ failed = true; box.classList.add('fail'); }
+  function fail(){ failed = true; box.classList.add('fail'); setMode('plate'); }
   function check(){
+    const on = isOn();
+    if (on && !wasOn) intro();
+    wasOn = on;
     if (failed) return;
-    if (isOn()) {
+    if (on) {
       if (S) S.start();
       else if (!loading) {
         loading = true;
@@ -8482,12 +8507,12 @@ window.addEventListener('admin-state-changed', e => {
       s.scale.set(scale, scale, 1); return s; }
 
     /* il sole */
-    const SUN_R = 5.6;
+    const SUN_R = 4.1;
     const sun = new T.Group(); scene.add(sun);
     const sunCore = new T.Mesh(new T.SphereGeometry(SUN_R, 64, 32), new T.MeshBasicMaterial({ map: tex('sun'), color: new T.Color(1.18,1.06,.9) }));
     sun.add(sunCore);
-    const halo1 = sprite(new T.Color(1,.82,.5), 30, .95); sun.add(halo1);
-    sun.add(sprite(new T.Color(1,.7,.38), 74, .36)); sun.add(sprite(new T.Color(.9,.62,.35), 170, .1));
+    const halo1 = sprite(new T.Color(1,.82,.5), 22, .95); sun.add(halo1);
+    sun.add(sprite(new T.Color(1,.7,.38), 54, .36)); sun.add(sprite(new T.Color(.9,.62,.35), 124, .1));
     const rayTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const g = c.getContext('2d'); g.translate(256,256);
       for (let i = 0; i < 36; i++){ const a = i/36*Math.PI*2, L = 150 + (i%3)*55 + Math.random()*40;
         const gr = g.createLinearGradient(0,0,Math.cos(a)*L,Math.sin(a)*L);
@@ -8495,7 +8520,7 @@ window.addEventListener('admin-state-changed', e => {
         g.strokeStyle = gr; g.lineWidth = i%2 ? 1.2 : 2.4; g.beginPath(); g.moveTo(Math.cos(a)*14,Math.sin(a)*14); g.lineTo(Math.cos(a)*L,Math.sin(a)*L); g.stroke(); }
       return new T.CanvasTexture(c); })();
     const rays = new T.Sprite(new T.SpriteMaterial({ map: rayTex, color: 0xffe2a8, transparent: true, opacity: .55, blending: T.AdditiveBlending, depthWrite: false }));
-    rays.scale.set(62, 62, 1); sun.add(rays);
+    rays.scale.set(45, 45, 1); sun.add(rays);
 
     /* materiale pittorico, con ombra calcolata di un mondo sull'altro */
     const VS = 'varying vec2 vUv; varying vec3 vN; varying vec3 vW; void main(){ vUv = uv; vN = normalize(mat3(modelMatrix) * normal);' +
@@ -8573,32 +8598,38 @@ window.addEventListener('admin-state-changed', e => {
       worlds.push(w); return w;
     }
     const gwernia = world({ id: 'gwernia', name: 'Gwernia', sub: 'apri la mappa', tex: 'gwernia', clouds: 'clouds', emap: 'gwernia_em', eStr: .55,
-      r: 2.8, orbit: 20, side: -1, spin: .2, axial: .41, rim: 0x9fd0ff, rimStr: .55, atmo: 0x6fb6ff, atmoStr: 1.1, amb: 0x0b1224, map: true });
+      r: 5.6, orbit: 39.85, side: -1, spin: .2, axial: .41, rim: 0x9fd0ff, rimStr: .55, atmo: 0x6fb6ff, atmoStr: 1.1, amb: 0x0b1224, map: true });
     const solv = world({ id: 'solvantia', name: 'Solvantia', sub: 'reame delle Divinità', tex: 'solvantia', emap: 'solvantia_em', eStr: 1.1,
-      r: 4.2, orbit: 27, side: 1, spin: .12, axial: .2, rim: 0xffe6a8, rimStr: .8, gain: .86, atmo: 0xffd98a, atmoStr: 1.15, amb: 0x1a1508,
+      r: 6.0, orbit: 16.33, side: 1, view: 1.55, dist: 5.2, spin: .12, axial: .2, rim: 0xffe6a8, rimStr: .8, gain: .86, atmo: 0xffd98a, atmoStr: 1.15, amb: 0x1a1508,
       kick: 'Il Reame delle Divinità', text: 'Un Mondo dove ogni Divinità ha plasmato il proprio Dominio a propria immagine. Per i mortali, questi Domini rappresentano la promessa più alta a cui aspirare in vita.' });
     const cald = world({ id: 'calderoth', name: 'Calderoth', sub: 'reame dei Diavoli', tex: 'calderoth', emap: 'calderoth_em', eStr: 1.7,
-      r: 1.6, orbit: 35, side: 1, spin: .16, axial: .22, rim: 0xff7a3a, rimStr: .7, atmo: 0xff5a1e, atmoStr: .8, amb: 0x160907,
-      view: -1.35, dist: 9, kick: 'Il Reame dei Diavoli', text: 'Un Mondo di ordine tirannico e crudeltà calcolata. I Diavoli vi regnano con gerarchia ferrea, perseguendo piani millenari di conquista e corruzione. Ogni Anima dannata diventa risorsa, ogni accordo uno strumento di potere. È un luogo dove anche la sofferenza obbedisce a regole precise.' });
+      r: 2.12, orbit: 30.1, side: 1, spin: .16, axial: .22, rim: 0xff7a3a, rimStr: .7, atmo: 0xff5a1e, atmoStr: .8, amb: 0x160907,
+      view: -1.35, dist: 11, kick: 'Il Reame dei Diavoli', text: 'Un Mondo di ordine tirannico e crudeltà calcolata. I Diavoli vi regnano con gerarchia ferrea, perseguendo piani millenari di conquista e corruzione. Ogni Anima dannata diventa risorsa, ogni accordo uno strumento di potere. È un luogo dove anche la sofferenza obbedisce a regole precise.' });
     const vora = world({ id: 'voraxia', name: 'Voraxia', sub: 'reame dei Demoni', tex: 'voraxia', emap: 'voraxia_em', eStr: 1.6,
-      r: 3.7, orbit: 50, side: 1, spin: .09, axial: .5, rim: 0xc890ff, rimStr: .85, atmo: 0x9a58ff, atmoStr: 1, amb: 0x0c0614,
+      r: 5.91, orbit: 50, side: 1, spin: .09, axial: .5, rim: 0xc890ff, rimStr: .85, atmo: 0x9a58ff, atmoStr: 1, amb: 0x0c0614,
       kick: 'Il Reame dei Demoni', text: 'Un Mondo fatto di caos e corruzione, dove ogni Dominio è plasmato dalla follia del Demone che lo governa. Finire qui è la sorte peggiore in cui un Mortale possa imbattersi.' });
     // Calderoth vive nell'ombra di Solvantia
     cald.mesh.material.uniforms.useOcc.value = 1;
 
     // luna di Gwernia
     const moonPivot = new T.Group(); gwernia.holder.add(moonPivot); moonPivot.rotation.x = .35;
-    const moon = new T.Mesh(new T.SphereGeometry(.62, 40, 24), pMat(tex('moon'), { rim: 0xe8dcc0, rimStr: .5, amb: 0x0c0c12 }));
-    moon.position.set(5, 0, 0); moonPivot.add(moon);
+    const moon = new T.Mesh(new T.SphereGeometry(.97, 40, 24), pMat(tex('moon'), { rim: 0xe8dcc0, rimStr: .5, amb: 0x0c0c12 }));
+    moon.position.set(9.5, 0, 0); moonPivot.add(moon);
 
-    // Solvantia: una corona di cristalli d'oro che le gira attorno, al posto degli anelli
-    const shardN = 34, shards = new T.InstancedMesh(new T.OctahedronGeometry(.17, 0),
-      new T.MeshLambertMaterial({ color: 0xf6dc9a, emissive: 0x6a4a18 }), shardN);
-    const shardPivot = new T.Group(); shardPivot.rotation.set(.5, 0, .25); solv.holder.add(shardPivot); shardPivot.add(shards);
-    const dummy = new T.Object3D(), shardData = [];
-    for (let i = 0; i < shardN; i++) shardData.push({ a: i/shardN*Math.PI*2 + Math.random()*.1, rr: solv.r*1.5 + (Math.random()-.5)*.6,
-      y: (Math.random()-.5)*.5, s: .45 + Math.random()*.9, rx: Math.random()*6, ry: Math.random()*6, sp: .6 + Math.random() });
-    const shardGlow = sprite(new T.Color(1,.86,.55), solv.r*5.2, .22); solv.holder.add(shardGlow);
+    // Solvantia: un'aura dorata che respira, segno della sua sacralità
+    const auraMat = new T.ShaderMaterial({ uniforms: { uTime: { value: 0 }, col: { value: new T.Color(1.0, .84, .52) } },
+      vertexShader: VS,
+      fragmentShader: 'uniform float uTime; uniform vec3 col; varying vec3 vN; varying vec3 vW; varying vec2 vUv;' +
+        'void main(){ vec3 N = normalize(vN); vec3 V = normalize(cameraPosition - vW); float f = 1.0 - max(dot(N, V), 0.0);' +
+        'float g = smoothstep(0.1, 0.2, f) * exp(-(max(f, 0.2) - 0.2) * 4.2);' +
+        'float sh = 0.9 + 0.1 * sin(uTime * 0.9 + vUv.x * 30.0) * sin(uTime * 0.6 + vUv.y * 18.0);' +
+        'float br = 0.82 + 0.18 * sin(uTime * 0.8);' +
+        'float a = g * sh * br * 0.85; gl_FragColor = vec4(col * a, a); }',
+      transparent: true, blending: T.AdditiveBlending, depthWrite: false });
+    const aura = new T.Mesh(new T.SphereGeometry(solv.r * 1.9, 64, 32), auraMat); solv.holder.add(aura);
+    const auraGlow = sprite(new T.Color(1, .86, .56), solv.r * 5.4, .3); solv.holder.add(auraGlow);
+    const auraRays = new T.Sprite(new T.SpriteMaterial({ map: rayTex, color: 0xffe7b0, transparent: true, opacity: .2, blending: T.AdditiveBlending, depthWrite: false }));
+    auraRays.scale.set(solv.r * 4.2, solv.r * 4.2, 1); solv.holder.add(auraRays);
 
     // particelle: braci che salgono da Calderoth, nebbia viola attorno a Voraxia
     function motes(w, n, color, mode){
@@ -8626,7 +8657,7 @@ window.addEventListener('admin-state-changed', e => {
 
     // pulviscolo dorato del sistema
     const dustN = coarse ? 220 : 440, dpos = new Float32Array(dustN*3), dph = new Float32Array(dustN);
-    for (let i = 0; i < dustN; i++){ const a = Math.random()*Math.PI*2, r = 9 + Math.random()*56;
+    for (let i = 0; i < dustN; i++){ const a = Math.random()*Math.PI*2, r = 8 + Math.random()*50;
       dpos[i*3] = Math.cos(a)*r; dpos[i*3+1] = (Math.random()-.5)*14*(1 - r/90); dpos[i*3+2] = Math.sin(a)*r; dph[i] = Math.random(); }
     const dg = new T.BufferGeometry(); dg.setAttribute('position', new T.BufferAttribute(dpos,3)); dg.setAttribute('phase', new T.BufferAttribute(dph,1));
     const dustMat = new T.ShaderMaterial({ uniforms: { uTime: { value: 0 }, uScale: { value: DPR } },
@@ -8643,36 +8674,24 @@ window.addEventListener('admin-state-changed', e => {
       el.innerHTML = '<span><b>' + w.name + '</b><small>' + w.sub + '</small></span>';
       el.addEventListener('click', e => { e.stopPropagation(); choose(w); }); labels.appendChild(el); w.label = el; });
 
-    /* camera: nella vista d'insieme gira insieme ai mondi, come nella tavola */
-    const CENTER = 15; let HOME_PH = .44, WIDE = false, BAR = 0;
-    const cam = { uth: 0, uph: HOME_PH, vth: 0, vph: 0, tr: 150, homeR: 150, focus: null, lock: false };
-    const cur = { t: new T.Vector3(), th: 0, ph: HOME_PH, r: 150, off: 0 };
-    const G = { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0 };
-    const MAXR = 420, minR = () => 26;
-    const fly = { t: 1, dur: 1.9, w: null, from: { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0 }, done: null };
+    /* camera: perno sul Sole; la vista iniziale coincide con la tavola e gira insieme ai mondi */
+    let HOME_PH = 1.22, WIDE = true, BAR = 0, BX = 0, BY = 0;
+    const cam = { uth: 0, uph: HOME_PH, vth: 0, vph: 0, tr: 100, homeR: 100, focus: null, lock: false };
+    const cur = { t: new T.Vector3(), th: 0, ph: HOME_PH, r: 100, off: 0, roll: 0 };
+    const G = { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0, roll: 0 };
+    const MAXR = 420, minR = () => 16;
+    const fly = { t: 1, dur: 1.9, w: null, from: { t: new T.Vector3(), th: 0, ph: 0, r: 0, off: 0, roll: 0 }, done: null };
     const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3)/2;
     const wrap = d => ((d + Math.PI) % (Math.PI*2) + Math.PI*2) % (Math.PI*2) - Math.PI;
     function goal(w, o){
-      if (w){ w.holder.getWorldPosition(o.t); o.th = Math.atan2(-o.t.z, -o.t.x) + (w.view || .8); o.ph = 1.12; o.r = w.r * (w.dist || 6.2) * (WIDE ? .85 : 1); o.off = w.map ? 0 : 1; }
-      else { o.t.set(Math.cos(A)*CENTER, 0, Math.sin(A)*CENTER); o.th = A + (WIDE ? Math.PI/2 : Math.PI) + cam.uth; o.ph = cam.uph; o.r = cam.tr; o.off = 0; }
+      if (w){ w.holder.getWorldPosition(o.t); o.th = Math.atan2(-o.t.z, -o.t.x) + (w.view || .8); o.ph = 1.12; o.r = w.r * (w.dist || 5.6) * (WIDE ? .85 : 1); o.off = w.map ? 0 : 1; o.roll = 0; }
+      else { o.t.set(0, 0, 0); o.th = A + Math.PI/2 + cam.uth; o.ph = cam.uph; o.r = cam.tr; o.off = 0; o.roll = WIDE ? 0 : 1; }
       return o;
     }
     function startFly(w, dur, done){
-      fly.from.t.copy(cur.t); fly.from.th = cur.th; fly.from.ph = cur.ph; fly.from.r = cur.r; fly.from.off = cur.off;
+      Object.assign(fly.from, { th: cur.th, ph: cur.ph, r: cur.r, off: cur.off, roll: cur.roll }); fly.from.t.copy(cur.t);
       fly.w = w; fly.t = 0; fly.dur = dur || 1.9; fly.done = done || null; cam.vth = cam.vph = 0;
       if (!w){ cam.tr = cam.homeR; cam.uth = 0; cam.uph = HOME_PH; }
-    }
-    function fitR(){   // distanza per far stare tutta la fila: in orizzontale su schermi larghi, in verticale sul telefono
-      const c = camera.clone(); c.clearViewOffset(); const pv = new T.Vector3(), pg = new T.Vector3();
-      const far = vora.orbit + vora.r*1.4, near = -gwernia.orbit - gwernia.r*1.6;
-      for (let rr = 30; rr < MAXR; rr += 2){
-        if (WIDE){ c.position.set(CENTER, rr*Math.cos(HOME_PH), rr*Math.sin(HOME_PH)); }
-        else { c.position.set(CENTER - rr*Math.sin(HOME_PH), rr*Math.cos(HOME_PH), 0); }
-        c.lookAt(CENTER, 0, 0); c.updateMatrixWorld();
-        pv.set(far, 0, 0).project(c); pg.set(near, 0, 0).project(c);
-        if (WIDE ? (pv.x < .84 && pg.x > -.86) : (pv.y < .7 && pg.y > -.74)) return rr;
-      }
-      return 200;
     }
     const ptrs = new Map(); let moved = 0, pinch0 = 0, pinchR0 = 0, last = null;
     const busy = () => !!(cam.focus || cam.lock || fly.t < 1);
@@ -8701,11 +8720,11 @@ window.addEventListener('admin-state-changed', e => {
     canvas.addEventListener('pointercancel', e => { ptrs.delete(e.pointerId); canvas.classList.remove('drag'); });
     canvas.addEventListener('wheel', e => { if (busy()) return; e.preventDefault(); cam.idle = 0; if (hint) hint.classList.add('gone');
       cam.tr = T.MathUtils.clamp(cam.tr * Math.exp(e.deltaY * .0012), minR(), MAXR); }, { passive: false });
-    addEventListener('keydown', e => { if (e.key === 'Escape' && cam.focus && !(lb && lb.classList.contains('on'))) back(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && cam.focus) back(); });
 
     const ray = new T.Raycaster(), ndc = new T.Vector2(), hits = worlds.map(w => w.hit);
     function worldAt(e){ const r = canvas.getBoundingClientRect();
-      ndc.set((e.clientX - r.left)/r.width*2 - 1, -(e.clientY - r.top)/Math.max(1, r.height - BAR)*2 + 1); ray.setFromCamera(ndc, camera);
+      ndc.set((e.clientX - r.left)/r.width*2 - 1, -(e.clientY - r.top)/r.height*2 + 1); ray.setFromCamera(ndc, camera);
       const h = ray.intersectObjects(hits, false)[0]; return h ? h.object.userData.w : null; }
     function hover(e){ if (coarse || busy()) return; canvas.classList.toggle('hot', !!worldAt(e)); }
     function pick(e){ const w = worldAt(e); if (w) choose(w); }
@@ -8732,25 +8751,18 @@ window.addEventListener('admin-state-changed', e => {
     function reset(){   // torna alla vista d'insieme senza animazione
       cam.focus = null; cam.lock = false; card.classList.remove('on'); box.classList.remove('focus');
       fly.t = 1; fly.done = null; cam.uth = 0; cam.uph = HOME_PH; cam.tr = cam.homeR; goal(null, G);
-      cur.t.copy(G.t); cur.th = G.th; cur.ph = G.ph; cur.r = G.r; cur.off = 0;
+      cur.t.copy(G.t); cur.th = G.th; cur.ph = G.ph; cur.r = G.r; cur.off = 0; cur.roll = G.roll;
     }
 
     function resize(){
-      const w = box.clientWidth, h = box.clientHeight; if (!w || !h) return;
-      // quanta parte della finestra finisce sotto la barra delle schede
-      const gw = box.closest('.gw'), bar = gw && gw.querySelector('.gw-bar');
-      BAR = 0;
-      if (bar && getComputedStyle(bar).position !== 'fixed'){
-        const br = box.getBoundingClientRect(), bb = bar.getBoundingClientRect();
-        BAR = Math.max(0, Math.min(br.bottom, bb.bottom) - bb.top);
-      }
-      box.style.setProperty('--czbar', BAR + 'px');
-      const wasWide = WIDE; WIDE = w / Math.max(1, h - BAR) > 1.05; box.classList.toggle('wide', WIDE);
-      HOME_PH = WIDE ? 1.1 : .44;
+      const m = measure(); if (!m.W) return;
+      BAR = m.BAR; const wasWide = WIDE; WIDE = m.wide; HOME_PH = WIDE ? 1.22 : .3;
+      renderer.setSize(m.W, m.H, false); camera.aspect = m.W / m.H; camera.updateProjectionMatrix();
+      // distanza e spostamento che fanno coincidere il 3D con la tavola: stessa scala, Sole nello stesso punto
+      cam.homeR = (m.H / 2) / (Math.tan(T.MathUtils.degToRad(camera.fov / 2)) * m.ppu);
+      BX = m.W / 2 - m.sunX; BY = m.H / 2 - m.sunY;
       if (wasWide !== WIDE && !cam.focus){ cam.uph = HOME_PH; cam.uth = 0; }
-      renderer.setSize(w, h, false); camera.aspect = w / Math.max(1, h - BAR); camera.updateProjectionMatrix();
-      cam.homeR = fitR();
-      if (!cam.focus && fly.t >= 1 && !cam.lock) cam.tr = cam.homeR;
+      if (!cam.focus && fly.t >= 1 && !cam.lock && Math.abs(cam.uth) < 1e-3) cam.tr = cam.homeR;
     }
     new ResizeObserver(resize).observe(box); resize(); reset();
 
@@ -8762,7 +8774,7 @@ window.addEventListener('admin-state-changed', e => {
       const raw = clock.getDelta(), dt = Math.min(raw, .05), rdt = Math.min(raw, .25), t = clock.elapsedTime;
       starMat.uniforms.uTime.value = t; dustMat.uniforms.uTime.value = t; emberMat.uniforms.uTime.value = t; mistMat.uniforms.uTime.value = t;
       sky.rotation.y += dt * .004; sunCore.rotation.y += dt * .05; rays.material.rotation += dt * .03;
-      const pl = 1 + Math.sin(t*.8)*.04; halo1.scale.set(30*pl, 30*pl, 1);
+      const pl = 1 + Math.sin(t*.8)*.04; halo1.scale.set(22*pl, 22*pl, 1);
 
       A += dt * OMEGA;
       worlds.forEach(w => { const a = A + (w.side < 0 ? Math.PI : 0);
@@ -8772,10 +8784,8 @@ window.addEventListener('admin-state-changed', e => {
       solv.holder.getWorldPosition(sp);
       cald.mesh.material.uniforms.occ.value.set(sp.x, sp.y, sp.z, solv.r);
       moonPivot.rotation.y += dt * .35; moon.rotation.y += dt * .1;
-      shardPivot.rotation.y += dt * .18;
-      shardData.forEach((d, i) => { dummy.position.set(Math.cos(d.a)*d.rr, d.y + Math.sin(t*d.sp + i)*.15, Math.sin(d.a)*d.rr);
-        dummy.rotation.set(d.rx + t*d.sp, d.ry + t*d.sp*.7, 0); dummy.scale.setScalar(d.s); dummy.updateMatrix(); shards.setMatrixAt(i, dummy.matrix); });
-      shards.instanceMatrix.needsUpdate = true;
+      auraMat.uniforms.uTime.value = t; auraRays.material.rotation -= dt * .02;
+      const ab = 1 + Math.sin(t * .8) * .05; auraGlow.scale.set(solv.r*5.4*ab, solv.r*5.4*ab, 1);
 
       // camera
       if (!ptrs.size){ cam.uth += cam.vth; cam.uph = T.MathUtils.clamp(cam.uph + cam.vph, .18, 1.5); cam.vth *= .93; cam.vph *= .93; }
@@ -8785,19 +8795,21 @@ window.addEventListener('admin-state-changed', e => {
         fly.t = Math.min(1, fly.t + rdt / fly.dur); const e = ease(fly.t);
         cur.t.lerpVectors(fly.from.t, G.t, e);
         cur.th = fly.from.th + wrap(G.th - fly.from.th) * e;
-        cur.ph = T.MathUtils.lerp(fly.from.ph, G.ph, e); cur.r = T.MathUtils.lerp(fly.from.r, G.r, e); cur.off = T.MathUtils.lerp(fly.from.off, G.off, e);
+        cur.ph = T.MathUtils.lerp(fly.from.ph, G.ph, e); cur.r = T.MathUtils.lerp(fly.from.r, G.r, e); cur.off = T.MathUtils.lerp(fly.from.off, G.off, e); cur.roll = T.MathUtils.lerp(fly.from.roll, G.roll, e);
         if (fly.t >= 1 && fly.done){ const f = fly.done; fly.done = null; f(); }
       } else {
-        cur.t.copy(G.t); cur.th = G.th; cur.ph = G.ph; cur.off = G.off;
+        cur.t.copy(G.t); cur.th = G.th; cur.ph = G.ph; cur.off = G.off; cur.roll = G.roll;
         cam.tr = T.MathUtils.clamp(cam.tr, minR(), MAXR);
         cur.r += (G.r - cur.r) * Math.min(1, dt * 3.2);
       }
       const s = Math.sin(cur.ph);
       camera.position.set(cur.t.x + cur.r*s*Math.cos(cur.th), cur.t.y + cur.r*Math.cos(cur.ph), cur.t.z + cur.r*s*Math.sin(cur.th));
-      camera.lookAt(cur.t);
+      // sul telefono la fila dei mondi sta in verticale, come nella tavola: la camera ruota sul proprio asse
+      upv.set(Math.cos(A), 0, Math.sin(A)).multiplyScalar(cur.roll).add(tmp.set(0, 1 - cur.roll, 0)).normalize();
+      camera.up.copy(upv); camera.lookAt(cur.t);
       const W = box.clientWidth, H = box.clientHeight, VH = Math.max(1, H - BAR);
-      // la scena sta nella parte visibile, sopra la barra; con la scheda aperta scivola di lato (o in alto sul telefono)
-      camera.setViewOffset(W, VH, WIDE ? cur.off * W * .17 : 0, WIDE ? 0 : cur.off * VH * .2, W, VH);
+      // Sole nello stesso punto della tavola; con la scheda aperta la vista scivola di lato (o in alto sul telefono)
+      camera.setViewOffset(W, H, BX * (1 - cur.off) + (WIDE ? cur.off * W * .17 : 0), BY * (1 - cur.off) + BAR / 2 * cur.off + (WIDE ? 0 : cur.off * VH * .2), W, H);
       goldLine.opacity = .3 * (1 - .75*cur.off); goldTick.opacity = .38 * (1 - .75*cur.off);
 
       // etichette, a destra di ogni mondo così non si sovrappongono mai
@@ -8805,8 +8817,8 @@ window.addEventListener('admin-state-changed', e => {
       worlds.forEach(w => {
         w.holder.getWorldPosition(tmp); prj.copy(tmp).project(camera);
         let x, y;
-        if (WIDE){ prj2.copy(tmp).addScaledVector(upv, w.r * 1.12).project(camera); x = (prj.x*.5+.5)*W; y = (-prj2.y*.5+.5)*VH - 4; }
-        else { prj2.copy(tmp).addScaledVector(right, w.r * 1.05).project(camera); x = (prj2.x*.5+.5)*W + 8; y = (-prj.y*.5+.5)*VH; }
+        if (WIDE){ prj2.copy(tmp).addScaledVector(upv, w.r * 1.12).project(camera); x = (prj.x*.5+.5)*W; y = (-prj2.y*.5+.5)*H - 4; }
+        else { prj2.copy(tmp).addScaledVector(right, w.r * 1.05).project(camera); x = (prj2.x*.5+.5)*W + 8; y = (-prj.y*.5+.5)*H; }
         let o = prj.z > 1 ? 0 : 1;
         if (busy()) o = 0;
         w.label.style.opacity = o; w.label.style.pointerEvents = o ? 'auto' : 'none';
@@ -8814,12 +8826,21 @@ window.addEventListener('admin-state-changed', e => {
       });
 
       renderer.render(scene, camera);
-      if (!readyShown && pending <= 0){ readyShown = true; setTimeout(() => box.classList.add('ready'), 150); }
+      if (!readyShown && pending <= 0){ readyShown = true; api.ready = true; }
     }
-    return {
+    const api = {
+      ready: false,
       start(){ if (running) return; running = true; resize(); clock.getDelta(); frame(); },
-      stop(){ if (!running) return; running = false; cancelAnimationFrame(raf); if (cam.focus || cam.lock) reset(); }
+      stop(){ if (!running) return; running = false; cancelAnimationFrame(raf); reset(); },
+      // riporta la camera sulla vista della tavola, poi richiama cb
+      home(cb){
+        const atHome = !cam.focus && fly.t >= 1 && Math.abs(wrap(cam.uth)) < .01 && Math.abs(cam.uph - HOME_PH) < .01 && Math.abs(cam.tr - cam.homeR) < .5 && Math.abs(cur.r - cam.homeR) < .5;
+        if (atHome) { cb && cb(); return; }
+        if (cam.focus){ cam.focus = null; card.classList.remove('on'); box.classList.remove('focus'); }
+        startFly(null, 1.3, cb);
+      }
     };
+    return api;
   }
 })();
 </script>
