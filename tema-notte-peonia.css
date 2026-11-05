@@ -171,24 +171,35 @@ nav{background:rgba(11,11,15,.96);border-bottom:1px solid var(--border)}
 .archive-divider span{color:var(--gold)}
 
 /* ── Iconoteca: ritratti con un solo filetto ── */
-.spot{display:none}
-.shelf-row{row-gap:clamp(34px,3.6vw,56px)}
-.niche{background:none;box-shadow:none;border-radius:0;padding:0;filter:none}
-.niche::before{display:none}
-.niche::after{inset:-10px;background:radial-gradient(60% 50% at 50% 40%,rgba(162,139,110,.1),transparent 72%);opacity:.9}
-.niche:hover{box-shadow:none}
-.cover-book{border:1px solid rgba(162,139,110,.45);box-shadow:0 20px 44px rgba(0,0,0,.65);transition:border-color .4s ease}
-.cover-book::after{background:linear-gradient(180deg,rgba(231,225,214,.05),transparent 40%)}
-.niche:hover .cover-book{border-color:var(--gold-light)}
+/* mostra di quadri: faretto, cornice piatta di bronzo, dipinto in seppia, targa */
+.shelf-row{row-gap:clamp(64px,7vw,104px)}
+.spot::before{background:linear-gradient(180deg,#2a2438 0%,#14121c 60%,#a28b6e 100%);box-shadow:0 2px 5px rgba(0,0,0,.8),0 0 12px rgba(231,225,214,.25)}
+.spot::after{background:linear-gradient(180deg,rgba(231,225,214,.24) 0%,rgba(231,225,214,.1) 16%,rgba(231,225,214,.035) 42%,transparent 76%)}
+.niche{
+  background:linear-gradient(145deg,#7d6a52 0%,#4a3d2f 45%,#6a5843 100%);border-radius:0;
+  padding:clamp(9px,.95vw,14px) clamp(9px,.95vw,14px) clamp(8px,.8vw,11px);filter:none;
+  box-shadow:inset 0 1px 0 rgba(231,225,214,.28),inset 0 -2px 3px rgba(0,0,0,.55),0 16px 34px rgba(0,0,0,.72),0 3px 9px rgba(0,0,0,.6)}
+.niche::before{display:block;inset:clamp(5px,.6vw,8px);border:1px solid rgba(11,11,15,.7);box-shadow:none;border-radius:0}
+.niche::after{inset:-16px;background:radial-gradient(60% 46% at 50% 6%,rgba(231,225,214,.16),transparent 72%);opacity:.85}
+.niche:hover{box-shadow:inset 0 1px 0 rgba(231,225,214,.3),inset 0 -2px 3px rgba(0,0,0,.55),0 16px 34px rgba(0,0,0,.72),0 0 46px rgba(231,225,214,.2)}
+.cover-book{border:0;box-shadow:inset 0 0 26px rgba(0,0,0,.55),0 2px 8px rgba(0,0,0,.5);transition:filter .4s ease}
+.cover-book::before{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border:6px solid #0b0b0f;opacity:.85}
+.cover-book::after{background:linear-gradient(180deg,rgba(231,225,214,.14) 0%,rgba(231,225,214,.04) 26%,transparent 58%),linear-gradient(118deg,rgba(255,255,255,.08) 0%,transparent 34%,transparent 66%,rgba(0,0,0,.2) 100%)}
+.niche:hover .cover-book{border:0;box-shadow:inset 0 0 26px rgba(0,0,0,.5),0 10px 26px rgba(0,0,0,.6)}
 .niche-label{
-  font-family:var(--label);font-weight:700;font-size:clamp(1.02rem,1.2vw,1.2rem);letter-spacing:.14em;text-transform:uppercase;
-  color:var(--cream);background:none;border:0;border-radius:0;box-shadow:none;margin-top:1rem;padding:0}
-.niche-sub{font-family:var(--testo);font-style:italic;font-weight:400;font-size:clamp(.98rem,1.05vw,1.08rem);color:var(--cream-dim);margin-top:.15rem}
-.niche-label.locked-label{background:none;color:var(--cream-dim)}
-.niche:has(.cover-book.locked){box-shadow:none;filter:brightness(.85)}
+  font-family:var(--label) !important;font-weight:700;font-size:clamp(.92rem,1.05vw,1.08rem);letter-spacing:.16em;text-transform:uppercase;
+  color:#17120f;text-align:center;line-height:1.2;
+  margin-top:clamp(8px,.95vw,13px);padding:.4rem .9rem .36rem;width:100%;
+  background:linear-gradient(180deg,#c9b697 0%,#a28b6e 55%,#8a7658 100%);
+  border:1px solid rgba(11,11,15,.55);border-radius:0;
+  box-shadow:0 3px 7px rgba(0,0,0,.55),inset 0 1px 0 rgba(231,225,214,.45)}
+.niche-sub{font-family:var(--testo) !important;font-style:italic;font-weight:500;font-size:clamp(.86rem,.95vw,.98rem);letter-spacing:.02em;text-transform:none;color:rgba(23,18,15,.85);margin-top:.15rem}
+.niche-label.locked-label{background:linear-gradient(180deg,#8a7658,#5c4a35);color:rgba(11,11,15,.7);font-style:normal}
+.niche:has(.cover-book.locked){filter:brightness(.82) saturate(.85)}
+.niche:has(.cover-book.locked)::after{opacity:.3}
 .cover-book.locked{background:linear-gradient(160deg,#14121c,#0b0b0f)}
 .cover-book.locked .locked-deco{display:none}
-.cover-book.locked::before{font-family:var(--titolo);color:rgba(162,139,110,.3)}
+.cover-book.locked::before{content:"?";border:0;font-family:var(--titolo);font-size:5rem;color:rgba(162,139,110,.3);display:flex;align-items:center;justify-content:center;opacity:1}
 .icon-card{background:linear-gradient(160deg,#14121c 0%,#0b0b0f 100%);border:1px solid rgba(162,139,110,.42);border-radius:0}
 .icon-name{font-family:var(--titolo);font-weight:800;color:var(--cream);background:none;-webkit-background-clip:border-box;background-clip:border-box}
 .icon-date{border-radius:0;border-color:rgba(162,139,110,.45);background:rgba(42,36,56,.4)}
@@ -328,6 +339,26 @@ nav{background:rgba(11,11,15,.96);border-bottom:1px solid var(--border)}
 @media (prefers-reduced-motion:reduce){.gw-tab,.cover-book{transition:none}}
 
 /* Archivio: vetrate senza blu */
-.win-sky{background:linear-gradient(180deg,rgba(42,36,56,.55),rgba(11,11,15,.4)) !important}
+.win-inner{border-radius:0 !important;border-color:#4a3d2f !important;border-width:8px !important;
+  box-shadow:inset 0 0 0 2px #14121c,inset 0 0 0 3px rgba(162,139,110,.5),inset 0 0 60px rgba(0,0,0,.6),0 0 40px rgba(0,0,0,.85) !important}
+.win-frame{border-radius:0 !important;border:2px solid #14121c !important;border-bottom:none !important;box-shadow:inset 0 0 0 1px rgba(162,139,110,.35) !important}
+.win-sky{background:
+  radial-gradient(1px 1px at 18% 6%,rgba(231,225,214,.9),transparent),radial-gradient(1px 1px at 70% 11%,rgba(231,225,214,.7),transparent),radial-gradient(1.2px 1.2px at 42% 17%,rgba(231,225,214,.8),transparent),radial-gradient(1px 1px at 85% 24%,rgba(231,225,214,.6),transparent),radial-gradient(1px 1px at 30% 30%,rgba(231,225,214,.6),transparent),
+  linear-gradient(180deg,#05050a 0%,#0b0b12 22%,#17121d 45%,#2e1621 68%,#5a1f2b 88%,#8a3a44 100%) !important;opacity:1 !important}
+.win-bar-h1,.win-bar-h2,.win-bar-v{background:linear-gradient(180deg,#7d6a52,#4a3d2f 60%,#2a2118) !important;box-shadow:0 4px 10px rgba(0,0,0,.8) !important}
+.win-bar-v{background:linear-gradient(90deg,#7d6a52,#4a3d2f 60%,#2a2118) !important}
 
 .gw-orgtabs-top{position:absolute;top:0;left:0;z-index:5;width:auto}
+
+/* Archivio: tra le finestre e la libreria resta un tratto di muro */
+@media (min-width:1101px){
+  #win-left{left:2.5vw !important;width:11vw !important}
+  #win-right{right:2.5vw !important;width:11vw !important}
+  #wall-left,#wall-right{width:2.5vw !important}
+  #wall-center{left:13.5vw !important;right:13.5vw !important;
+    background:
+      repeating-linear-gradient(90deg,rgba(231,225,214,.022) 0 1px,transparent 1px 64px),
+      linear-gradient(180deg,#171216 0%,#1f171c 50%,#171216 100%) !important;
+    box-shadow:inset 1px 0 0 rgba(162,139,110,.35),inset -1px 0 0 rgba(162,139,110,.35)}
+  #wall-left,#wall-right{background:#0e0b0f !important}
+}
