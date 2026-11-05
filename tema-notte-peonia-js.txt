@@ -33,10 +33,11 @@
       }
     });
   }
-  /* Organizzazioni: i pulsanti stanno sotto titolo e dati, prima del testo (niente colonna a sinistra) */
+  /* Organizzazioni e Cosmologia: i pulsanti stanno sotto titolo e dati, prima del testo (niente colonna a sinistra) */
   function orgTabs() {
     document.querySelectorAll('.gw').forEach(function (g) {
-      if (g.getAttribute('data-orgtabs') || !g.querySelector('.gw-intro.gw-org') || !g.querySelector('.gw-bar .gw-tab')) return;
+      var pg = g.closest('.page'), terr = ['page-eldoria','page-arinthel','page-draconia','page-murondir','page-underdark'];
+      if (g.getAttribute('data-orgtabs') || (pg && terr.indexOf(pg.id) > -1) || !g.querySelector('.gw-bar .gw-tab')) return;
       g.setAttribute('data-orgtabs', '1');
       var orig = Array.prototype.slice.call(g.querySelectorAll('.gw-bar .gw-tab'));
       g.querySelectorAll('.gw-stage > .gw-panel').forEach(function (p) {
@@ -52,6 +53,7 @@
         else if (desc) desc.parentNode.insertBefore(row, desc);
         else if (meta) meta.parentNode.insertBefore(row, meta.nextSibling);
         else if (title) title.parentNode.insertBefore(row, title.nextSibling);
+        else { row.classList.add('gw-orgtabs-top'); p.insertBefore(row, p.firstChild); }
       });
       function sync() { g.querySelectorAll('.gw-otab').forEach(function (b) { var o = orig.filter(function (x) { return x.getAttribute('data-p') === b.getAttribute('data-for'); })[0]; b.classList.toggle('gw-on', !!(o && o.classList.contains('gw-on'))); }); }
       sync();
