@@ -10,20 +10,20 @@
 <title>Le Cronache di Gwernia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&amp;family=Alegreya+Sans+SC:wght@400;500;700&amp;family=Cinzel+Decorative:wght@400;700;900&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
 <style>
 /* ═══════════ TOKENS ═══════════ */
 :root {
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-dim: #9a7535;
-  --gold-pale: rgba(201, 168, 76, 0.18);
-  --bg: #06060f;
-  --bg2: #0b0b1a;
-  --cream: #f0e6d3;
-  --cream-dim: #bba98c;
-  --border: rgba(201, 168, 76, 0.42);
-  --glow: rgba(201, 168, 76, 0.65);
+  --gold: #d9c58f;
+  --gold-light: #efe0b4;
+  --gold-dim: #a8956b;
+  --gold-pale: rgba(217, 197, 143, 0.18);
+  --bg: #070814;
+  --bg2: #10152a;
+  --cream: #ece5d6;
+  --cream-dim: #cfc6b2;
+  --border: rgba(217, 197, 143, 0.42);
+  --glow: rgba(217, 197, 143, 0.65);
 }
 *,
 *::before,
@@ -73,7 +73,7 @@ nav {
   align-items: center;
   justify-content: flex-start;
   overflow: visible;
-  background: rgba(6, 6, 15, 0.97);
+  background: rgba(7, 8, 20, 0.97);
   border-bottom: 2px solid var(--border);
   backdrop-filter: blur(10px);
   transition: box-shadow 0.4s;
@@ -186,7 +186,7 @@ nav.scrolled {
   backdrop-filter: blur(16px);
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(201, 168, 76, 0.06);
+    0 0 0 1px rgba(217, 197, 143, 0.06);
   max-height: 88vh;
   overflow-y: auto;
 }
@@ -223,7 +223,7 @@ nav.scrolled {
 .dd-link:hover {
   color: var(--gold-light);
   padding-left: 2rem;
-  background: rgba(201, 168, 76, 0.06);
+  background: rgba(217, 197, 143, 0.06);
 }
 .dd-link::before {
   content: "◆";
@@ -242,7 +242,7 @@ nav.scrolled {
 .dd-sub .dd-link {
   padding-left: 2.1rem;
   font-size: 0.86rem;
-  color: rgba(187, 169, 140, 0.8);
+  color: rgba(207, 198, 178, 0.8);
 }
 .dd-sub .dd-link:hover {
   padding-left: 2.6rem;
@@ -250,7 +250,7 @@ nav.scrolled {
 }
 .dd-divider {
   height: 1px;
-  background: rgba(201, 168, 76, 0.28);
+  background: rgba(217, 197, 143, 0.28);
   margin: 0.5rem 1.2rem;
 }
 
@@ -303,7 +303,7 @@ nav.scrolled {
   width: 720px;
   height: 720px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(75, 25, 150, 0.3) 0%, rgba(201, 168, 76, 0.05) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(75, 25, 150, 0.3) 0%, rgba(217, 197, 143, 0.05) 45%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -358,7 +358,7 @@ nav.scrolled {
   font-weight: 900;
   line-height: 0.88;
   color: transparent;
-  background: linear-gradient(160deg, #f0e6d3 0%, #e8c97a 22%, #c9a84c 42%, #fff8e8 52%, #c9a84c 66%, #a07828 82%, #f0e6d3 100%);
+  background: linear-gradient(160deg, #ece5d6 0%, #efe0b4 22%, #d9c58f 42%, #fff8e8 52%, #d9c58f 66%, #a07828 82%, #ece5d6 100%);
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 200% 200%;
@@ -366,7 +366,7 @@ nav.scrolled {
     shimmer 7s linear infinite,
     fadeUp 1.4s 0.6s forwards;
   opacity: 0;
-  filter: drop-shadow(0 0 65px rgba(201, 168, 76, 0.4));
+  filter: drop-shadow(0 0 65px rgba(217, 197, 143, 0.4));
 }
 @keyframes shimmer {
   0% {
@@ -448,6 +448,410 @@ nav.scrolled {
   text-transform: uppercase;
 }
 .scroll-arrow {
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(180deg, var(--gold-dim), transparent);
+  animation: bounce 2.2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ═══════════ NARRATIVE BLOCKS ═══════════ */
+.img-icon {
+  font-size: 3rem;
+  opacity: 0.35;
+  position: relative;
+  z-index: 1;
+}
+.img-label {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════ GLOW LINE ═══════════ */
+
+/* ═══════════ FOOTER ═══════════ */
+footer {
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+  border-top: 2px solid var(--border);
+  padding: 2.5rem 4rem;
+  text-align: center;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.footer-logo {
+  font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+  font-size: 1.1rem;
+  color: var(--gold-dim);
+  display: block;
+  margin-bottom: 0.7rem;
+}
+.footer-text {
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(207, 198, 178, 0.5);
+}
+
+/* ═══════════ REVEAL ═══════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ═══════════ SCROLLBAR ═══════════ */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ═══════════ PAGE HEADER (shared) ═══════════ */
+.page-header {
+  padding: 8rem 5rem 3rem;
+  text-align: center;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(60, 15, 110, 0.38) 0%, transparent 70%);
+}
+.page-header-tag {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 0 14px rgba(217, 197, 143, 0.4);
+}
+.page-header-title {
+  font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  text-shadow: 0 0 50px rgba(217, 197, 143, 0.35);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.page-header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.8rem auto 0;
+}
+.ph-line {
+  width: 160px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+  border-radius: 1px;
+}
+.ph-line:last-child {
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+.ph-gem {
+  width: 7px;
+  height: 7px;
+  background: var(--gold-dim);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(217, 197, 143, 0.5);
+}
+
+/* ═══════════ MYSTERY PAGE ═══════════ */
+.mystery-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 4rem 6rem;
+  background: radial-gradient(ellipse 60% 50% at 50% 35%, rgba(55, 10, 100, 0.38) 0%, transparent 70%), var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.mystery-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a84c' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.mystery-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 0 30px rgba(217, 197, 143, 0.35));
+  animation: floatIcon 4s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.mystery-title {
+  font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--gold-light);
+  text-shadow: 0 0 50px rgba(217, 197, 143, 0.38);
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+.mystery-subtitle {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 14px rgba(217, 197, 143, 0.35);
+}
+.mystery-box {
+  max-width: 680px;
+  border: 2px solid var(--border);
+  border-top: 3px solid var(--gold-dim);
+  padding: 3rem 3.5rem;
+  background: rgba(10, 8, 20, 0.75);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+.mystery-box::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  border-bottom: 2px solid var(--gold-dim);
+  border-right: 2px solid var(--gold-dim);
+}
+.mystery-lock {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1.2rem;
+  opacity: 0.6;
+}
+.mystery-text {
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.88;
+  color: var(--cream-dim);
+}
+.mystery-tag {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 2px solid var(--gold-dim);
+  padding: 0.4rem 1.4rem;
+  box-shadow: 0 0 15px rgba(217, 197, 143, 0.15);
+}
+.mystery-page-tag {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.8rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════ CATEGORY INDEX ═══════════ */
+.cat-index {
+  padding: 7rem 0 5rem;
+  flex: 1;
+  background: radial-gradient(ellipse 80% 50% at 50% 10%, rgba(40, 15, 85, 0.32) 0%, transparent 65%);
+}
+.cat-index-header {
+  text-align: center;
+  padding: 0 4rem 4rem;
+}
+.cat-index-tag {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 0 14px rgba(217, 197, 143, 0.4);
+}
+.cat-index-title {
+  font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  text-shadow: 0 0 50px rgba(217, 197, 143, 0.32);
+  line-height: 1.1;
+  margin-bottom: 2rem;
+}
+.cat-index-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.cid-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+  border-radius: 1px;
+}
+.cid-line:last-child {
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+.cid-gem {
+  width: 8px;
+  height: 8px;
+  background: var(--gold-dim);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(217, 197, 143, 0.4);
+}
+.cat-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 2.5rem 4rem;
+}
+.cat-section-label {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid rgba(217, 197, 143, 0.3);
+  margin-bottom: 1.5rem;
+  display: block;
+  text-shadow: 0 0 12px rgba(217, 197, 143, 0.3);
+  text-align: center;
+}
+.cat-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.cat-nav-card {
+  background: rgba(12, 9, 26, 0.85);
+  border: 2px solid var(--border);
+  padding: 1.4rem 1.6rem;
+  cursor:
+    url("/images/Mouse_isfffe.png") 0 0,
+    pointer;
+  transition:
+    border-color 0.35s,
+    background 0.35s,
+    transform 0.3s,
+    box-shadow 0.3s;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  text-align: left;
+  width: 240px;
+  flex-shrink: 0;
+}
+.cat-nav-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-bottom: 2px solid var(--gold-dim);
+  border-right: 2px solid var(--gold-dim);
+  transition: border-color 0.35s;
+}
+.cat-nav-card:hover {
+  border-color: var(--gold);
+  background: rgba(217, 197, 143, 0.08);
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(217, 197, 143, 0.1);
+}
+.cat-nav-card:hover::after {
+  border-color: var(--gold);
+}
+.cat-nav-name {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--cream-dim);
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.cat-nav-name::before {
+  content: "◆";
+  font-size: 0.36rem;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cat-nav-card:hover .cat-nav-name {
+  color: var(--cream);
+}
+.cat-nav-card:hover .cat-nav-name::before {
+  opacity: 1;
+}
+.cat-nav-arrow {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: var(--gold);
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    rrow {
   width: 1px;
   height: 46px;
   background: linear-gradient(180deg, var(--gold-dim), transparent);
