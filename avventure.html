@@ -1652,39 +1652,8 @@ nav { position: relative; z-index: 1000; }
   <p class="save-msg" id="save-msg">Salvato ✦</p>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCCfucSV5KmGd4M9Bg7mD4UPhbBK4ce0-k",
-    authDomain: "gwernia.firebaseapp.com",
-    projectId: "gwernia",
-    storageBucket: "gwernia.firebasestorage.app",
-    messagingSenderId: "442880358118",
-    appId: "1:442880358118:web:71b180258d8dc98d786d27",
-    measurementId: "G-4TEN29F7HG"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  setPersistence(auth, browserLocalPersistence).catch(()=>{});
-
-  onAuthStateChanged(auth, user => {
-    document.body.classList.toggle('is-admin', !!user);
-    window.dispatchEvent(new CustomEvent('auth-changed', { detail: { uid: user?user.uid:null, email: user?user.email:null } }));
-  });
-
-  window.fbLogin = (e,p) => signInWithEmailAndPassword(auth,e,p);
-  window.fbLogout = () => signOut(auth);
-  window.fbSaveAdv = (id,data) => setDoc(doc(db,'adventures',id), data, { merge:false });
-  window.fbSubscribeAdvs = cb => onSnapshot(collection(db,'adventures'), snap => {
-    const out={}; snap.forEach(d=>{ out[d.id]=d.data(); }); cb(out);
-  }, err => console.error('Firestore adventures error:', err));
-</script>
+<script>window.GW_PAGE='avventure';</script>
+<script type="module" src="gw-tavoli.js"></script>
 
 <script>
 /* ═══ STELLE ═══ */

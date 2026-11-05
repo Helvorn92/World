@@ -60,10 +60,39 @@
       if (window.MutationObserver) { var mo = new MutationObserver(sync); orig.forEach(function (o) { mo.observe(o, { attributes: true, attributeFilter: ['class'] }); }); }
     });
   }
+
+  /* Territori: colonna a sinistra con stemma, titolo, pulsanti numerati e ritorno all'elenco */
+  function terrSide() {
+    var ids = ['page-eldoria', 'page-arinthel', 'page-draconia', 'page-murondir', 'page-underdark'], num = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+    ids.forEach(function (id) {
+      var pg = document.getElementById(id), g = pg && pg.querySelector('.gw'), bar = g && g.querySelector('.gw-bar'), inn = bar && bar.querySelector('.gw-bar-in');
+      if (!g || !bar || !inn || g.getAttribute('data-side')) return;
+      g.setAttribute('data-side', '1');
+      var side = document.createElement('div'); side.className = 'gw-side';
+      var em = g.querySelector('.gw-emblem');
+      if (em) {
+        var c = em.cloneNode(true); c.className = 'gw-emblem gw-side-emb';
+        c.querySelectorAll('.gw-draw,.gw-dash,.gw-dots').forEach(function (n) { n.removeAttribute('class'); });
+        side.appendChild(c);
+      }
+      var k = document.createElement('span'); k.className = 'gw-side-kick'; k.textContent = 'Territori'; side.appendChild(k);
+      var h = document.createElement('div'); h.className = 'gw-side-title'; h.textContent = g.getAttribute('data-title') || ''; side.appendChild(h);
+      var hr = document.createElement('i'); hr.className = 'gw-side-rule'; side.appendChild(hr);
+      bar.insertBefore(side, inn);
+      inn.querySelectorAll('.gw-tab').forEach(function (t, i) {
+        var n = document.createElement('span'); n.className = 'gw-num'; n.textContent = num[i] || ''; t.insertBefore(n, t.firstChild);
+      });
+      var back = document.createElement('a'); back.className = 'gw-back'; back.setAttribute('role', 'button'); back.tabIndex = 0;
+      back.innerHTML = '&lsaquo;&nbsp; Tutti i territori';
+      back.addEventListener('click', function () { if (window.showPage) window.showPage('gwernia'); });
+      back.addEventListener('keydown', function (e) { if (e.key === 'Enter') back.click(); });
+      bar.appendChild(back);
+    });
+  }
   var t;
   function later() { clearTimeout(t); t = setTimeout(fit, 120); }
   function start() {
-    tag(); tagSec(); orgTabs(); fit();
+    tag(); tagSec(); orgTabs(); terrSide(); fit();
     window.addEventListener('resize', later);
     document.addEventListener('click', function () { setTimeout(fit, 450); setTimeout(fit, 1100); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);

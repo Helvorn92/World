@@ -477,3 +477,41 @@ body:has(#wall-center) .cover-book:not(.locked),
 body:has(#wall-center) .niche:hover .cover-book:not(.locked){mix-blend-mode:normal;background:none !important;box-shadow:none !important;overflow:visible}
 body:has(#wall-center) .cover-book:not(.locked) img{filter:drop-shadow(0 9px 10px rgba(0,0,0,.5)) drop-shadow(0 2px 3px rgba(0,0,0,.45))}
 body:has(#wall-center) .niche:hover .cover-book:not(.locked) img{filter:drop-shadow(0 12px 14px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(201,182,151,.2))}
+
+/* ritocchi v6: muro uniforme, la sfumatura violacea vive nel cielo della finestra */
+body:has(#wall-center) .hall,
+body:has(#wall-center) #wall-left,body:has(#wall-center) #wall-center,body:has(#wall-center) #wall-right{background:#0e0e13 !important}
+.win-sky{background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cg fill='%23e7e1d6'%3E%3Ccircle cx='40' cy='60' r='1.7' opacity='.95'/%3E%3Ccircle cx='210' cy='30' r='1.4' opacity='.85'/%3E%3Ccircle cx='330' cy='140' r='1.8' opacity='.95'/%3E%3Ccircle cx='120' cy='220' r='1.4' opacity='.8'/%3E%3Ccircle cx='290' cy='300' r='1.7' opacity='.9'/%3E%3Ccircle cx='60' cy='370' r='1.4' opacity='.85'/%3E%3Ccircle cx='380' cy='400' r='1.2' opacity='.8'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23c9b697'%3E%3Ccircle cx='20' cy='25' r='.8' opacity='.6'/%3E%3Ccircle cx='90' cy='70' r='.9' opacity='.55'/%3E%3Ccircle cx='160' cy='20' r='.7' opacity='.6'/%3E%3Ccircle cx='230' cy='110' r='.9' opacity='.5'/%3E%3Ccircle cx='60' cy='150' r='.8' opacity='.55'/%3E%3Ccircle cx='140' cy='190' r='.9' opacity='.6'/%3E%3Ccircle cx='210' cy='235' r='.7' opacity='.5'/%3E%3Ccircle cx='30' cy='230' r='.8' opacity='.5'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(180deg,#07070c 0%,#17131f 55%,#2a1620 100%) !important}
+.win-inner{background:#07070c !important;overflow:hidden !important;isolation:isolate}
+body:has(#wall-center),html:has(#wall-center){background:#0e0e13 !important}
+
+/* ritocchi v6: Territori con colonna a sinistra (stemma, titolo, pulsanti numerati) */
+.gw-side,.gw-back{display:none}
+.gw-num{display:none}
+@media (min-width:821px) and (min-height:501px){
+  .gw[data-side] .gw-bar{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:clamp(1.2rem,3.4vh,2.4rem) clamp(.9rem,1.4vw,1.4rem) clamp(1rem,2.6vh,1.8rem) clamp(1rem,1.8vw,1.8rem);overflow:auto}
+  .gw[data-side] .gw-bar-in{flex:0 0 auto;gap:12px}
+  .gw[data-side] .gw-side{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:clamp(.8rem,2.4vh,1.6rem)}
+  .gw[data-side] .gw-side-emb{margin:0 auto;transform:scale(.9);transform-origin:center top;opacity:1 !important}
+  .gw[data-side] .gw-side-emb *{opacity:1}
+  .gw[data-side] .gw-side-kick{margin-top:clamp(.4rem,1.6vh,1rem);font-family:var(--label);font-size:.8rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+  .gw[data-side] .gw-side-title{font-family:var(--titolo);font-weight:400;font-size:clamp(2.2rem,3.4vw,3rem);line-height:1.05;color:var(--cream);margin:.35rem 0 0;white-space:nowrap}
+  .gw[data-side] .gw-side-rule{display:block;width:100%;height:1px;margin-top:clamp(1rem,2.6vh,1.8rem);background:linear-gradient(90deg,transparent,rgba(162,139,110,.55) 20%,rgba(162,139,110,.55) 80%,transparent)}
+  .gw[data-side] .gw-tab .gw-ico{display:none}
+  .gw[data-side] .gw-num{display:inline-block;min-width:1.7rem;font-family:var(--titolo);font-weight:400;font-size:1.05rem;letter-spacing:.02em;color:var(--gold);text-align:left}
+  .gw[data-side] .gw-tab.gw-on .gw-num{color:var(--cream)}
+  .gw[data-side] .gw-back{display:block;margin-top:auto;padding-top:1.4rem;text-align:center;cursor:pointer;font-family:var(--label);font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .gw[data-side] .gw-back:hover{color:var(--cream)}
+  /* nel primo pannello restano solo i testi: stemma, etichetta e titolo ora stanno nella colonna */
+  .gw[data-side] .gw-intro .gw-emblem,.gw[data-side] .gw-intro .gw-kicker,.gw[data-side] .gw-intro .gw-title{display:none !important}
+}
+
+/* ritocchi v6: Organizzazioni, stessa posizione con o senza pulsanti */
+.page[id^="page-org-"] .gw .gw-stage{left:0 !important;bottom:0 !important}
+.page[id^="page-org-"] .gw .gw-panel{inset:clamp(.8rem,2.6vh,2rem) clamp(1.2rem,4.5vw,5rem) !important}
+@media (min-width:821px) and (min-height:501px){
+  .page[id^="page-org-"] .gw .gw-intro-in{margin:clamp(1.2rem,6vh,4rem) 0 auto}
+}

@@ -1782,10 +1782,7 @@ nav { position: relative; z-index: 1000; }
     <textarea id="be-paragraphs" placeholder="Vita, imprese, eredità...&#10;&#10;Secondo paragrafo..."></textarea>
     <div class="adm-field-hint">Puoi usare &lt;b&gt; ed &lt;em&gt; per il grassetto/corsivo. Lascia una riga vuota tra un paragrafo e l'altro.</div>
   </div>
-  <div class="adm-toggle-row">
-    <label class="adm-switch"><input type="checkbox" id="be-locked"><span class="adm-switch-track"></span></label>
-    <label for="be-locked">Nascosto (non ancora svelato)</label>
-  </div>
+  <div class="adm-field"><label>Visibile ai tavoli</label><div id="be-tables"></div><div class="adm-field-hint">Senza spunte la voce resta nascosta a tutti i giocatori.</div></div>
   <div class="adm-modal-actions">
     <button class="adm-btn adm-btn-danger" id="be-delete-btn" onclick="deleteBookFromModal()" style="display:none">🗑 &nbsp; Elimina</button>
     <button class="adm-btn" onclick="saveBookFromModal()">✦ &nbsp; Salva</button>
@@ -1819,54 +1816,8 @@ nav { position: relative; z-index: 1000; }
   </div>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, doc, setDoc, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCCfucSV5KmGd4M9Bg7mD4UPhbBK4ce0-k",
-    authDomain: "gwernia.firebaseapp.com",
-    projectId: "gwernia",
-    storageBucket: "gwernia.firebasestorage.app",
-    messagingSenderId: "442880358118",
-    appId: "1:442880358118:web:71b180258d8dc98d786d27",
-    measurementId: "G-4TEN29F7HG"
-  };
-
-  const fbApp = initializeApp(firebaseConfig);
-  const fbAuth = getAuth(fbApp);
-  const fbDb = getFirestore(fbApp);
-
-  window.fbIsAdmin = false;
-  setPersistence(fbAuth, browserLocalPersistence).catch(()=>{});
-
-  onAuthStateChanged(fbAuth, user => {
-    window.fbIsAdmin = !!user;
-    document.body.classList.toggle('is-admin', !!user);
-    window.dispatchEvent(new CustomEvent('admin-state-changed', { detail: { isAdmin: !!user, email: user ? user.email : null } }));
-  });
-
-  window.fbAdminLogin = (email, password) => signInWithEmailAndPassword(fbAuth, email, password);
-  window.fbAdminLogout = () => signOut(fbAuth);
-  window.fbSaveBook = (id, data) => setDoc(doc(fbDb, 'icons', id), data, { merge: true });
-  window.fbSaveMeta = data => setDoc(doc(fbDb, 'meta', 'gallery'), data, { merge: true });
-  window.fbSubscribeMeta = cb => onSnapshot(doc(fbDb, 'meta', 'gallery'),
-    snap => cb(snap.exists() ? (snap.data() || {}) : {}),
-    err => console.error('Firestore meta error:', err));
-  // Ospite: legge SOLO i ritratti svelati (i nascosti non lasciano il server, per le regole di sicurezza).
-  // Admin autenticato: legge l'intera collezione. Ritorna la funzione di unsubscribe.
-  window.fbSubscribeBooks = (isAdmin, cb) => {
-    const ref = isAdmin
-      ? collection(fbDb, 'icons')
-      : query(collection(fbDb, 'icons'), where('locked', '==', false));
-    return onSnapshot(ref, snap => {
-      const out = {};
-      snap.forEach(d => { out[d.id] = d.data(); });
-      cb(out);
-    }, err => console.error('Firestore books error:', err));
-  };
-</script>
+<script>window.GW_PAGE='iconoteca';</script>
+<script type="module" src="gw-tavoli.js"></script>
 
 <script>
 /* ═══ ADMIN LOGIN UI ═══ */
@@ -2048,7 +1999,7 @@ function openBookEdit(id){
   document.getElementById('be-birth').value = b.birth || '';
   document.getElementById('be-death').value = b.death || '';
   document.getElementById('be-paragraphs').value = (b.paragraphs||[]).join('\n\n');
-  document.getElementById('be-locked').checked = b.locked === true;
+  window.GW.renderTablePicker(document.getElementById('be-tables'), b.tables||[]);
   document.getElementById('book-edit-overlay').classList.add('open');
   document.getElementById('book-edit-modal').classList.add('open');
 }
@@ -2113,7 +2064,7 @@ function saveBookFromModal(){
   var death = document.getElementById('be-death').value.trim();
   var paragraphs = document.getElementById('be-paragraphs').value
     .split(/\n\s*\n/).map(function(p){return p.trim();}).filter(Boolean);
-  var locked = document.getElementById('be-locked').checked;
+  var tables = window.GW.readTablePicker(document.getElementById('be-tables'));
   if(!title || !cover || !paragraphs.length){ alert('Nome, dipinto e informazioni sono obbligatori.'); return; }
   var id = _editingBookId;
   var extra = {};
@@ -2121,15 +2072,16 @@ function saveBookFromModal(){
     id = 'b_' + Date.now();
     extra = { order: Date.now() };
   }
-  window.fbSaveBook(id, Object.assign({title, cover, birth, death, paragraphs, locked}, extra))
+  window.fbSaveBook(id, Object.assign({title, cover, birth, death, paragraphs, tables}, extra))
     .catch(function(e){ alert('Errore nel salvataggio: '+e.message); });
   closeBookEdit();
 }
 function toggleBookLocked(id){
   if(!window.fbIsAdmin) return;
   var b = BOOKS[id]; if(!b) return;
-  window.fbSaveBook(id, {locked: b.locked !== true})
-    .catch(function(e){ alert('Errore nel salvataggio: '+e.message); });
+  window.GW.pickTablesDialog(b.tables||[], function(t){
+    window.fbSaveBook(id, {tables:t}).catch(function(e){ alert('Errore nel salvataggio: '+e.message); });
+  });
 }
 function deleteBook(id){
   if(!window.fbIsAdmin || !confirm('Eliminare definitivamente questo ritratto?')) return;
