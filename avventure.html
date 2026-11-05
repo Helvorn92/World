@@ -8,12 +8,12 @@
 <title>Avventure — Le Cronache di Gwernia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&amp;family=Alegreya+Sans+SC:wght@400;500;700&amp;family=Cinzel+Decorative:wght@400;700;900&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#9a7535;
-  --bg:#06060f;--cream:#f0e6d3;--cream-dim:#bba98c;
-  --border:rgba(201,168,76,.42);--glow:rgba(201,168,76,.65);
+  --gold:#d9c58f;--gold-light:#efe0b4;--gold-dim:#a8956b;
+  --bg:#070814;--cream:#ece5d6;--cream-dim:#cfc6b2;
+  --border:rgba(217,197,143,.42);--glow:rgba(217,197,143,.65);
   --panel:rgba(10,9,24,.88);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -27,9 +27,9 @@ button{font-family:inherit}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:300;height:56px;display:flex;align-items:center;justify-content:center;padding:0 1.4rem;background:linear-gradient(180deg,rgba(4,3,12,.92),rgba(4,3,12,.6) 70%,transparent);pointer-events:none}
 .topbar>*{pointer-events:auto}
 .top-login-btn{position:absolute;right:1.4rem;top:50%;transform:translateY(-50%)}
-.back-btn{background:rgba(6,4,16,.9);border:1px solid rgba(201,168,76,.35);color:var(--gold-dim);font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:600;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;padding:.48rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s;text-decoration:none;white-space:nowrap}
+.back-btn{background:rgba(6,4,16,.9);border:1px solid rgba(217,197,143,.35);color:var(--gold-dim);font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:600;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;padding:.48rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s;text-decoration:none;white-space:nowrap}
 .back-btn:hover{border-color:var(--gold);color:var(--gold)}
-.top-login-btn{background:rgba(6,4,16,.9);border:1px solid rgba(201,168,76,.35);color:var(--gold-dim);font-size:1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s}
+.top-login-btn{background:rgba(6,4,16,.9);border:1px solid rgba(217,197,143,.35);color:var(--gold-dim);font-size:1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s}
 .top-login-btn:hover{border-color:var(--gold);color:var(--gold)}
 .top-login-btn.logged{color:#7fd87f;border-color:rgba(127,216,127,.5)}
 
@@ -42,10 +42,10 @@ button{font-family:inherit}
 /* ═══ INSEGNA ═══ */
 .marquee{text-align:center;margin-bottom:1.1rem;flex-shrink:0}
 .marquee-eyebrow{font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:600;font-size:.66rem;letter-spacing:.55em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.5rem}
-.marquee-title{font-family:'Cormorant Garamond','Palatino Linotype',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:transparent;background:linear-gradient(165deg,#f0e6d3 0%,#e8c97a 30%,#c9a84c 55%,#fff3d6 65%,#a07828 90%);-webkit-background-clip:text;background-clip:text;padding:.1em 0 .22em;margin:-.1em 0 -.22em}
+.marquee-title{font-family:'Cormorant Garamond','Palatino Linotype',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:transparent;background:linear-gradient(165deg,#ece5d6 0%,#efe0b4 30%,#d9c58f 55%,#fff3d6 65%,#a07828 90%);-webkit-background-clip:text;background-clip:text;padding:.1em 0 .22em;margin:-.1em 0 -.22em}
 .marquee-sub{font-style:italic;color:var(--cream-dim);font-size:.92rem;margin-top:.4rem}
 .marquee-lights{display:flex;justify-content:center;gap:.85rem;margin-top:.8rem}
-.marquee-lights span{width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,#ffe9ad,#c9a84c 70%);box-shadow:0 0 10px rgba(232,201,122,.8);animation:bulb 2.2s ease-in-out infinite}
+.marquee-lights span{width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,#ffe9ad,#d9c58f 70%);box-shadow:0 0 10px rgba(239,224,180,.8);animation:bulb 2.2s ease-in-out infinite}
 .marquee-lights span:nth-child(2n){animation-delay:.55s}
 .marquee-lights span:nth-child(3n){animation-delay:1.1s}
 @keyframes bulb{0%,100%{opacity:1}50%{opacity:.25}}
@@ -57,60 +57,410 @@ button{font-family:inherit}
 .board-empty{margin:auto;color:var(--cream-dim);font-style:italic;font-size:1.05rem;text-align:center}
 /* ═══ FILTRI DURATA ═══ */
 .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:1rem;flex-shrink:0}
-.filter-btn{background:rgba(6,4,16,.7);border:1px solid rgba(201,168,76,.3);color:var(--gold-dim);font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:600;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.42rem 1rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s}
+.filter-btn{background:rgba(6,4,16,.7);border:1px solid rgba(217,197,143,.3);color:var(--gold-dim);font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:600;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.42rem 1rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s}
 .filter-btn:hover{border-color:var(--gold);color:var(--gold)}
-.filter-btn.active{background:rgba(201,168,76,.18);border-color:var(--gold);color:var(--gold-light)}
+.filter-btn.active{background:rgba(217,197,143,.18);border-color:var(--gold);color:var(--gold-light)}
 .poster{
   position:relative;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;height:var(--ph,340px);width:auto;flex:0 0 auto;
   background:var(--panel);
-  border:1px solid rgba(201,168,76,.3);
-  box-shadow:0 0 0 4px rgba(4,3,12,.9),0 0 0 5px rgba(201,168,76,.18),0 14px 34px rgba(0,0,0,.7);
+  border:1px solid rgba(217,197,143,.3);
+  box-shadow:0 0 0 4px rgba(4,3,12,.9),0 0 0 5px rgba(217,197,143,.18),0 14px 34px rgba(0,0,0,.7);
   transition:transform .32s cubic-bezier(.2,.7,.2,1),box-shadow .32s,border-color .32s;
   overflow:hidden;
   opacity:0;transform:translateY(20px);animation:postIn .55s forwards;
 }
 @keyframes postIn{to{opacity:1;transform:translateY(0)}}
-.poster:hover{transform:translateY(-8px) scale(1.025);border-color:var(--gold);box-shadow:0 0 0 4px rgba(4,3,12,.9),0 0 0 5px rgba(201,168,76,.5),0 24px 54px rgba(0,0,0,.85),0 0 40px rgba(201,168,76,.16)}
+.poster:hover{transform:translateY(-8px) scale(1.025);border-color:var(--gold);box-shadow:0 0 0 4px rgba(4,3,12,.9),0 0 0 5px rgba(217,197,143,.5),0 24px 54px rgba(0,0,0,.85),0 0 40px rgba(217,197,143,.16)}
 /* la cornice segue il formato dell'immagine: niente tagli, niente bande */
 .poster img{display:block;height:100%;width:auto;transition:transform .5s ease}
 .poster:hover img{transform:scale(1.1)}
 .poster::after{content:'';position:absolute;top:0;bottom:0;left:-80%;width:50%;background:linear-gradient(105deg,transparent,rgba(255,240,190,.13),transparent);transform:skewX(-18deg);transition:left .55s ease;z-index:3}
 .poster:hover::after{left:135%}
 /* slot vuoto */
-.poster.empty{cursor:url('/images/Mouse_isfffe.png') 0 0,default;aspect-ratio:2/3;border-style:dashed;border-color:rgba(201,168,76,.3);box-shadow:none;background:linear-gradient(165deg,rgba(12,10,28,.9),rgba(6,5,16,.95))}
-.poster.empty:hover{transform:none;box-shadow:none;border-color:rgba(201,168,76,.45)}
+.poster.empty{cursor:url('/images/Mouse_isfffe.png') 0 0,default;aspect-ratio:2/3;border-style:dashed;border-color:rgba(217,197,143,.3);box-shadow:none;background:linear-gradient(165deg,rgba(12,10,28,.9),rgba(6,5,16,.95))}
+.poster.empty:hover{transform:none;box-shadow:none;border-color:rgba(217,197,143,.45)}
 .poster.empty .empty-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem}
-.poster.empty .empty-star{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:rgba(201,168,76,.28)}
+.poster.empty .empty-star{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:rgba(217,197,143,.28)}
 .poster.empty .empty-label{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(187,169,140,.4)}
 body.is-admin .poster.empty{cursor:url('/images/Mouse_isfffe.png') 0 0,pointer}
 body.is-admin .poster.empty:hover .empty-star{color:var(--gold)}
 /* matita admin */
-.poster-edit{position:absolute;top:8px;left:8px;z-index:4;width:28px;height:28px;background:rgba(4,3,12,.88);border:1px solid rgba(201,168,76,.5);color:var(--gold);font-size:.8rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;display:none;align-items:center;justify-content:center}
+.poster-edit{position:absolute;top:8px;left:8px;z-index:4;width:28px;height:28px;background:rgba(4,3,12,.88);border:1px solid rgba(217,197,143,.5);color:var(--gold);font-size:.8rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;display:none;align-items:center;justify-content:center}
 body.is-admin .poster:hover .poster-edit{display:flex}
-.poster-edit:hover{background:rgba(201,168,76,.2)}
+.poster-edit:hover{background:rgba(217,197,143,.2)}
 
 /* ═══ DETTAGLIO ═══ */
 #detail-view{display:none}
 .detail-topline{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem}
-.detail-back{display:inline-flex;align-items:center;gap:.5rem;background:rgba(6,4,16,.7);border:1px solid rgba(201,168,76,.3);color:var(--gold-dim);font-family:'Cormorant Garamond',serif;font-weight:600;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s}
+.detail-back{display:inline-flex;align-items:center;gap:.5rem;background:rgba(6,4,16,.7);border:1px solid rgba(217,197,143,.3);color:var(--gold-dim);font-family:'Cormorant Garamond',serif;font-weight:600;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:all .2s}
 .detail-back:hover{border-color:var(--gold);color:var(--gold)}
 .detail{display:grid;grid-template-columns:minmax(300px,500px) 1fr;gap:2.8rem;align-items:start;animation:detIn .45s ease}
 @keyframes detIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.detail-poster{position:relative;border:1px solid rgba(201,168,76,.35);box-shadow:0 0 0 5px rgba(4,3,12,.9),0 0 0 6px rgba(201,168,76,.22),0 26px 60px rgba(0,0,0,.85);overflow:hidden;background:var(--panel)}
+.detail-poster{position:relative;border:1px solid rgba(217,197,143,.35);box-shadow:0 0 0 5px rgba(4,3,12,.9),0 0 0 6px rgba(217,197,143,.22),0 26px 60px rgba(0,0,0,.85);overflow:hidden;background:var(--panel)}
 .detail-poster img{width:100%;height:auto;display:block}
 .detail-poster.noimg{aspect-ratio:3/4}
-.detail-poster .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:5rem;color:rgba(201,168,76,.2)}
+.detail-poster .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:5rem;color:rgba(217,197,143,.2)}
 .detail-info{min-width:0}
 /* padding + margin negativo di pari valore: allarga l'area in cui viene dipinto il gradiente
    (altrimenti i tratti discendenti di g, p, q, y finiscono fuori e spariscono) senza spostare nulla */
-.detail-title{font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:700;font-size:clamp(2.2rem,4.2vw,3.4rem);line-height:1.08;letter-spacing:.04em;color:transparent;background:linear-gradient(165deg,#f0e6d3,#e8c97a 35%,#c9a84c 60%,#fff3d6 70%,#a07828);-webkit-background-clip:text;background-clip:text;padding:.12em 0 .28em;margin:-.12em 0 -.28em}
+.detail-title{font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:700;font-size:clamp(2.2rem,4.2vw,3.4rem);line-height:1.08;letter-spacing:.04em;color:transparent;background:linear-gradient(165deg,#ece5d6,#efe0b4 35%,#d9c58f 60%,#fff3d6 70%,#a07828);-webkit-background-clip:text;background-clip:text;padding:.12em 0 .28em;margin:-.12em 0 -.28em}
 .detail-chips{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.2rem}
-.dchip{display:flex;flex-direction:column;gap:.2rem;border:1px solid rgba(201,168,76,.4);background:rgba(4,3,12,.78);padding:.55rem 1.05rem;clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.dchip{display:flex;flex-direction:column;gap:.2rem;border:1px solid rgba(217,197,143,.4);background:rgba(4,3,12,.78);padding:.55rem 1.05rem;clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
 .dchip-l{font-family:'Lora',Georgia,serif;font-weight:700;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
 .dchip-v{font-family:'Lora',Georgia,serif;font-weight:700;font-size:1.02rem;letter-spacing:.03em;color:var(--cream)}
-.dchip-v .skull-on{color:#e8c97a;text-shadow:0 0 8px rgba(232,181,58,.5)}
+.dchip-v .skull-on{color:#efe0b4;text-shadow:0 0 8px rgba(232,181,58,.5)}
 .dchip-v .skull-off{color:rgba(187,169,140,.28)}
-.detail-edit{background:rgba(201,168,76,.13);border:1px solid rgba(201,168,76,.5);color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:background .2s;display:none}
+.detail-edit{background:rgba(217,197,143,.13);border:1px solid rgba(217,197,143,.5);color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:background .2s;display:none}
+body.is-admin .detail-edit{display:inline-block}
+.detail-edit:hover{background:rgba(217,197,143,.26)}
+.detail-desc{margin-top:1.5rem;background:var(--panel);border:1px solid rgba(217,197,143,.22);border-left:3px solid var(--gold-dim);padding:1.5rem 1.7rem;line-height:1.8;font-size:.95rem;font-weight:500;color:var(--cream)}
+.detail-desc p{margin:.7rem 0}
+.detail-desc p:first-child{margin-top:0}
+.detail-desc p:last-child{margin-bottom:0}
+.detail-desc .empty{font-style:italic;color:rgba(187,169,140,.45)}
+
+/* ═══ MODALI ═══ */
+.ov{position:fixed;inset:0;z-index:9980;background:rgba(2,1,8,.86);backdrop-filter:blur(10px);display:none}
+.ov.open{display:block}
+.modal{position:fixed;z-index:9981;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(8,5,20,.97);border:2px solid var(--border);border-top:3px solid var(--gold-dim);max-width:560px;width:94%;max-height:88vh;overflow-y:auto;padding:1.9rem 2rem;display:none;box-shadow:0 24px 64px rgba(0,0,0,.9)}
+.modal.open{display:block}
+.modal-title{font-family:'Cormorant Garamond','Palatino Linotype',serif;font-weight:700;font-size:1.15rem;letter-spacing:.08em;color:var(--gold-light);margin-bottom:1rem}
+.modal-close{position:absolute;top:.7rem;right:.95rem;background:none;border:none;color:var(--gold-dim);font-size:1.3rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;line-height:1}
+.modal-close:hover{color:var(--gold)}
+.field{margin-bottom:.85rem}
+.field label{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);display:block;margin-bottom:.32rem}
+.field input,.field textarea,.field select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(217,197,143,.3);padding:.5rem .65rem;color:var(--cream);font-family:'Lora',Georgia,serif;font-size:.92rem;outline:none;resize:vertical;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(217,197,143,.7)}
+.field select{cursor:url('/images/Mouse_isfffe.png') 0 0,pointer}
+.field select option{background:#0b0a1c}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.hint{font-size:.72rem;color:var(--cream-dim);font-style:italic;margin-top:.25rem}
+.modal-actions{display:flex;gap:.8rem;margin-top:1rem}
+.btn{flex:1;padding:.65rem;background:rgba(217,197,143,.15);border:1px solid rgba(217,197,143,.5);color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:background .2s,border-color .2s}
+.btn:hover{background:rgba(217,197,143,.28);border-color:var(--gold)}
+.btn-danger{border-color:rgba(255,80,80,.5);color:#ff8080}
+.btn-danger:hover{background:rgba(255,80,80,.15);border-color:#ff8080}
+#login-error{color:#ff8080;font-size:.8rem;display:none;margin:.4rem 0 0}
+.save-msg{font-size:.8rem;color:#7fd87f;display:none;margin-top:.5rem;text-align:center}
+
+/* pulsante admin: aggiungi locandina */
+.add-adv-btn{position:fixed;bottom:1.6rem;right:1.6rem;z-index:150;width:52px;height:52px;border-radius:50%;background:rgba(217,197,143,.18);border:1px solid rgba(217,197,143,.55);color:var(--gold-light);font-size:1.5rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;display:none;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.7);transition:background .2s}
+body.is-admin .add-adv-btn{display:flex}
+.add-adv-btn:hover{background:rgba(217,197,143,.32)}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  #board-view{position:static;display:block;padding:4.6rem 1.2rem 2.5rem}
+  .board{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;gap:1rem}
+  /* su mobile le file spariscono dal layout: le locandine tornano celle della griglia */
+  .shelf-row{display:contents}
+  .poster{height:auto;width:100%}
+  .poster img{width:100%;height:auto}
+  .detail{grid-template-columns:1fr}
+  .detail-poster{max-width:380px;margin:0 auto}
+}
+@media(max-width:600px){
+  .wrap{padding:4.6rem 1rem 3rem}
+  .board{grid-template-columns:repeat(2,1fr);gap:.9rem}
+  .field-row{grid-template-columns:1fr}
+}
+</style>
+<style>
+/* ═══ MENU DELL'INDEX ═══ */
+
+
+/* ═══════════ NAV ═══════════ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 70px;
+  padding: 0 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+  background: rgba(7, 8, 20, 0.97);
+  border-bottom: 2px solid var(--border);
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.4s;
+}
+
+nav.scrolled {
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.8);
+}
+
+.nav-logo {
+  font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor:
+    url("/images/Mouse_isfffe.png") 0 0,
+    pointer;
+  transition:
+    text-shadow 0.3s,
+    color 0.3s;
+}
+
+.nav-logo:hover {
+  color: var(--gold-light);
+  text-shadow: 0 0 18px var(--glow);
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 0.1rem;
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  height: 70px;
+}
+
+/* invisible bridge to prevent gap-triggered close */
+.nav-link {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  padding: 0.6rem 0.95rem;
+  display: block;
+  transition: color 0.3s;
+  position: relative;
+  cursor:
+    url("/images/Mouse_isfffe.png") 0 0,
+    pointer;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: var(--gold);
+  transition:
+    left 0.3s,
+    right 0.3s;
+  border-radius: 1px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: var(--gold-light);
+}
+
+.nav-link.active::after,
+.nav-link:hover::after {
+  left: 0.95rem;
+  right: 0.95rem;
+}
+
+.nav-item.dd-open .nav-link {
+  color: var(--gold-light);
+}
+
+.nav-item.dd-open .nav-link::after {
+  left: 0.95rem;
+  right: 0.95rem;
+}
+
+
+/* ── DROPDOWN ── */
+.dropdown {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  transform: translateY(6px);
+  min-width: 260px;
+  background: rgba(7, 6, 18, 0.98);
+  border: 2px solid var(--border);
+  border-top: 3px solid var(--gold-dim);
+  padding: 1rem 0;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(217, 197, 143, 0.06);
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.nav-item.dd-open .dropdown {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.dd-title {
+  font-family: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 0.5rem 1.4rem 0.25rem;
+  display: block;
+}
+
+.dd-link {
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-size: 0.92rem;
+  color: var(--cream-dim);
+  padding: 0.32rem 1.4rem;
+  display: block;
+  transition:
+    color 0.2s,
+    padding-left 0.2s,
+    background 0.2s;
+  position: relative;
+  cursor:
+    url("/images/Mouse_isfffe.png") 0 0,
+    pointer;
+  text-decoration: none;
+}
+
+.dd-link:hover {
+  color: var(--gold-light);
+  padding-left: 2rem;
+  background: rgba(217, 197, 143, 0.06);
+}
+
+.dd-link::before {
+  content: "◆";
+  position: absolute;
+  left: 0.7rem;
+  opacity: 0;
+  font-size: 0.38rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  transition: opacity 0.2s;
+}
+
+.dd-link:hover::before {
+  opacity: 1;
+}
+
+.dd-sub .dd-link {
+  padding-left: 2.1rem;
+  font-size: 0.86rem;
+  color: rgba(207, 198, 178, 0.8);
+}
+
+.dd-sub .dd-link:hover {
+  padding-left: 2.6rem;
+  color: var(--cream-dim);
+}
+
+.dd-divider {
+  height: 1px;
+  background: rgba(217, 197, 143, 0.28);
+  margin: 0.5rem 1.2rem;
+}
+@media (max-width: 960px){
+
+  nav {
+    padding: 0 1.5rem;
+  }
+  .nav-link {
+    padding: 0.5rem 0.55rem;
+    font-size: 0.62rem;
+  }
+}
+
+
+/* ═══ TERRITORI ═══ */
+
+/* ═══ ORGANIZZAZIONI ═══ */
+
+/* ═══ SEARCH ═══ */
+#search-btn {
+  background: none;
+  border: none;
+  cursor:
+    url("/images/Mouse_isfffe.png") 0 0,
+    auto;
+  padding: 0.5rem 0.7rem;
+  color: var(--gold-dim);
+  font-size: 1.1rem;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+#search-btn:hover {
+  color: var(--gold-light);
+  text-shadow: 0 0 18px var(--glow);
+}
+
+#admin-login-btn {
+  background: none;
+  border: none;
+  cursor:
+    url("/images/Mouse_isfffe.png") 0 0,
+    auto;
+  padding: 0.5rem 0.7rem;
+  color: var(--gold-dim);
+  font-size: 1.1rem;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+#admin-login-btn:hover {
+  color: var(--gold-light);
+  text-shadow: 0 0 18px var(--glow);
+  opacity: 1;
+}
+
+#admin-login-btn.is-admin {
+  color: #7fd87f;
+  opacity: 1;
+}
+
+
+/* Nav: border gradient animato */
+nav {
+  border-bottom: none;
+  position: relative;
+}
+
+nav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-dim) 20%, var(--gold) 50%, var(--gold-dim) 80%, transparent 100%);
+  box-shadow: 0 0 18px rgba(217, 197, 143, 0.35);
+}
+
+
+/* Dropdown: border top p13);border:1px solid rgba(201,168,76,.5);color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;padding:.55rem 1.2rem;cursor:url('/images/Mouse_isfffe.png') 0 0,pointer;transition:background .2s;display:none}
 body.is-admin .detail-edit{display:inline-block}
 .detail-edit:hover{background:rgba(201,168,76,.26)}
 .detail-desc{margin-top:1.5rem;background:var(--panel);border:1px solid rgba(201,168,76,.22);border-left:3px solid var(--gold-dim);padding:1.5rem 1.7rem;line-height:1.8;font-size:.95rem;font-weight:500;color:var(--cream)}
