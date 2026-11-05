@@ -469,3 +469,11 @@ body:has(#wall-center) .shelf-row{margin-bottom:clamp(30px,4vw,56px)}
 .win-inner{left:0 !important;right:0 !important}
 body:has(#wall-center) .cover-book::after{display:none !important}
 body:has(#wall-center) .cover-book:not(.locked){mix-blend-mode:lighten}
+
+/* ritocchi v5c */
+.win-inner{top:96px !important;
+  box-shadow:inset 0 0 0 1px #c9b697,inset 0 0 0 3px #2d2117,inset 0 0 50px rgba(0,0,0,.7) !important}
+body:has(#wall-center) .cover-book:not(.locked),
+body:has(#wall-center) .niche:hover .cover-book:not(.locked){mix-blend-mode:normal;background:none !important;box-shadow:none !important;overflow:visible}
+body:has(#wall-center) .cover-book:not(.locked) img{filter:drop-shadow(0 9px 10px rgba(0,0,0,.5)) drop-shadow(0 2px 3px rgba(0,0,0,.45))}
+body:has(#wall-center) .niche:hover .cover-book:not(.locked) img{filter:drop-shadow(0 12px 14px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(201,182,151,.2))}
