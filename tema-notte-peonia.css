@@ -515,3 +515,13 @@ body:has(#wall-center),html:has(#wall-center){background:#0e0e13 !important}
 @media (min-width:821px) and (min-height:501px){
   .page[id^="page-org-"] .gw .gw-intro-in{margin:clamp(1.2rem,6vh,4rem) 0 auto}
 }
+
+/* accesso: menu e muro decisi al primo disegno (html.gw-hint = utente già collegato) */
+html:not(.gw-hint) [data-gw-gate]{display:none !important}
+.gw-wall{display:none;position:fixed;left:0;right:0;bottom:0;top:64px;z-index:5000;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(180deg,#0e0e13 0%,#1c1824 70%,#2a1620 100%)}
+html:not(.gw-hint) .gw-wall{display:flex}
+.gw-wall > div{max-width:520px}
+.gw-wall h2{font-family:var(--titolo);font-weight:400;font-size:2.4rem;color:var(--cream);margin:0 0 .6rem}
+.gw-wall p{font-family:var(--testo);color:#b9b0a0;font-size:1.2rem;line-height:1.55;margin:0 0 1.4rem}
+.gw-wall button{font-family:var(--label);font-size:1rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);background:linear-gradient(180deg,#6a2432,#5a1f2b);border:1px solid rgba(231,225,214,.45);padding:.7rem 1.6rem;cursor:pointer;border-radius:0}
+.gw-wall button:hover{background:linear-gradient(180deg,#7a2a3a,#661f2f)}

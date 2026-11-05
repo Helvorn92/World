@@ -1558,8 +1558,14 @@ nav { position: relative; z-index: 1000; }
 
 </style>
 <link rel="stylesheet" href="tema-notte-peonia.css">
+<script>try{if(localStorage.getItem('gw_in')==='1')document.documentElement.classList.add('gw-hint')}catch(e){}</script>
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js" crossorigin>
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js" crossorigin>
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js" crossorigin>
 </head>
 <body>
+<div class="gw-wall" id="gw-wall"><div><h2>Accesso riservato</h2><p>Questa sezione si apre solo ai giocatori dei tavoli. Entra con il tuo nome utente e il tuo codice.</p><button type="button" id="gw-wall-btn">Accedi</button></div></div>
+
 <svg style="display:none"><defs><symbol id="gwi-corner" viewBox="0 0 58 58"><g fill="none" stroke="#a28b6e" stroke-width="1.2" stroke-linecap="round"><path d="M4 56V14Q4 4 14 4h42"/><path d="M10 40V18q0-8 8-8h22" stroke-opacity=".55"/><path d="M4 22c7 0 11-4 11-11M22 4c0 7-4 11-11 11" stroke-opacity=".8"/><circle cx="15.5" cy="15.5" r="2.2" fill="#a28b6e"/></g><path d="M4 4l3.5 3.5L4 11 .5 7.5z" fill="#c9b697"/></symbol></defs></svg>
 <nav id="navbar" class="">
   <svg class="nav-orn end l" viewBox="0 0 120 20" aria-hidden="true"><path d="M2 10 C 18 10, 22 2, 30 4 C 37 6, 34 15, 27 13 C 22 11, 26 7, 30 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".85"/><path d="M30 10 H118" stroke="currentColor" stroke-width=".8" opacity=".35"/><path d="M8 5 L9.25 8.75 L13 10 L9.25 11.25 L8 15 L6.75 11.25 L3 10 L6.75 8.75 Z" fill="currentColor"/></svg><svg class="nav-orn end r" viewBox="0 0 120 20" aria-hidden="true"><path d="M2 10 C 18 10, 22 2, 30 4 C 37 6, 34 15, 27 13 C 22 11, 26 7, 30 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".85"/><path d="M30 10 H118" stroke="currentColor" stroke-width=".8" opacity=".35"/><path d="M8 5 L9.25 8.75 L13 10 L9.25 11.25 L8 15 L6.75 11.25 L3 10 L6.75 8.75 Z" fill="currentColor"/></svg><a class="nav-logo" onclick="showPage(&#39;home&#39;)" title="Home"><span class="lg-c" aria-hidden="true"></span><span class="lg-w" role="img" aria-label="Gwernia"></span></a>
@@ -1674,7 +1680,7 @@ nav { position: relative; z-index: 1000; }
     
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item" data-gw-gate="1">
       <a class="nav-link">Metropoli</a>
       <div class="dropdown"><div class="dd-inner"><div class="dd-grid">
       <div class="dd-col">
@@ -1732,8 +1738,8 @@ nav { position: relative; z-index: 1000; }
     </div></div></div>
     
     </li>
-    <li class="nav-item"><a class="nav-link active" href="https://world.villarium.workers.dev/iconoteca">Iconoteca</a></li>
-    <li class="nav-item"><a class="nav-link" href="https://world.villarium.workers.dev/archivio">Archivio</a></li>
+    <li class="nav-item" data-gw-gate="1"><a class="nav-link active" href="https://world.villarium.workers.dev/iconoteca">Iconoteca</a></li>
+    <li class="nav-item" data-gw-gate="1"><a class="nav-link" href="https://world.villarium.workers.dev/archivio">Archivio</a></li>
     <li class="nav-item"><a class="nav-link" href="https://world.villarium.workers.dev/avventure">Avventure</a></li>
   </ul>
   <div class="nav-tools"><button id="search-btn" onclick="openSearch()" title="Cerca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button><button id="admin-login-btn" onclick="openAdminLogin()" title="Accedi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9.5" r="3.6"/><path d="M5.2 19c1.6-3 4-4.4 6.8-4.4s5.2 1.4 6.8 4.4"/></svg></button></div></div>

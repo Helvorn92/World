@@ -1,20 +1,18 @@
 /* ═══════════════════════════════════════════════════════════════
    GWERNIA · ACCESSO E TAVOLI
    Un solo modulo, caricato da tutte le pagine.
-   · accesso giocatori (nome utente + codice) e accesso del master (email + password)
-   · tavoli: ogni tavolo ha i suoi giocatori e i suoi contenuti sbloccati
-   · Archivio, Iconoteca e pin di Ravenholm: ognuno vede solo ciò che è sbloccato per i suoi tavoli
-   · Metropoli, Iconoteca e Archivio compaiono solo dopo l'accesso
 
-   Struttura dei dati (Firestore)
-     books, icons, maps/ravenholm/pins   contenuti originali, li legge solo il master
-                                         ogni voce ha  tables: [idTavolo, ...]
-     tables/{t}                          il tavolo (nome)
+   Dati (Firestore)
+     books, icons, maps/ravenholm/pins   originali, li legge solo il master, ogni voce ha tables: [id, ...]
+     tables/{t}                          il tavolo
      tables/{t}/members/{uid}            chi può entrare nel tavolo
-     tables/{t}/books|icons|pins/{id}    copia dei contenuti sbloccati per quel tavolo
-     tables/{t}/meta/shelf|gallery       numero totale di voci (per i segnaposto "?")
+     tables/{t}/books|icons|pins/{id}    copia di ciò che è sbloccato per quel tavolo
+     tables/{t}/meta/shelf|gallery       numero totale di voci (segnaposto "?")
      players/{uid}                       nome utente e tavoli del giocatore
      secrets/{uid}                       codice del giocatore, solo per il master
+
+   Il menu e il muro di accesso sono nascosti dal CSS fin dal primo disegno
+   (classe html.gw-hint, ricordata in localStorage), quindi non c'è sfarfallio.
    ═══════════════════════════════════════════════════════════════ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -35,91 +33,129 @@ const db = getFirestore(app);
 setPersistence(auth, browserLocalPersistence).catch(() => {});
 
 const PAGE = window.GW_PAGE || '';
-const DOMAIN = '@giocatori.gwernia';            /* i giocatori accedono con nome@giocatori.gwernia, ma non lo vedono mai */
-const GATED_PAGES = ['metropoli', 'ravenholm', 'crevasse'];   /* pagine dell'index riservate ai tavoli */
+const DOMAIN = '@giocatori.gwernia';                       /* i giocatori accedono con nome@giocatori.gwernia, senza vederlo */
+const GATED_PAGES = ['metropoli', 'ravenholm', 'crevasse'];  /* pagine dell'index riservate ai tavoli */
 const MAP = 'ravenholm';
+const META_OF = { books: 'shelf', icons: 'gallery' };
 
-/* ── stato ── */
 const G = window.GW = { ready: false, user: null, isAdmin: false, isPlayer: false, username: '', tables: [], tableNames: {}, tablesAll: {}, players: {}, secrets: {} };
 let resolveReady; G.whenReady = new Promise(r => { resolveReady = r; });
 
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const isPlayerEmail = e => !!e && String(e).toLowerCase().endsWith(DOMAIN);
 const slug = s => String(s || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '.').replace(/[^a-z0-9._-]/g, '');
 const toEmail = name => name.indexOf('@') > -1 ? name.trim() : slug(name) + DOMAIN;
-const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const $ = id => document.getElementById(id);
 const tableName = id => (G.tablesAll[id] && G.tablesAll[id].name) || G.tableNames[id] || 'Tavolo';
+const sortedTables = () => Object.keys(G.tablesAll).sort((a, b) => tableName(a).localeCompare(tableName(b), 'it'));
+const noop = () => {};
 
-/* ═══════════ STILE ═══════════ */
-const css = document.createElement('style');
-css.textContent = `
-body:not(.gw-in) [data-gw-gate]{display:none !important}
-.gw-ov{position:fixed;inset:0;z-index:99990;background:rgba(5,5,9,.84);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+/* ═══════════ STILE (solo finestre del modulo, il resto sta nel tema) ═══════════ */
+const style = document.createElement('style');
+style.textContent = `
+.gw-ov{position:fixed;inset:0;z-index:99990;background:rgba(5,5,9,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
 .gw-ov.open{display:flex}
-.gw-box{position:relative;background:#101017;border:1px solid #a28b6e;border-top:2px solid #a28b6e;width:min(600px,100%);max-height:90vh;overflow:auto;padding:26px 28px 24px;color:#e7e1d6;font-family:'Spectral',Georgia,serif;font-size:1.05rem;box-shadow:0 30px 70px rgba(0,0,0,.7)}
-.gw-box.wide{width:min(760px,100%)}
-.gw-x{position:absolute;top:10px;right:14px;background:none;border:0;color:#b9b0a0;font-size:1.3rem;cursor:pointer}
+.gw-box{position:relative;background:#101017;border:1px solid #a28b6e;border-top:2px solid #a28b6e;width:min(560px,100%);max-height:92vh;overflow:auto;padding:28px 30px 26px;color:#e7e1d6;font-family:'Spectral',Georgia,serif;font-size:1.05rem;box-shadow:0 30px 70px rgba(0,0,0,.7)}
+.gw-box.wide{width:min(1020px,100%);padding:0;display:flex;flex-direction:column;height:min(760px,92vh)}
+.gw-x{position:absolute;top:10px;right:14px;background:none;border:0;color:#b9b0a0;font-size:1.3rem;cursor:pointer;z-index:2;line-height:1}
 .gw-x:hover{color:#e7e1d6}
-.gw-h{font-family:'Forum',Georgia,serif;font-weight:400;font-size:1.7rem;color:#e7e1d6;margin:0 0 .3rem;text-align:center}
-.gw-sub{text-align:center;color:#b9b0a0;font-size:.98rem;margin:0 0 1.1rem;line-height:1.5}
-.gw-l{display:block;font-family:'Forum',Georgia,serif;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:#a28b6e;margin:.9rem 0 .35rem}
-.gw-in-t,.gw-box input[type=text],.gw-box input[type=password],.gw-box input[type=email],.gw-box select{width:100%;box-sizing:border-box;background:#0b0b0f;border:1px solid rgba(162,139,110,.45);color:#e7e1d6;font-family:'Spectral',Georgia,serif;font-size:1.05rem;padding:.6rem .8rem;border-radius:0;outline:0}
+.gw-h{font-family:'Forum',Georgia,serif;font-weight:400;font-size:1.8rem;color:#e7e1d6;margin:0 0 .3rem;text-align:center}
+.gw-sub{text-align:center;color:#b9b0a0;font-size:1rem;margin:0 0 1.1rem;line-height:1.5}
+.gw-l{display:block;font-family:'Forum',Georgia,serif;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;color:#a28b6e;margin:1.1rem 0 .4rem}
+.gw-box input[type=text],.gw-box input[type=password],.gw-box select{width:100%;box-sizing:border-box;background:#0b0b0f;border:1px solid rgba(162,139,110,.45);color:#e7e1d6;font-family:'Spectral',Georgia,serif;font-size:1.05rem;padding:.6rem .8rem;border-radius:0;outline:0;min-width:0}
 .gw-box input:focus,.gw-box select:focus{border-color:#c9b697}
-.gw-btn{font-family:'Forum',Georgia,serif;font-size:1rem;letter-spacing:.14em;text-transform:uppercase;color:#e7e1d6;background:#14121c;border:1px solid rgba(162,139,110,.6);padding:.6rem 1.2rem;cursor:pointer;border-radius:0}
+.gw-btn{font-family:'Forum',Georgia,serif;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;color:#e7e1d6;background:#14121c;border:1px solid rgba(162,139,110,.6);padding:.6rem 1.1rem;cursor:pointer;border-radius:0;white-space:nowrap}
 .gw-btn:hover{border-color:#c9b697;background:#1c1824}
+.gw-btn:disabled{opacity:.5;cursor:default}
 .gw-btn.pri{background:linear-gradient(180deg,#6a2432,#5a1f2b);border-color:rgba(231,225,214,.45)}
 .gw-btn.pri:hover{background:linear-gradient(180deg,#7a2a3a,#661f2f)}
 .gw-btn.dng{border-color:rgba(184,112,124,.6);color:#d49aa4}
-.gw-btn.sm{font-size:.82rem;padding:.35rem .7rem;letter-spacing:.1em}
-.gw-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.gw-btn.sm{font-size:.78rem;padding:.4rem .75rem;letter-spacing:.1em}
+.gw-row{display:flex;gap:10px;align-items:center}
 .gw-row.end{justify-content:flex-end}
+.gw-row.wrap{flex-wrap:wrap}
 .gw-err{color:#d49aa4;font-size:.95rem;min-height:1.2em;margin:.7rem 0 0;text-align:center}
-.gw-ok{color:#b5c9a0}
-.gw-tabs{display:flex;gap:0;margin:.3rem 0 1rem;border-bottom:1px solid rgba(162,139,110,.4)}
-.gw-tab{flex:1;font-family:'Forum',Georgia,serif;font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;background:none;border:0;color:#b9b0a0;padding:.7rem .4rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
-.gw-tab.on{color:#e7e1d6;border-bottom-color:#a28b6e;background:rgba(90,31,43,.35)}
-.gw-item{border:1px solid rgba(162,139,110,.3);padding:.8rem 1rem;margin:.6rem 0;background:rgba(20,18,28,.7)}
-.gw-item b{font-weight:500;color:#e7e1d6}
-.gw-code{font-family:ui-monospace,Consolas,monospace;color:#c9b697;background:#0b0b0f;padding:1px 7px;border:1px solid rgba(162,139,110,.3)}
-.gw-tp{display:flex;flex-wrap:wrap;gap:6px 16px;margin:.2rem 0}
-.gw-chk{display:inline-flex;align-items:center;gap:7px;cursor:pointer;font-size:1rem;color:#e7e1d6}
-.gw-chk input{accent-color:#a28b6e;width:16px;height:16px}
 .gw-muted{color:#8f8678;font-size:.95rem}
-.gw-wall{position:fixed;left:0;right:0;bottom:0;top:64px;z-index:5000;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(180deg,#0e0e13 0%,#1c1824 70%,#2a1620 100%)}
-.gw-wall.on{display:flex}
-.gw-wall div{max-width:520px}
-.gw-wall h2{font-family:'Forum',Georgia,serif;font-weight:400;font-size:2.4rem;color:#e7e1d6;margin:0 0 .6rem}
-.gw-wall p{color:#b9b0a0;font-size:1.2rem;line-height:1.55;margin:0 0 1.4rem}
-#admin-login-btn.gw-logged::after{content:attr(data-gw-label) !important}
-`;
-document.head.appendChild(css);
-
-/* ═══════════ ACCESSO ═══════════ */
-function markGates() {
-  document.querySelectorAll('.nav-item').forEach(li => {
-    const a = li.querySelector('.nav-link'); if (!a) return;
-    const t = (a.textContent || '').trim().toLowerCase();
-    if (t === 'metropoli' || t === 'iconoteca' || t === 'archivio') li.setAttribute('data-gw-gate', '1');
-  });
+.gw-chk{display:inline-flex;align-items:center;gap:7px;cursor:pointer;color:#e7e1d6}
+.gw-chk input{accent-color:#a28b6e;width:16px;height:16px}
+.gw-tp{display:flex;flex-wrap:wrap;gap:6px 16px}
+/* pannello del master */
+.gw-head{flex:0 0 auto;padding:22px 30px 0;border-bottom:1px solid rgba(162,139,110,.35)}
+.gw-head .gw-h{text-align:left;font-size:1.9rem;margin:0 0 14px}
+.gw-tabs{display:flex;gap:4px}
+.gw-tab{font-family:'Forum',Georgia,serif;font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;background:none;border:0;border-bottom:2px solid transparent;color:#b9b0a0;padding:.7rem 1.3rem;cursor:pointer;margin-bottom:-1px}
+.gw-tab:hover{color:#e7e1d6}
+.gw-tab.on{color:#e7e1d6;border-bottom-color:#a28b6e;background:rgba(90,31,43,.35)}
+.gw-body{flex:1 1 auto;min-height:0;overflow:auto;padding:24px 30px}
+.gw-foot{flex:0 0 auto;min-height:2.6rem;padding:.7rem 30px;border-top:1px solid rgba(162,139,110,.25);font-size:.95rem;color:#b9b0a0}
+.gw-foot.ok{color:#b5c9a0}.gw-foot.ko{color:#d49aa4}
+.gw-split{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;align-items:start}
+.gw-side{display:flex;flex-direction:column;gap:8px}
+.gw-li{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;width:100%;background:rgba(20,18,28,.7);border:1px solid rgba(162,139,110,.3);color:#e7e1d6;font-family:'Spectral',Georgia,serif;font-size:1.08rem;padding:.75rem .95rem;cursor:pointer;border-radius:0}
+.gw-li:hover{border-color:#c9b697}
+.gw-li.on{background:linear-gradient(180deg,#6a2432,#5a1f2b);border-color:rgba(231,225,214,.45)}
+.gw-li em{font-style:normal;color:#b9b0a0;font-size:.92rem}
+.gw-card{border:1px solid rgba(162,139,110,.3);background:rgba(20,18,28,.7);padding:1rem 1.2rem;margin:0 0 14px}
+.gw-card h3{font-family:'Forum',Georgia,serif;font-weight:400;font-size:1.25rem;margin:0 0 .6rem;color:#e7e1d6}
+.gw-line{display:flex;align-items:center;gap:12px;padding:.55rem 0;border-top:1px solid rgba(162,139,110,.18)}
+.gw-line:first-of-type{border-top:0}
+.gw-line b{font-weight:500;flex:1;min-width:0;overflow-wrap:anywhere}
+.gw-code{font-family:ui-monospace,Consolas,monospace;color:#c9b697;background:#0b0b0f;padding:3px 9px;border:1px solid rgba(162,139,110,.3)}
+.gw-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.5rem}
+.gw-chip{font-family:'Spectral',Georgia,serif;font-size:.98rem;color:#b9b0a0;background:transparent;border:1px solid rgba(162,139,110,.35);padding:.3rem .8rem;cursor:pointer;border-radius:0}
+.gw-chip:hover{border-color:#c9b697;color:#e7e1d6}
+.gw-chip.on{background:rgba(90,31,43,.75);border-color:rgba(231,225,214,.45);color:#e7e1d6}
+.gw-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:760px){
+  .gw-split{grid-template-columns:1fr;gap:18px}
+  .gw-head,.gw-body,.gw-foot{padding-left:16px;padding-right:16px}
+  .gw-tab{padding:.7rem .6rem;letter-spacing:.08em}
+  .gw-grid2{grid-template-columns:1fr}
+  .gw-box{padding:24px 18px 20px}
 }
+`;
+document.head.appendChild(style);
+
+/* ═══════════ FINESTRE ═══════════ */
+/* si chiude con la X o con Esc; il fondo chiude solo se si preme e si rilascia fuori, e solo se lo si permette */
+function overlay(id, opts) {
+  let ov = $(id);
+  if (ov) return ov;
+  opts = opts || {};
+  ov = document.createElement('div'); ov.id = id; ov.className = 'gw-ov';
+  ov.innerHTML = '<div class="gw-box' + (opts.wide ? ' wide' : '') + '" role="dialog" aria-modal="true"><button class="gw-x" type="button" data-act="close" aria-label="Chiudi">✕</button><div class="gw-in" style="display:contents"></div></div>';
+  let down = false;
+  ov.addEventListener('mousedown', e => { down = e.target === ov; });
+  ov.addEventListener('click', e => {
+    const x = e.target.closest && e.target.closest('[data-act="close"]');
+    if (x) { ov.classList.remove('open'); return; }
+    if (down && e.target === ov && opts.backdrop !== false) ov.classList.remove('open');
+    down = false;
+  });
+  document.body.appendChild(ov);
+  return ov;
+}
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const open = document.querySelectorAll('.gw-ov.open'); if (open.length) open[open.length - 1].classList.remove('open');
+});
+
+/* ═══════════ STATO DI ACCESSO ═══════════ */
 function applyState() {
   const u = G.user;
-  document.body.classList.toggle('gw-in', !!u);
-  document.body.classList.toggle('gw-admin', G.isAdmin);
-  document.body.classList.toggle('gw-player', G.isPlayer);
+  const root = document.documentElement;
+  root.classList.toggle('gw-hint', !!u);
+  try { localStorage.setItem('gw_in', u ? '1' : '0'); } catch (e) { /* niente */ }
   document.body.classList.toggle('is-admin', G.isAdmin);
   window.fbIsAdmin = G.isAdmin;
   const btn = $('admin-login-btn');
   if (btn) {
     btn.classList.toggle('is-admin', G.isAdmin);
-    btn.classList.toggle('gw-logged', !!u);
-    btn.setAttribute('data-gw-label', G.isAdmin ? 'Master' : (G.username || 'Esci'));
     btn.title = u ? (G.isAdmin ? 'Master' : (G.username || 'Giocatore')) : 'Accedi';
   }
-  const wall = $('gw-wall');
-  if (wall) wall.classList.toggle('on', G.ready && !u);
   renderLogin();
 }
+
 onAuthStateChanged(auth, async user => {
   G.user = user || null;
   G.isAdmin = !!user && !isPlayerEmail(user.email);
@@ -130,44 +166,35 @@ onAuthStateChanged(auth, async user => {
       const s = await getDoc(doc(db, 'players', user.uid));
       if (s.exists()) { const d = s.data(); G.username = d.username || ''; G.tables = Array.isArray(d.tables) ? d.tables : []; }
       else G.username = String(user.email).split('@')[0];
-      await Promise.all(G.tables.map(async t => { try { const x = await getDoc(doc(db, 'tables', t)); if (x.exists()) G.tableNames[t] = x.data().name; } catch (e) { /* tavolo senza nome */ } }));
+      /* i nomi dei tavoli servono solo alla finestra del profilo, non bloccano nulla */
+      G.tables.forEach(t => getDoc(doc(db, 'tables', t)).then(x => { if (x.exists()) { G.tableNames[t] = x.data().name; renderLogin(); } }).catch(noop));
     } catch (e) { console.error('Profilo giocatore:', e); }
   }
-  if (G.isAdmin) startAdminListeners(); else stopAdminListeners();
+  if (G.isAdmin) watchTables(); else unwatchAdmin();
   const first = !G.ready;
   G.ready = true; resolveReady();
   applyState();
   const detail = { isAdmin: G.isAdmin, email: user ? user.email : null, uid: user ? user.uid : null };
   window.dispatchEvent(new CustomEvent('admin-state-changed', { detail }));
-  window.dispatchEvent(new CustomEvent('auth-changed', { detail: { uid: G.isAdmin ? user.uid : null, email: user ? user.email : null } }));
-  window.dispatchEvent(new CustomEvent('gw-state', { detail }));
+  window.dispatchEvent(new CustomEvent('auth-changed', { detail: { uid: G.isAdmin ? user.uid : null, email: detail.email } }));
   if (first) replayPending();
 });
 
-async function login(name, code) {
-  const email = toEmail(name);
-  await signInWithEmailAndPassword(auth, email, code);
-}
 async function logout() {
   await signOut(auth);
   try { if (PAGE === 'index') sessionStorage.setItem('gwernia_page', 'home'); } catch (e) { /* niente */ }
   location.reload();
 }
 window.fbAdminLogout = logout;
-window.fbAdminLogin = (email, pw) => signInWithEmailAndPassword(auth, email, pw);
 
 /* ═══════════ FINESTRA DI ACCESSO ═══════════ */
-function mkOverlay(id, wide) {
-  let ov = $(id);
-  if (ov) return ov;
-  ov = document.createElement('div'); ov.id = id; ov.className = 'gw-ov';
-  ov.innerHTML = '<div class="gw-box' + (wide ? ' wide' : '') + '"><button class="gw-x" data-x="1" aria-label="Chiudi">✕</button><div class="gw-in"></div></div>';
-  ov.addEventListener('click', e => { if (e.target === ov || (e.target.dataset && e.target.dataset.x)) ov.classList.remove('open'); });
-  document.body.appendChild(ov);
-  return ov;
-}
 let loginMsg = '';
-function openLogin(msg) { loginMsg = msg || ''; mkOverlay('gw-login').classList.add('open'); renderLogin(); setTimeout(() => { const i = $('gw-user'); if (i) i.focus(); }, 60); }
+function openLogin(msg) {
+  loginMsg = msg || '';
+  overlay('gw-login').classList.add('open');
+  renderLogin();
+  setTimeout(() => { const i = $('gw-user'); if (i) i.focus(); }, 60);
+}
 function renderLogin() {
   const ov = $('gw-login'); if (!ov) return;
   const box = ov.querySelector('.gw-in');
@@ -179,27 +206,28 @@ function renderLogin() {
       '<p class="gw-muted" style="text-align:center;margin:1rem 0 0">Il master accede con la sua email e la sua password.</p>';
     $('gw-form').addEventListener('submit', async e => {
       e.preventDefault();
-      const n = $('gw-user').value, c = $('gw-code').value, err = $('gw-err');
+      const n = $('gw-user').value, c = $('gw-code').value, err = $('gw-err'), btn = e.target.querySelector('button');
       if (!n.trim() || !c) { err.textContent = 'Scrivi nome utente e codice.'; return; }
-      err.textContent = ''; $('gw-form').querySelector('button').disabled = true;
-      try { await login(n, c); location.reload(); }
-      catch (x) { err.textContent = 'Nome utente o codice non validi.'; $('gw-form').querySelector('button').disabled = false; }
+      err.textContent = ''; btn.disabled = true;
+      try { await signInWithEmailAndPassword(auth, toEmail(n), c); location.reload(); }
+      catch (x) { err.textContent = 'Nome utente o codice non validi.'; btn.disabled = false; }
     });
   } else if (G.isAdmin) {
     box.innerHTML = '<h2 class="gw-h">Master</h2><p class="gw-sub">' + esc(G.user.email) + '</p>' +
-      '<div class="gw-row" style="justify-content:center;margin-top:.8rem"><button class="gw-btn pri" id="gw-open-admin">Tavoli e giocatori</button><button class="gw-btn" id="gw-out">Esci</button></div>';
+      '<div class="gw-row wrap" style="justify-content:center"><button class="gw-btn pri" type="button" id="gw-open-admin">Tavoli e giocatori</button><button class="gw-btn" type="button" id="gw-out">Esci</button></div>';
     $('gw-open-admin').onclick = () => { ov.classList.remove('open'); openAdmin(); };
     $('gw-out').onclick = logout;
   } else {
     const tn = G.tables.map(tableName);
     box.innerHTML = '<h2 class="gw-h">' + esc(G.username || 'Giocatore') + '</h2><p class="gw-sub">' + (tn.length ? 'Tavoli: ' + esc(tn.join(', ')) : 'Non fai ancora parte di nessun tavolo.') + '</p>' +
-      '<div class="gw-row" style="justify-content:center;margin-top:.8rem"><button class="gw-btn" id="gw-out">Esci</button></div>';
+      '<div class="gw-row" style="justify-content:center"><button class="gw-btn" type="button" id="gw-out">Esci</button></div>';
     $('gw-out').onclick = logout;
   }
 }
 window.openAdminLogin = () => openLogin();
 window.closeAdminLogin = () => { const o = $('gw-login'); if (o) o.classList.remove('open'); };
-if (PAGE === 'avventure') { window.openLogin = () => openLogin(); }
+window.fbLogin = (e, p) => signInWithEmailAndPassword(auth, e, p);   /* usata dal login di Avventure */
+window.fbLogout = logout;
 
 /* ═══════════ BLOCCO DELLE PAGINE ═══════════ */
 let pending = null;
@@ -210,25 +238,24 @@ if (PAGE === 'index' && typeof window.showPage === 'function') {
   window.showPage = function (id, link) {
     if (GATED_PAGES.indexOf(id) > -1) {
       if (!G.ready) { pending = [id, link]; return; }
-      if (!G.user) { openLogin('Accedi per entrare nelle Metropoli.'); if (!document.querySelector('.page.active')) orig.call(this, 'home'); return; }
+      if (!G.user) {
+        openLogin('Accedi per entrare nelle Metropoli.');
+        if (!document.querySelector('.page.active')) orig.call(this, 'home');
+        return;
+      }
     }
     return orig.apply(this, arguments);
   };
 }
-if (PAGE === 'archivio' || PAGE === 'iconoteca') {
-  const w = document.createElement('div'); w.id = 'gw-wall'; w.className = 'gw-wall';
-  w.innerHTML = '<div><h2>Accesso riservato</h2><p>Questa sezione si apre solo ai giocatori dei tavoli. Entra con il tuo nome utente e il tuo codice.</p><button class="gw-btn pri" id="gw-wall-btn">Accedi</button></div>';
-  document.body.appendChild(w);
-  $('gw-wall-btn').onclick = () => openLogin();
-}
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { markGates(); applyState(); }); else { markGates(); applyState(); }
+const wallBtn = $('gw-wall-btn'); if (wallBtn) wallBtn.onclick = () => openLogin();
 
 /* ═══════════ LETTURA DEI CONTENUTI ═══════════ */
-const metaStat = { visible: 0, total: 0 }, metaListeners = new Set();
-function emitMeta() { const lc = G.isAdmin ? 0 : Math.max(0, metaStat.total - metaStat.visible); metaListeners.forEach(cb => { try { cb({ lockedCount: lc }); } catch (e) { /* niente */ } }); }
+const stat = { visible: 0, total: 0 }, metaListeners = new Set();
+function emitMeta() { const n = G.isAdmin ? 0 : Math.max(0, stat.total - stat.visible); metaListeners.forEach(cb => { try { cb({ lockedCount: n }); } catch (e) { /* niente */ } }); }
+const stopAll = list => () => list.forEach(u => { try { u(); } catch (e) { /* niente */ } });
 
 /* Master: legge l'originale. Giocatore: legge le copie dei suoi tavoli. Ospite: niente. */
-function subscribeItems(coll, metaName, cb) {
+function subscribeItems(coll, cb) {
   let dead = false; const unsubs = [];
   G.whenReady.then(() => {
     if (dead) return;
@@ -238,56 +265,24 @@ function subscribeItems(coll, metaName, cb) {
         const out = {};
         snap.forEach(d => { const v = d.data(); v.locked = !(Array.isArray(v.tables) && v.tables.length); out[d.id] = v; });
         cb(out);
-      }, err => console.error('Firestore ' + coll + ':', err)));
+      }, err => console.error(coll + ':', err)));
       return;
     }
+    if (!G.tables.length) { cb({}); return; }
     const per = {}, totals = {};
     const emit = () => {
-      const out = {}; Object.keys(per).forEach(t => Object.assign(out, per[t]));
-      metaStat.visible = Object.values(out).filter(b => !b.deleted).length;
-      metaStat.total = Math.max(0, ...Object.values(totals), 0);
+      const out = {}; Object.values(per).forEach(m => Object.assign(out, m));
+      stat.visible = Object.values(out).filter(b => !b.deleted).length;
+      stat.total = Math.max(0, ...Object.values(totals));
       cb(out); emitMeta();
     };
-    if (!G.tables.length) { cb({}); return; }
     G.tables.forEach(t => {
       per[t] = {}; totals[t] = 0;
-      unsubs.push(onSnapshot(collection(db, 'tables', t, coll), snap => { const m = {}; snap.forEach(d => { m[d.id] = d.data(); }); per[t] = m; emit(); }, err => console.error('Firestore tavolo ' + t + ':', err)));
-      unsubs.push(onSnapshot(doc(db, 'tables', t, 'meta', metaName), s => { totals[t] = s.exists() && typeof s.data().total === 'number' ? s.data().total : 0; emit(); }, () => {}));
+      unsubs.push(onSnapshot(collection(db, 'tables', t, coll), snap => { const m = {}; snap.forEach(d => { m[d.id] = d.data(); }); per[t] = m; emit(); }, err => console.error('Tavolo ' + t + ':', err)));
+      unsubs.push(onSnapshot(doc(db, 'tables', t, 'meta', META_OF[coll]), s => { totals[t] = s.exists() && typeof s.data().total === 'number' ? s.data().total : 0; emit(); }, noop));
     });
   });
-  return () => { dead = true; unsubs.forEach(u => { try { u(); } catch (e) { /* niente */ } }); };
-}
-
-/* ═══════════ SCRITTURA (SOLO MASTER) ═══════════ */
-async function syncTotals(coll, metaName, ids) {
-  const snap = await getDocs(collection(db, coll));
-  let n = 0; snap.forEach(d => { if (!d.data().deleted) n++; });
-  const list = ids || Object.keys(G.tablesAll);
-  await Promise.all(list.map(t => setDoc(doc(db, 'tables', t, 'meta', metaName), { total: n }, { merge: true })));
-}
-/* Salva l'originale e tiene allineate le copie nei tavoli scelti */
-async function saveGeneric(masterRef, copyRef, extra, data) {
-  const before = await getDoc(masterRef);
-  const prev = before.exists() ? before.data() : {};
-  const clean = Object.assign({}, data); delete clean.locked;
-  await setDoc(masterRef, clean, { merge: true });
-  const full = Object.assign({}, prev, clean); delete full.locked;
-  const nowT = full.deleted ? [] : (Array.isArray(full.tables) ? full.tables : []);
-  const prevT = Array.isArray(prev.tables) ? prev.tables : [];
-  const all = Array.from(new Set(prevT.concat(nowT)));
-  if (all.length) {
-    const b = writeBatch(db);
-    all.forEach(t => { const r = copyRef(t); if (nowT.indexOf(t) > -1) b.set(r, Object.assign({}, full, extra)); else b.delete(r); });
-    await b.commit();
-  }
-}
-const META_OF = { books: 'shelf', icons: 'gallery' };
-async function saveItem(coll, id, data) {
-  await saveGeneric(doc(db, coll, id), t => doc(db, 'tables', t, coll, id), {}, data);
-  await syncTotals(coll, META_OF[coll]);
-}
-async function savePin(mapName, id, data) {
-  await saveGeneric(doc(db, 'maps', mapName, 'pins', id), t => doc(db, 'tables', t, 'pins', mapName + '__' + id), { map: mapName, pinId: id }, data);
+  return () => { dead = true; stopAll(unsubs)(); };
 }
 function subscribePins(mapName, cb) {
   let dead = false; const unsubs = [];
@@ -298,9 +293,9 @@ function subscribePins(mapName, cb) {
       unsubs.push(onSnapshot(collection(db, 'maps', mapName, 'pins'), snap => { const out = {}; snap.forEach(d => { out[d.id] = d.data(); }); cb(out); }, err => console.error('Pin:', err)));
       return;
     }
-    const per = {};
-    const emit = () => { const out = {}; Object.keys(per).forEach(t => Object.assign(out, per[t])); cb(out); };
     if (!G.tables.length) { cb({}); return; }
+    const per = {};
+    const emit = () => { const out = {}; Object.values(per).forEach(m => Object.assign(out, m)); cb(out); };
     G.tables.forEach(t => {
       per[t] = {};
       unsubs.push(onSnapshot(collection(db, 'tables', t, 'pins'), snap => {
@@ -308,86 +303,154 @@ function subscribePins(mapName, cb) {
       }, err => console.error('Pin tavolo:', err)));
     });
   });
-  return () => { dead = true; unsubs.forEach(u => { try { u(); } catch (e) { /* niente */ } }); };
+  return () => { dead = true; stopAll(unsubs)(); };
 }
 
-/* collegamento con le pagine */
+/* ═══════════ SCRITTURA (SOLO MASTER) ═══════════ */
+async function syncTotals(coll, ids) {
+  const snap = await getDocs(collection(db, coll));
+  let n = 0; snap.forEach(d => { if (!d.data().deleted) n++; });
+  await Promise.all((ids || Object.keys(G.tablesAll)).map(t => setDoc(doc(db, 'tables', t, 'meta', META_OF[coll]), { total: n }, { merge: true })));
+}
+/* salva l'originale e tiene allineate le copie nei tavoli scelti */
+async function saveWithCopies(masterRef, copyRef, extra, data) {
+  const prev = (await getDoc(masterRef)).data() || {};
+  const clean = Object.assign({}, data); delete clean.locked;
+  await setDoc(masterRef, clean, { merge: true });
+  const full = Object.assign({}, prev, clean);
+  const nowT = full.deleted ? [] : (Array.isArray(full.tables) ? full.tables : []);
+  const all = Array.from(new Set((Array.isArray(prev.tables) ? prev.tables : []).concat(nowT)));
+  if (!all.length) return;
+  const b = writeBatch(db);
+  all.forEach(t => { const r = copyRef(t); if (nowT.indexOf(t) > -1) b.set(r, Object.assign({}, full, extra)); else b.delete(r); });
+  await b.commit();
+}
+async function saveItem(coll, id, data) {
+  await saveWithCopies(doc(db, coll, id), t => doc(db, 'tables', t, coll, id), {}, data);
+  await syncTotals(coll);
+}
+const savePin = (mapName, id, data) => saveWithCopies(doc(db, 'maps', mapName, 'pins', id), t => doc(db, 'tables', t, 'pins', mapName + '__' + id), { map: mapName, pinId: id }, data);
+
 const COLL = PAGE === 'archivio' ? 'books' : (PAGE === 'iconoteca' ? 'icons' : '');
 if (COLL) {
-  window.fbSubscribeBooks = (_isAdmin, cb) => subscribeItems(COLL, META_OF[COLL], cb);
+  window.fbSubscribeBooks = (_isAdmin, cb) => subscribeItems(COLL, cb);
   window.fbSaveBook = (id, data) => saveItem(COLL, id, data);
   window.fbSaveMeta = () => Promise.resolve();
   window.fbSubscribeMeta = cb => { metaListeners.add(cb); emitMeta(); return () => metaListeners.delete(cb); };
 }
-if (PAGE === 'index') {
-  window.fbSubscribePins = subscribePins;
-  window.fbSavePin = savePin;
+if (PAGE === 'index') { window.fbSubscribePins = subscribePins; window.fbSavePin = savePin; }
+if (PAGE === 'avventure') {
+  window.fbSaveAdv = (id, data) => setDoc(doc(db, 'adventures', id), data, { merge: false });
+  window.fbSubscribeAdvs = cb => onSnapshot(collection(db, 'adventures'), snap => { const out = {}; snap.forEach(d => { out[d.id] = d.data(); }); cb(out); }, err => console.error('Avventure:', err));
 }
 
 /* ═══════════ SCELTA DEI TAVOLI (per voci e pin) ═══════════ */
 G.renderTablePicker = function (el, selected) {
   if (!el) return;
-  const ids = Object.keys(G.tablesAll).sort((a, b) => tableName(a).localeCompare(tableName(b), 'it'));
-  if (!ids.length) { el.innerHTML = '<span class="gw-muted">Nessun tavolo. Creane uno da Accedi, Tavoli e giocatori.</span>'; return; }
+  const ids = sortedTables();
+  if (!ids.length) { el.className = ''; el.innerHTML = '<span class="gw-muted">Nessun tavolo. Creane uno da Accedi, Tavoli e giocatori.</span>'; return; }
   el.className = 'gw-tp';
   el.innerHTML = ids.map(t => '<label class="gw-chk"><input type="checkbox" value="' + esc(t) + '"' + ((selected || []).indexOf(t) > -1 ? ' checked' : '') + '><span>' + esc(tableName(t)) + '</span></label>').join('');
 };
-G.readTablePicker = function (el) { return el ? Array.prototype.map.call(el.querySelectorAll('input:checked'), i => i.value) : []; };
+G.readTablePicker = el => el ? Array.prototype.map.call(el.querySelectorAll('input:checked'), i => i.value) : [];
 G.pickTablesDialog = function (selected, onSave, title) {
-  const ov = mkOverlay('gw-pick'); const box = ov.querySelector('.gw-in');
-  box.innerHTML = '<h2 class="gw-h">' + esc(title || 'Visibile ai tavoli') + '</h2><p class="gw-sub">Spunta i tavoli che possono vedere questa voce. Senza spunte resta nascosta a tutti.</p><div id="gw-pick-tp"></div><div class="gw-row end" style="margin-top:1.2rem"><button class="gw-btn pri" id="gw-pick-ok">Salva</button></div>';
+  const ov = overlay('gw-pick'), box = ov.querySelector('.gw-in');
+  box.innerHTML = '<h2 class="gw-h">' + esc(title || 'Visibile ai tavoli') + '</h2><p class="gw-sub">Spunta i tavoli che possono vedere questa voce. Senza spunte resta nascosta a tutti.</p><div id="gw-pick-tp"></div><div class="gw-row end" style="margin-top:1.4rem"><button class="gw-btn pri" type="button" id="gw-pick-ok">Salva</button></div>';
   G.renderTablePicker($('gw-pick-tp'), selected);
   $('gw-pick-ok').onclick = () => { const v = G.readTablePicker($('gw-pick-tp')); ov.classList.remove('open'); onSave(v); };
   ov.classList.add('open');
 };
 
 /* ═══════════ PANNELLO DEL MASTER ═══════════ */
-let adminUnsubs = [], adminTab = 'tavoli';
-function startAdminListeners() {
-  if (adminUnsubs.length) return;
-  const watch = (coll, store) => adminUnsubs.push(onSnapshot(collection(db, coll), snap => {
-    G[store] = {}; snap.forEach(d => { G[store][d.id] = d.data(); });
-    renderAdmin();
-  }, err => console.error('Firestore ' + coll + ':', err)));
-  watch('tables', 'tablesAll'); watch('players', 'players'); watch('secrets', 'secrets');
+/* i tavoli servono subito (per le caselle nelle schede), giocatori e codici solo quando si apre il pannello */
+let adminUnsubs = [], adminDeep = false;
+function watch(coll, store) {
+  return onSnapshot(collection(db, coll), snap => { G[store] = {}; snap.forEach(d => { G[store][d.id] = d.data(); }); render(); }, err => console.error(coll + ':', err));
 }
-function stopAdminListeners() { adminUnsubs.forEach(u => u()); adminUnsubs = []; G.tablesAll = {}; G.players = {}; G.secrets = {}; }
-function openAdmin() { mkOverlay('gw-admin', true).classList.add('open'); renderAdmin(); }
+function watchTables() { if (!adminUnsubs.length) adminUnsubs.push(watch('tables', 'tablesAll')); }
+function watchDeep() { if (adminDeep || !G.isAdmin) return; adminDeep = true; adminUnsubs.push(watch('players', 'players'), watch('secrets', 'secrets')); }
+function unwatchAdmin() { stopAll(adminUnsubs)(); adminUnsubs = []; adminDeep = false; G.tablesAll = {}; G.players = {}; G.secrets = {}; }
 
-let creator = null;
+const A = { tab: 'tavoli', sel: null, rn: '', nt: '', pn: '', pc: '', ptabs: [], addp: '', mig: '', status: '', ok: true };
+function say(msg, ok) { A.status = msg; A.ok = ok !== false; const f = $('gw-foot'); if (f) { f.textContent = msg; f.className = 'gw-foot ' + (A.ok ? 'ok' : 'ko'); } }
+function openAdmin() { watchDeep(); overlay('gw-admin', { wide: true, backdrop: false }).classList.add('open'); render(); }
+const playersOf = t => Object.keys(G.players).filter(u => (G.players[u].tables || []).indexOf(t) > -1).sort((a, b) => (G.players[a].username || '').localeCompare(G.players[b].username || '', 'it'));
+const chips = (ids, on, attrs) => '<div class="gw-chips">' + ids.map(t => '<button type="button" class="gw-chip' + (on.indexOf(t) > -1 ? ' on' : '') + '" ' + attrs + ' data-id="' + esc(t) + '">' + esc(tableName(t)) + '</button>').join('') + '</div>';
+
+function render() {
+  const ov = $('gw-admin'); if (!ov || !ov.classList.contains('open')) return;
+  const box = ov.querySelector('.gw-in');
+  const ids = sortedTables();
+  if (!A.sel || !G.tablesAll[A.sel]) A.sel = ids[0] || null;
+  if (A.rnFor !== A.sel) { A.rnFor = A.sel; A.rn = A.sel ? tableName(A.sel) : ''; }
+  let body = '';
+  if (A.tab === 'tavoli') {
+    const list = ids.map(t => '<button type="button" class="gw-li' + (t === A.sel ? ' on' : '') + '" data-act="sel" data-id="' + esc(t) + '"><span>' + esc(tableName(t)) + '</span><em>' + playersOf(t).length + '</em></button>').join('') || '<p class="gw-muted">Nessun tavolo ancora.</p>';
+    let det = '<p class="gw-muted">Crea un tavolo a sinistra per cominciare.</p>';
+    if (A.sel) {
+      const mem = playersOf(A.sel), free = Object.keys(G.players).filter(u => mem.indexOf(u) < 0).sort((a, b) => (G.players[a].username || '').localeCompare(G.players[b].username || '', 'it'));
+      det = '<div class="gw-card"><h3>Nome del tavolo</h3><div class="gw-row"><input type="text" id="gw-rn" data-k="rn" value="' + esc(A.rn) + '" maxlength="60"><button class="gw-btn" type="button" data-act="rename">Rinomina</button></div></div>' +
+        '<div class="gw-card"><h3>Giocatori del tavolo</h3>' +
+        (mem.length ? mem.map(u => '<div class="gw-line"><b>' + esc(G.players[u].username) + '</b><button class="gw-btn sm" type="button" data-act="kick" data-u="' + esc(u) + '">Togli</button></div>').join('') : '<p class="gw-muted" style="margin:0">Nessun giocatore in questo tavolo.</p>') +
+        (free.length ? '<div class="gw-row" style="margin-top:.9rem"><select id="gw-addp" data-k="addp"><option value="">Aggiungi un giocatore…</option>' + free.map(u => '<option value="' + esc(u) + '"' + (A.addp === u ? ' selected' : '') + '>' + esc(G.players[u].username) + '</option>').join('') + '</select><button class="gw-btn" type="button" data-act="addp">Aggiungi</button></div>' : '') +
+        '</div><div class="gw-row end"><button class="gw-btn dng" type="button" data-act="deltable">Elimina il tavolo</button></div>';
+    }
+    body = '<div class="gw-split"><div class="gw-side">' + list + '<div class="gw-row" style="margin-top:8px"><input type="text" id="gw-nt" data-k="nt" placeholder="Nuovo tavolo" value="' + esc(A.nt) + '" maxlength="60"><button class="gw-btn pri" type="button" data-act="addtable">Crea</button></div></div><div>' + det + '</div></div>';
+  } else if (A.tab === 'giocatori') {
+    const uids = Object.keys(G.players).sort((a, b) => (G.players[a].username || '').localeCompare(G.players[b].username || '', 'it'));
+    body = '<div class="gw-card"><h3>Nuovo giocatore</h3><div class="gw-grid2"><input type="text" id="gw-pn" data-k="pn" placeholder="Nome utente" value="' + esc(A.pn) + '" autocomplete="off"><input type="text" id="gw-pc" data-k="pc" placeholder="Codice, almeno 6 caratteri" value="' + esc(A.pc) + '" autocomplete="off"></div>' +
+      (ids.length ? '<span class="gw-l" style="margin-top:1rem">Tavoli</span>' + chips(ids, A.ptabs, 'data-act="ptog"') : '') +
+      '<div class="gw-row end" style="margin-top:1rem"><button class="gw-btn pri" type="button" data-act="addplayer">Crea giocatore</button></div></div>' +
+      (uids.length ? uids.map(u => {
+        const p = G.players[u], s = G.secrets[u] || {};
+        return '<div class="gw-card"><div class="gw-row wrap"><h3 style="margin:0;flex:1">' + esc(p.username) + '</h3><span class="gw-muted">codice</span><span class="gw-code">' + esc(s.code || '?') + '</span><button class="gw-btn sm" type="button" data-act="copy" data-c="' + esc(s.code || '') + '">Copia</button><button class="gw-btn sm dng" type="button" data-act="delplayer" data-u="' + esc(u) + '">Elimina</button></div>' +
+          (ids.length ? chips(ids, p.tables || [], 'data-act="pt" data-u="' + esc(u) + '"') : '') + '</div>';
+      }).join('') : '<p class="gw-muted">Nessun giocatore ancora.</p>');
+  } else {
+    body = '<div class="gw-card"><h3>Passaggio dal vecchio sistema</h3><p class="gw-muted" style="margin:0 0 .9rem">Dà a un tavolo tutte le voci di Archivio e Iconoteca che prima erano sbloccate per tutti.</p><div class="gw-row"><select id="gw-mig" data-k="mig">' + ids.map(t => '<option value="' + esc(t) + '"' + (A.mig === t ? ' selected' : '') + '>' + esc(tableName(t)) + '</option>').join('') + '</select><button class="gw-btn" type="button" data-act="migrate">Assegna</button></div></div>' +
+      '<div class="gw-card"><h3>Importa i pin di Ravenholm</h3><p class="gw-muted" style="margin:0 0 .9rem">Scegli il file pin-ravenholm.json. I pin entrano nascosti, poi li assegni ai tavoli aprendoli sulla mappa.</p><div class="gw-row"><input type="file" id="gw-pin-file" accept=".json,application/json" style="flex:1;min-width:0;color:#b9b0a0"><button class="gw-btn" type="button" data-act="importpins">Importa</button></div></div>';
+  }
+  /* ridisegno conservando scorrimento e campo attivo */
+  const bodyEl = box.querySelector('.gw-body'), top = bodyEl ? bodyEl.scrollTop : 0, ae = document.activeElement, fid = ae && box.contains(ae) ? ae.id : '', pos = fid && ae.selectionStart != null ? [ae.selectionStart, ae.selectionEnd] : null;
+  const tabs = [['tavoli', 'Tavoli'], ['giocatori', 'Giocatori'], ['strumenti', 'Strumenti']];
+  box.innerHTML = '<div class="gw-head"><h2 class="gw-h">Tavoli e giocatori</h2><div class="gw-tabs">' + tabs.map(t => '<button type="button" class="gw-tab' + (A.tab === t[0] ? ' on' : '') + '" data-act="tab" data-id="' + t[0] + '">' + t[1] + '</button>').join('') + '</div></div><div class="gw-body">' + body + '</div><div class="gw-foot ' + (A.ok ? 'ok' : 'ko') + '" id="gw-foot">' + esc(A.status) + '</div>';
+  const nb = box.querySelector('.gw-body'); if (nb) nb.scrollTop = top;
+  if (fid && $(fid)) { $(fid).focus(); if (pos) try { $(fid).setSelectionRange(pos[0], pos[1]); } catch (e) { /* niente */ } }
+}
+
+/* operazioni */
 async function createPlayer(name, code, tables) {
-  const email = toEmail(name);
-  if (!slug(name)) throw new Error('Nome non valido.');
+  if (!slug(name)) throw new Error('Il nome utente non è valido.');
   if (String(code).length < 6) throw new Error('Il codice deve avere almeno 6 caratteri.');
-  if (!creator) { const a2 = initializeApp(CFG, 'creatore'); creator = getAuth(a2); }
+  const second = getAuth(initializeApp(CFG, 'creatore-' + Date.now()));   /* istanza separata, così il master resta collegato */
   let uid;
-  try { const cred = await createUserWithEmailAndPassword(creator, email, code); uid = cred.user.uid; await signOut(creator); }
-  catch (e) { throw new Error(e.code === 'auth/email-already-in-use' ? 'Esiste già un giocatore con questo nome.' : (e.code === 'auth/weak-password' ? 'Codice troppo debole, usa almeno 6 caratteri.' : 'Creazione non riuscita (' + (e.code || e.message) + ').')); }
-  const b = writeBatch(db);
-  b.set(doc(db, 'players', uid), { username: name.trim(), tables: tables, createdAt: Date.now() });
-  b.set(doc(db, 'secrets', uid), { username: name.trim(), code: code });
-  tables.forEach(t => b.set(doc(db, 'tables', t, 'members', uid), { username: name.trim() }));
+  try { uid = (await createUserWithEmailAndPassword(second, toEmail(name), code)).user.uid; await signOut(second); }
+  catch (e) { throw new Error(e.code === 'auth/email-already-in-use' ? 'Esiste già un giocatore con questo nome.' : e.code === 'auth/weak-password' ? 'Codice troppo debole.' : 'Creazione non riuscita (' + (e.code || e.message) + ').'); }
+  const b = writeBatch(db), un = name.trim();
+  b.set(doc(db, 'players', uid), { username: un, tables, createdAt: Date.now() });
+  b.set(doc(db, 'secrets', uid), { username: un, code });
+  tables.forEach(t => b.set(doc(db, 'tables', t, 'members', uid), { username: un }));
   await b.commit();
 }
-async function setPlayerTables(uid, newT) {
+async function setPlayerTables(uid, next) {
   const p = G.players[uid]; if (!p) return;
-  const old = Array.isArray(p.tables) ? p.tables : [];
-  const b = writeBatch(db);
-  b.update(doc(db, 'players', uid), { tables: newT });
-  newT.filter(t => old.indexOf(t) < 0).forEach(t => b.set(doc(db, 'tables', t, 'members', uid), { username: p.username }));
-  old.filter(t => newT.indexOf(t) < 0).forEach(t => b.delete(doc(db, 'tables', t, 'members', uid)));
+  const old = Array.isArray(p.tables) ? p.tables : [], b = writeBatch(db);
+  b.update(doc(db, 'players', uid), { tables: next });
+  next.filter(t => old.indexOf(t) < 0).forEach(t => b.set(doc(db, 'tables', t, 'members', uid), { username: p.username }));
+  old.filter(t => next.indexOf(t) < 0).forEach(t => b.delete(doc(db, 'tables', t, 'members', uid)));
   await b.commit();
 }
 async function deletePlayer(uid) {
-  const p = G.players[uid] || {}; const b = writeBatch(db);
-  (p.tables || []).forEach(t => b.delete(doc(db, 'tables', t, 'members', uid)));
+  const b = writeBatch(db);
+  ((G.players[uid] || {}).tables || []).forEach(t => b.delete(doc(db, 'tables', t, 'members', uid)));
   b.delete(doc(db, 'players', uid)); b.delete(doc(db, 'secrets', uid));
   await b.commit();
 }
 async function createTable(name) {
   const id = 't_' + Date.now().toString(36);
   await setDoc(doc(db, 'tables', id), { name: name.trim(), createdAt: Date.now() });
-  await syncTotals('books', 'shelf', [id]); await syncTotals('icons', 'gallery', [id]);
+  await Promise.all([syncTotals('books', [id]), syncTotals('icons', [id])]);
+  return id;
 }
 async function wipe(colRef) {
   const s = await getDocs(colRef); let b = writeBatch(db), n = 0;
@@ -407,78 +470,67 @@ async function migrateUnlocked(tableId) {
   let n = 0;
   for (const coll of ['books', 'icons']) {
     const s = await getDocs(collection(db, coll));
-    for (const d of s.docs) { const v = d.data(); if (v.deleted) continue; if (v.locked === false && !(Array.isArray(v.tables) && v.tables.length)) { await saveItem(coll, d.id, { tables: [tableId] }); n++; } }
+    for (const d of s.docs) { const v = d.data(); if (!v.deleted && v.locked === false && !(Array.isArray(v.tables) && v.tables.length)) { await saveItem(coll, d.id, { tables: [tableId] }); n++; } }
   }
   return n;
 }
 async function importPins(json) {
-  const s = await getDocs(collection(db, 'maps', MAP, 'pins')); const have = new Set(); s.forEach(d => have.add(d.id));
+  const have = new Set((await getDocs(collection(db, 'maps', MAP, 'pins'))).docs.map(d => d.id));
   let n = 0;
   for (const id of Object.keys(json)) { if (have.has(id)) continue; await setDoc(doc(db, 'maps', MAP, 'pins', id), Object.assign({}, json[id], { tables: [] })); n++; }
   return n;
 }
 
-function renderAdmin() {
-  const ov = $('gw-admin'); if (!ov || !ov.classList.contains('open')) return;
-  const box = ov.querySelector('.gw-in');
-  /* non ridisegno mentre il master sta scrivendo in un campo */
-  const ae = document.activeElement;
-  if (ae && box.contains(ae) && (ae.tagName === 'INPUT' && ae.type !== 'checkbox' || ae.tagName === 'SELECT')) return;
-  const tIds = Object.keys(G.tablesAll).sort((a, b) => tableName(a).localeCompare(tableName(b), 'it'));
-  const tabs = [['tavoli', 'Tavoli'], ['giocatori', 'Giocatori'], ['strumenti', 'Strumenti']];
-  let h = '<h2 class="gw-h">Tavoli e giocatori</h2><div class="gw-tabs">' + tabs.map(t => '<button class="gw-tab' + (adminTab === t[0] ? ' on' : '') + '" data-tab="' + t[0] + '">' + t[1] + '</button>').join('') + '</div>';
-  if (adminTab === 'tavoli') {
-    h += tIds.length ? tIds.map(t => {
-      const n = Object.keys(G.players).filter(u => (G.players[u].tables || []).indexOf(t) > -1).length;
-      return '<div class="gw-item"><div class="gw-row"><b style="flex:1">' + esc(tableName(t)) + '</b><span class="gw-muted">' + n + (n === 1 ? ' giocatore' : ' giocatori') + '</span><button class="gw-btn sm dng" data-deltable="' + esc(t) + '">Elimina</button></div></div>';
-    }).join('') : '<p class="gw-muted">Nessun tavolo. Creane uno qui sotto.</p>';
-    h += '<label class="gw-l">Nuovo tavolo</label><div class="gw-row"><input type="text" id="gw-nt" placeholder="Nome del tavolo" style="flex:1"><button class="gw-btn pri" id="gw-nt-add">Crea</button></div><p class="gw-err" id="gw-adm-err"></p>';
-  } else if (adminTab === 'giocatori') {
-    const uids = Object.keys(G.players).sort((a, b) => (G.players[a].username || '').localeCompare(G.players[b].username || '', 'it'));
-    h += '<div class="gw-item"><b>Nuovo giocatore</b><div class="gw-row" style="margin-top:.6rem"><input type="text" id="gw-pn" placeholder="Nome utente" style="flex:1;min-width:150px"><input type="text" id="gw-pc" placeholder="Codice (min. 6)" style="flex:1;min-width:150px"></div><label class="gw-l">Tavoli</label><div id="gw-pt"></div><div class="gw-row end" style="margin-top:.8rem"><button class="gw-btn pri" id="gw-padd">Crea giocatore</button></div><p class="gw-err" id="gw-adm-err"></p></div>';
-    h += uids.length ? uids.map(u => {
-      const p = G.players[u], s = G.secrets[u] || {};
-      return '<div class="gw-item" data-uid="' + esc(u) + '"><div class="gw-row"><b style="flex:1">' + esc(p.username) + '</b><span class="gw-muted">codice</span><span class="gw-code">' + esc(s.code || '?') + '</span><button class="gw-btn sm dng" data-delplayer="' + esc(u) + '">Elimina</button></div><div class="gw-tp" style="margin-top:.6rem">' +
-        (tIds.length ? tIds.map(t => '<label class="gw-chk"><input type="checkbox" data-pt="' + esc(u) + '" value="' + esc(t) + '"' + ((p.tables || []).indexOf(t) > -1 ? ' checked' : '') + '><span>' + esc(tableName(t)) + '</span></label>').join('') : '<span class="gw-muted">Nessun tavolo</span>') + '</div></div>';
-    }).join('') : '<p class="gw-muted">Nessun giocatore ancora.</p>';
-  } else {
-    h += '<div class="gw-item"><b>Passaggio dal vecchio sistema</b><p class="gw-muted" style="margin:.4rem 0 .7rem">Assegna a un tavolo tutte le voci di Archivio e Iconoteca che prima erano sbloccate per tutti.</p><div class="gw-row"><select id="gw-mig" style="flex:1">' + tIds.map(t => '<option value="' + esc(t) + '">' + esc(tableName(t)) + '</option>').join('') + '</select><button class="gw-btn" id="gw-mig-go">Assegna</button></div><p class="gw-err" id="gw-mig-msg"></p></div>';
-    h += '<div class="gw-item"><b>Importa i pin di Ravenholm</b><p class="gw-muted" style="margin:.4rem 0 .7rem">Scegli il file pin-ravenholm.json. I pin entrano nascosti, poi li assegni ai tavoli aprendoli sulla mappa.</p><div class="gw-row"><input type="file" id="gw-pin-file" accept=".json,application/json" style="flex:1;color:#b9b0a0"><button class="gw-btn" id="gw-pin-go">Importa</button></div><p class="gw-err" id="gw-pin-msg"></p></div>';
-  }
-  box.innerHTML = h;
-  if (adminTab === 'giocatori') G.renderTablePicker($('gw-pt'), []);
-}
-function adminErr(m, ok) { const e = $('gw-adm-err'); if (e) { e.textContent = m; e.className = 'gw-err' + (ok ? ' gw-ok' : ''); } }
-document.addEventListener('click', async e => {
-  const t = e.target; if (!t || !t.closest || !t.closest('#gw-admin')) return;
+/* un solo gestore per tutti i pulsanti del pannello */
+async function adminClick(e) {
+  const t = e.target.closest && e.target.closest('[data-act]'); if (!t) return;
+  const act = t.dataset.act, id = t.dataset.id, u = t.dataset.u;
+  if (act === 'close') return;
+  const busy = on => { t.disabled = on; };
   try {
-    if (t.dataset.tab) { adminTab = t.dataset.tab; renderAdmin(); return; }
-    if (t.id === 'gw-nt-add') { const v = $('gw-nt').value.trim(); if (!v) return adminErr('Scrivi il nome del tavolo.'); t.disabled = true; await createTable(v); $('gw-nt').value = ''; t.disabled = false; adminErr('Tavolo creato.', 1); return; }
-    if (t.dataset.deltable) { if (!confirm('Eliminare il tavolo "' + tableName(t.dataset.deltable) + '" e tutti i suoi sblocchi? I giocatori restano, ma perdono questo tavolo.')) return; t.disabled = true; await deleteTable(t.dataset.deltable); return; }
-    if (t.id === 'gw-padd') {
-      const n = $('gw-pn').value.trim(), c = $('gw-pc').value; if (!n || !c) return adminErr('Servono nome utente e codice.');
-      t.disabled = true; try { await createPlayer(n, c, G.readTablePicker($('gw-pt'))); $('gw-pn').value = ''; $('gw-pc').value = ''; adminErr('Giocatore creato.', 1); } catch (x) { adminErr(x.message); } t.disabled = false; return;
+    if (act === 'tab') { A.tab = id; A.status = ''; render(); return; }
+    if (act === 'sel') { A.sel = id; A.addp = ''; render(); return; }
+    if (act === 'ptog') { const i = A.ptabs.indexOf(id); if (i < 0) A.ptabs.push(id); else A.ptabs.splice(i, 1); render(); return; }
+    if (act === 'copy') { try { await navigator.clipboard.writeText(t.dataset.c); say('Codice copiato.'); } catch (x) { say('Copia non riuscita, selezionalo a mano.', false); } return; }
+    busy(true);
+    if (act === 'addtable') {
+      if (!A.nt.trim()) { say('Scrivi il nome del tavolo.', false); return; }
+      const nid = await createTable(A.nt); A.nt = ''; A.sel = nid; say('Tavolo creato.');
+    } else if (act === 'rename') {
+      if (!A.rn.trim()) { say('Il nome non può essere vuoto.', false); return; }
+      await updateDoc(doc(db, 'tables', A.sel), { name: A.rn.trim() }); say('Tavolo rinominato.');
+    } else if (act === 'deltable') {
+      if (!confirm('Eliminare il tavolo "' + tableName(A.sel) + '" e tutti i suoi sblocchi? I giocatori restano, ma perdono questo tavolo.')) return;
+      say('Elimino il tavolo…'); await deleteTable(A.sel); A.sel = null; say('Tavolo eliminato.');
+    } else if (act === 'kick') {
+      await setPlayerTables(u, (G.players[u].tables || []).filter(x => x !== A.sel)); say('Giocatore tolto dal tavolo.');
+    } else if (act === 'addp') {
+      if (!A.addp) { say('Scegli un giocatore.', false); return; }
+      await setPlayerTables(A.addp, (G.players[A.addp].tables || []).concat(A.sel)); A.addp = ''; say('Giocatore aggiunto.');
+    } else if (act === 'pt') {
+      const cur = G.players[u].tables || []; await setPlayerTables(u, cur.indexOf(id) > -1 ? cur.filter(x => x !== id) : cur.concat(id)); say('Salvato.');
+    } else if (act === 'addplayer') {
+      await createPlayer(A.pn.trim(), A.pc, A.ptabs.slice()); say('Giocatore "' + A.pn.trim() + '" creato.'); A.pn = ''; A.pc = ''; A.ptabs = [];
+    } else if (act === 'delplayer') {
+      if (!confirm('Eliminare il giocatore "' + ((G.players[u] || {}).username || '') + '"? Non potrà più vedere nulla.')) return;
+      await deletePlayer(u); say('Giocatore eliminato.');
+    } else if (act === 'migrate') {
+      const tid = A.mig || (sortedTables()[0] || ''); if (!tid) { say('Crea prima un tavolo.', false); return; }
+      say('Assegno le voci…'); say((await migrateUnlocked(tid)) + ' voci assegnate a "' + tableName(tid) + '".');
+    } else if (act === 'importpins') {
+      const f = $('gw-pin-file').files[0]; if (!f) { say('Scegli prima il file.', false); return; }
+      say('Importo i pin…'); say((await importPins(JSON.parse(await f.text()))) + ' pin importati.');
     }
-    if (t.dataset.delplayer) { const p = G.players[t.dataset.delplayer] || {}; if (!confirm('Eliminare il giocatore "' + (p.username || '') + '"? Non potrà più vedere nulla.')) return; await deletePlayer(t.dataset.delplayer); return; }
-    if (t.id === 'gw-mig-go') { const v = $('gw-mig').value; if (!v) { $('gw-mig-msg').textContent = 'Crea prima un tavolo.'; return; } t.disabled = true; const n = await migrateUnlocked(v); $('gw-mig-msg').className = 'gw-err gw-ok'; $('gw-mig-msg').textContent = n + ' voci assegnate.'; t.disabled = false; return; }
-    if (t.id === 'gw-pin-go') {
-      const f = $('gw-pin-file').files[0]; if (!f) { $('gw-pin-msg').textContent = 'Scegli prima il file.'; return; }
-      t.disabled = true; const n = await importPins(JSON.parse(await f.text())); $('gw-pin-msg').className = 'gw-err gw-ok'; $('gw-pin-msg').textContent = n + ' pin importati.'; t.disabled = false; return;
-    }
-  } catch (x) { console.error(x); adminErr('Errore: ' + (x.message || x)); if (t.disabled) t.disabled = false; }
-});
-document.addEventListener('change', async e => {
-  const t = e.target; if (!t || !t.dataset || !t.dataset.pt) return;
-  const uid = t.dataset.pt;
-  const sel = Array.prototype.map.call(document.querySelectorAll('#gw-admin input[data-pt="' + uid + '"]:checked'), i => i.value);
-  try { await setPlayerTables(uid, sel); } catch (x) { console.error(x); alert('Errore nel salvataggio: ' + x.message); }
-});
-
-if (PAGE === 'avventure') {
-  window.fbLogin = (e, p) => signInWithEmailAndPassword(auth, e, p);
-  window.fbLogout = logout;
-  window.fbSaveAdv = (id, data) => setDoc(doc(db, 'adventures', id), data, { merge: false });
-  window.fbSubscribeAdvs = cb => onSnapshot(collection(db, 'adventures'), snap => { const out = {}; snap.forEach(d => { out[d.id] = d.data(); }); cb(out); }, err => console.error('Avventure:', err));
+  } catch (x) { console.error(x); say('Errore: ' + (x.message || x), false); }
+  finally { if (t.isConnected) t.disabled = false; render(); }
 }
+function adminInput(e) {
+  const k = e.target.dataset && e.target.dataset.k; if (!k) return;
+  A[k] = e.target.value;
+}
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#gw-admin')) adminClick(e); });
+document.addEventListener('input', e => { if (e.target.closest && e.target.closest('#gw-admin')) adminInput(e); });
+document.addEventListener('change', e => { if (e.target.closest && e.target.closest('#gw-admin')) adminInput(e); });
+
 G.openLogin = openLogin;
 G.openAdmin = openAdmin;

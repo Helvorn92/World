@@ -96,7 +96,8 @@
     window.addEventListener('resize', later);
     document.addEventListener('click', function () { setTimeout(fit, 450); setTimeout(fit, 1100); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-    if (window.MutationObserver) new MutationObserver(later).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    /* si riadatta solo quando cambia la pagina visibile, non a ogni classe della pagina */
+    if (window.MutationObserver) { var mo = new MutationObserver(later); document.querySelectorAll('.page').forEach(function (pg) { mo.observe(pg, { attributes: true, attributeFilter: ['class'] }); }); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
