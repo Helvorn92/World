@@ -5,7 +5,7 @@
 
    Palette: nero #0B0B0F, crepuscolo #2A2438, borgogna #5A1F2B,
             bronzo #A28B6E, pergamena #E7E1D6.
-   Font: Texturina (titoli incisi), Crimson Pro (testi), Barlow Condensed (etichette).
+   Font: Forum (titoli, etichette, pulsanti), Spectral (testi).
 
    Linguaggio delle forme (uno solo, per tutto il sito)
    · targa        pulsanti e voci: rettangolo, un filetto di bronzo, attiva in borgogna
@@ -21,9 +21,9 @@
   --cream:#e7e1d6; --cream-dim:#b9b0a0;
   --border:rgba(162,139,110,.4); --glow:rgba(162,139,110,.4);
   --cre:#2a2438; --bur:#5a1f2b; --bur-hi:#6a2432; --rose:#b8707c;
-  --titolo:'Texturina','Palatino Linotype',Georgia,serif;
-  --testo:'Crimson Pro',Georgia,'Times New Roman',serif;
-  --label:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --titolo:'Forum','Palatino Linotype',Georgia,serif;
+  --testo:'Spectral',Georgia,'Times New Roman',serif;
+  --label:'Forum','Palatino Linotype',Georgia,serif;
   --vetro:rgba(11,11,15,.78);
   --rail:244px;
 }
@@ -362,3 +362,106 @@ nav{background:rgba(11,11,15,.96);border-bottom:1px solid var(--border)}
     box-shadow:inset 1px 0 0 rgba(162,139,110,.35),inset -1px 0 0 rgba(162,139,110,.35)}
   #wall-left,#wall-right{background:#0e0b0f !important}
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   v5  Forum e Spectral, menu B, logo, finestre di legno, sfondo T6,
+       cornici ebano e passepartout (Iconoteca), libreria a ripiani (Archivio)
+   ═══════════════════════════════════════════════════════════════ */
+html{font-synthesis:none}
+:root{--t6:linear-gradient(180deg,#0e0e13 0%,#1c1824 70%,#2a1620 100%);
+  --legno:linear-gradient(180deg,#6b5238 0%,#4a3826 50%,#2d2117 100%);
+  --legno-v:linear-gradient(90deg,#6b5238 0%,#4a3826 50%,#2d2117 100%)}
+
+/* ── Menu B: voci a tutta altezza, separatori verticali, targa borgogna senza vuoti sopra e sotto ── */
+.nav-link{font-family:var(--label);font-weight:400;color:#d8d0c0;border-radius:0;text-shadow:none}
+.nav-link:hover,.nav-link.active,.nav-item.dd-open .nav-link{color:var(--cream);text-shadow:none;background:linear-gradient(180deg,#6a2432,#5a1f2b)}
+@media (min-width:1025px){
+  nav{height:78px}
+  .nav-item{height:78px}
+  .nav-item + .nav-item::before{left:0 !important;top:0 !important;bottom:0 !important;width:1px !important;height:auto !important;margin:0 !important;border-radius:0 !important;background:rgba(162,139,110,.35) !important;opacity:1 !important}
+  .nav-link{font-size:.98rem;letter-spacing:.12em;height:100%;padding:0 1.15rem;background:none;transition:color .2s,background .2s}
+  .nav-link:hover,.nav-link.active,.nav-item.dd-open .nav-link{background:linear-gradient(180deg,#6a2432,#5a1f2b)}
+  .nav-link::after{display:none !important}
+  .nav-link.active{box-shadow:inset 1px 0 0 rgba(231,225,214,.35),inset -1px 0 0 rgba(231,225,214,.35)}
+  .dropdown::before,.dropdown::after,.dd-inner::before,.dd-inner::after,.dd-title::before{display:none !important}
+}
+@media (min-width:1025px) and (max-width:1680px){.nav-link{padding:0 .8rem;letter-spacing:.09em;font-size:.92rem}}
+@media (min-width:1025px) and (max-width:1300px){.nav-link{padding:0 .6rem;letter-spacing:.06em;font-size:.86rem}}
+@media (max-width:1024px){.nav-link{letter-spacing:.14em}}
+.dd-title{font-family:var(--label);font-weight:400;font-size:.9rem;letter-spacing:.24em;padding-bottom:.4rem;border-bottom:1px solid rgba(162,139,110,.4)}
+.dd-title.dd-neg{color:var(--rose);border-bottom-color:rgba(184,112,124,.45)}
+.dd-link{font-family:var(--testo);font-weight:400;font-size:1.12rem;border-radius:0}
+.dd-link:hover{color:var(--cream);background:linear-gradient(180deg,#6a2432,#5a1f2b);box-shadow:inset 0 0 0 1px rgba(231,225,214,.45)}
+
+/* ── Logo: bussola e scritta ── */
+.nav-logo{gap:.7rem;padding-right:1.1rem;background:none;-webkit-text-fill-color:initial}
+.nav-logo img{display:block;width:auto;max-width:none}
+.nav-logo .lg-c{height:42px}
+.nav-logo .lg-w{height:25px}
+.nav-logo:hover .lg-c{filter:drop-shadow(0 0 10px rgba(201,182,151,.55))}
+@media (max-width:1024px){.nav-logo .lg-c{height:34px}.nav-logo .lg-w{height:20px}}
+@media (min-width:1025px) and (max-width:1240px){.nav-logo .lg-w{display:none}}
+
+/* ── Testi descrittivi più grandi ── */
+.gw .gw-intro .gw-desc,.gw .gw-intro .gw-desc p{font-size:clamp(1.3rem,1.72vw,1.55rem);line-height:1.55}
+.gw .gw-sheet p,.gw-pol .gw-sheet p,.gw .gw-pol .gw-sheet p{font-size:clamp(1.15rem,1.5vw,1.375rem) !important;line-height:1.55 !important}
+.gw p,.gw li,.gw-lore,.gw-lore p{font-size:clamp(1.15rem,1.4vw,1.3rem);line-height:1.58}
+.gw-motto{font-size:clamp(1.3rem,1.7vw,1.55rem)}
+.detail-desc,.detail-desc p,.detail-desc li{font-size:clamp(1.25rem,1.5vw,1.4rem)}
+.icon-text{font-size:1.42rem}
+.zodiac-intro,.zodiac-text,.zodiac-text p,.mystery-text,.mystery-subtitle,.mystery-desc,.footer-text,.page-header p,.cat-index p{font-size:1.34rem;line-height:1.6}
+.archive-intro{font-size:1.5rem}
+.marquee-sub{font-size:clamp(1.25rem,1.5vw,1.45rem) !important}
+.field input,.field textarea,.field select{font-size:1.2rem}
+
+/* ── Sfondo T6 (nero in alto, viola a terra), senza texture ── */
+.hall{background:var(--t6) !important}
+.hall::before,.hall::after{display:none !important}
+#wall-left,#wall-center,#wall-right{background:var(--t6) !important;box-shadow:none !important}
+
+/* ── Archivio: finestre di legno come i ripiani, cielo scuro stellato in parallasse ── */
+.win-inner{border-color:#4a3826 !important;
+  box-shadow:inset 0 0 0 1px #c9b697,inset 0 0 0 3px #2d2117,inset 0 0 50px rgba(0,0,0,.7),0 0 36px rgba(0,0,0,.8) !important}
+.win-frame{border:3px solid #2d2117 !important;border-bottom:none !important;box-shadow:inset 0 0 0 1px rgba(162,139,110,.45) !important}
+.win-bar-h1,.win-bar-h2{background:var(--legno) !important;box-shadow:inset 0 1px 0 rgba(201,182,151,.55),0 4px 8px rgba(0,0,0,.7) !important}
+.win-bar-v{background:var(--legno-v) !important;box-shadow:inset 1px 0 0 rgba(201,182,151,.45),4px 0 8px rgba(0,0,0,.7) !important}
+.win-sky{opacity:1 !important;background-color:#08080d !important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cg fill='%23e7e1d6'%3E%3Ccircle cx='40' cy='60' r='1.7' opacity='.95'/%3E%3Ccircle cx='210' cy='30' r='1.4' opacity='.85'/%3E%3Ccircle cx='330' cy='140' r='1.8' opacity='.95'/%3E%3Ccircle cx='120' cy='220' r='1.4' opacity='.8'/%3E%3Ccircle cx='290' cy='300' r='1.7' opacity='.9'/%3E%3Ccircle cx='60' cy='370' r='1.4' opacity='.85'/%3E%3Ccircle cx='380' cy='400' r='1.2' opacity='.8'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23c9b697'%3E%3Ccircle cx='20' cy='25' r='.8' opacity='.6'/%3E%3Ccircle cx='90' cy='70' r='.9' opacity='.55'/%3E%3Ccircle cx='160' cy='20' r='.7' opacity='.6'/%3E%3Ccircle cx='230' cy='110' r='.9' opacity='.5'/%3E%3Ccircle cx='60' cy='150' r='.8' opacity='.55'/%3E%3Ccircle cx='140' cy='190' r='.9' opacity='.6'/%3E%3Ccircle cx='210' cy='235' r='.7' opacity='.5'/%3E%3Ccircle cx='30' cy='230' r='.8' opacity='.55'/%3E%3Ccircle cx='110' cy='120' r='.6' opacity='.5'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(180deg,#07070c 0%,#0a0a10 100%) !important;
+  background-repeat:repeat,repeat,no-repeat !important;background-size:420px 420px,260px 260px,100% 100% !important}
+
+/* ── Archivio: libreria a ripiani di legno con filo di bronzo, libri appoggiati ── */
+body:has(#wall-center) .shelf-row{background:none !important;border:0 !important;box-shadow:none !important;padding:clamp(18px,2.4vw,34px) clamp(14px,1.8vw,22px) clamp(26px,3vw,40px);margin:0}
+body:has(#wall-center) .shelf-row::before{display:none !important}
+body:has(#wall-center) .shelf-row::after,body:has(#wall-center) .shelf-row:last-child::after{content:"" !important;display:block !important;position:absolute;left:0 !important;right:0 !important;bottom:0 !important;top:auto !important;height:14px !important;
+  background:var(--legno) !important;border-top:1px solid #c9b697;box-shadow:0 10px 14px rgba(0,0,0,.6) !important;pointer-events:none;z-index:2}
+body:has(#wall-center) .niche{background:none !important;box-shadow:none !important;border:0 !important;border-radius:0 !important;padding:0 !important;filter:none}
+body:has(#wall-center) .niche::before{display:none !important}
+body:has(#wall-center) .niche::after{display:none !important}
+body:has(#wall-center) .cover-book::before{display:none}
+body:has(#wall-center) .cover-book{box-shadow:0 6px 10px rgba(0,0,0,.65)}
+body:has(#wall-center) .niche:hover .cover-book{box-shadow:0 10px 18px rgba(0,0,0,.7),0 0 26px rgba(201,182,151,.18)}
+
+/* ── Iconoteca: cornice in ebano con filetto di bronzo e passepartout avorio ── */
+.niche:has(> .spot){--e:clamp(9px,1vw,14px);--m:clamp(12px,1.4vw,20px);
+  background:none !important;box-shadow:none !important;filter:none;
+  padding:calc(var(--e) + 3px + var(--m)) calc(var(--e) + 3px + var(--m)) 0}
+.niche:has(> .spot)::before{display:none !important}
+.niche:has(> .spot) .cover-book::before{display:none}
+.niche:has(> .spot) .cover-book,.niche:has(> .spot):hover .cover-book{
+  box-shadow:0 0 0 1px #8f836d,0 0 0 var(--m) #d9d1c1,0 0 0 calc(var(--m) + 3px) #a28b6e,0 0 0 calc(var(--m) + 3px + var(--e)) #0e0b0c,0 0 0 calc(var(--m) + 4px + var(--e)) #3a2f26,0 18px 30px calc(var(--m) + 3px + var(--e)) rgba(0,0,0,.45) !important}
+.niche:has(> .spot):hover .cover-book{box-shadow:0 0 0 1px #8f836d,0 0 0 var(--m) #d9d1c1,0 0 0 calc(var(--m) + 3px) #a28b6e,0 0 0 calc(var(--m) + 3px + var(--e)) #0e0b0c,0 0 0 calc(var(--m) + 4px + var(--e)) #3a2f26,0 0 40px calc(var(--m) + 8px + var(--e)) rgba(231,225,214,.14) !important}
+.niche:has(> .spot) .niche-label{margin-top:calc(var(--e) + 3px + var(--m) + 12px);width:auto;min-width:70%;max-width:100%;align-self:center}
+.niche:has(> .spot){align-items:stretch}
+.niche:has(> .spot) .niche-label{display:block;margin-left:auto;margin-right:auto}
+
+/* ritocchi v5 */
+.win-inner{border-radius:50% 50% 0 0 / calc(5.5vw + 10px) calc(5.5vw + 10px) 0 0 !important}
+.win-frame{border-radius:50% 50% 0 0 / calc(5.5vw + 10px) calc(5.5vw + 10px) 0 0 !important}
+.archive-title{filter:none !important}
+.archive-intro{text-wrap:balance}
+body:has(#wall-center) .shelf-row{padding-bottom:16px}
+body:has(#wall-center) .shelf-row{margin-bottom:clamp(30px,4vw,56px)}
+@media (max-width:1024px){.dropdown{border-top:0 !important}}
