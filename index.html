@@ -2712,8 +2712,8 @@ footer::before {
 #page-ravenholm,
 #page-mappa {
   min-height: 0 !important;
-  height: calc(100vh - 78px);
-  height: calc(100dvh - 78px);
+  height: calc(100vh - 64px);
+  height: calc(100dvh - 64px);
   overflow: hidden;
 }
 @media (max-width: 768px) {
@@ -2896,7 +2896,7 @@ footer::before {
 }
 .gw-bg {
   position: absolute;
-  top: 78px;
+  top: 64px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -2909,7 +2909,7 @@ footer::before {
 }
 .gw-shade {
   position: absolute;
-  inset: 78px 0 0 0;
+  inset: 64px 0 0 0;
   pointer-events: none;
   transition: opacity 1s;
   background:
@@ -2922,12 +2922,12 @@ footer::before {
 .gw-stage,
 canvas.gw-motes {
   position: absolute;
-  top: 78px;
+  top: 64px;
   left: 0;
 }
 canvas.gw-motes {
   width: 100%;
-  height: calc(100% - 78px);
+  height: calc(100% - 64px);
   pointer-events: none;
 }
 .gw-stage {
@@ -5197,7 +5197,7 @@ canvas.gw-motes {
 
 /* --- menu in alto --- */
 nav {
-  height: 78px;
+  height: 64px;
   padding: 0 2.2rem 0 1.6rem;
   background:
     radial-gradient(ellipse 40% 120% at 50% 0%, rgba(162, 139, 110, 0.07), transparent 70%),
@@ -5267,7 +5267,7 @@ nav::after {
   align-items: stretch;
 }
 .nav-item {
-  height: 78px;
+  height: 64px;
 }
 .nav-item + .nav-item::before {
   content: "";
@@ -5313,7 +5313,7 @@ nav::after {
   right: 0.6rem;
 }
 .dropdown {
-  top: 78px;
+  top: 64px;
 }
 #search-btn,
 #admin-login-btn {
@@ -5483,12 +5483,12 @@ nav::after {
 /* ═══ MENU A TENDINA ═══ */
 .dropdown {
   position: fixed;
-  top: var(--dd-top, 78px);
+  top: var(--dd-top, 64px);
   left: var(--dd-left, 16px);
   visibility: hidden;
   min-width: 0;
   max-width: calc(100vw - 2rem);
-  max-height: calc(100vh - var(--dd-top, 78px) - 1.5rem);
+  max-height: calc(100vh - var(--dd-top, 64px) - 1.5rem);
   overflow: visible;
   padding: 0;
   border: 0;
@@ -6043,7 +6043,7 @@ nav::after {
 
 <!-- ═══════════════════ NAV ═══════════════════ -->
 <nav id="navbar" class="">
-  <svg class="nav-orn end l" viewBox="0 0 120 20" aria-hidden="true"><path d="M2 10 C 18 10, 22 2, 30 4 C 37 6, 34 15, 27 13 C 22 11, 26 7, 30 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".85"/><path d="M30 10 H118" stroke="currentColor" stroke-width=".8" opacity=".35"/><path d="M8 5 L9.25 8.75 L13 10 L9.25 11.25 L8 15 L6.75 11.25 L3 10 L6.75 8.75 Z" fill="currentColor"/></svg><svg class="nav-orn end r" viewBox="0 0 120 20" aria-hidden="true"><path d="M2 10 C 18 10, 22 2, 30 4 C 37 6, 34 15, 27 13 C 22 11, 26 7, 30 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".85"/><path d="M30 10 H118" stroke="currentColor" stroke-width=".8" opacity=".35"/><path d="M8 5 L9.25 8.75 L13 10 L9.25 11.25 L8 15 L6.75 11.25 L3 10 L6.75 8.75 Z" fill="currentColor"/></svg><a class="nav-logo" onclick="showPage(&#39;home&#39;)" title="Home"><img class="lg-c" src="images/gwernia-bussola.png" alt=""><img class="lg-w" src="images/gwernia-scritta.png" alt="Gwernia"></a>
+  <svg class="nav-orn end l" viewBox="0 0 120 20" aria-hidden="true"><path d="M2 10 C 18 10, 22 2, 30 4 C 37 6, 34 15, 27 13 C 22 11, 26 7, 30 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".85"/><path d="M30 10 H118" stroke="currentColor" stroke-width=".8" opacity=".35"/><path d="M8 5 L9.25 8.75 L13 10 L9.25 11.25 L8 15 L6.75 11.25 L3 10 L6.75 8.75 Z" fill="currentColor"/></svg><svg class="nav-orn end r" viewBox="0 0 120 20" aria-hidden="true"><path d="M2 10 C 18 10, 22 2, 30 4 C 37 6, 34 15, 27 13 C 22 11, 26 7, 30 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".85"/><path d="M30 10 H118" stroke="currentColor" stroke-width=".8" opacity=".35"/><path d="M8 5 L9.25 8.75 L13 10 L9.25 11.25 L8 15 L6.75 11.25 L3 10 L6.75 8.75 Z" fill="currentColor"/></svg><a class="nav-logo" onclick="showPage(&#39;home&#39;)" title="Home"><span class="lg-c" aria-hidden="true"></span><span class="lg-w" role="img" aria-label="Gwernia"></span></a>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-right" id="nav-right"><ul class="nav-menu">
     <li class="nav-item"><a class="nav-link" onclick="showPage(&#39;home&#39;,this)">Home</a></li>
@@ -6198,7 +6198,7 @@ nav::after {
       </div>
       <div class="dd-col">
         <div class="dd-group">
-          <span class="dd-title dd-neg">Organizzazioni Negative</span>
+          <span class="dd-title">Organizzazioni Negative</span>
           <div class="dd-sub">
           <a class="dd-link" onclick="showPage(&#39;org-karak&#39;)">Legione di Karak-Dûm</a>
           <a class="dd-link" onclick="showPage(&#39;org-rosa&#39;)">Ordine della Rosa</a>
