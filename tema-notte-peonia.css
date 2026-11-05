@@ -329,3 +329,5 @@ nav{background:rgba(11,11,15,.96);border-bottom:1px solid var(--border)}
 
 /* Archivio: vetrate senza blu */
 .win-sky{background:linear-gradient(180deg,rgba(42,36,56,.55),rgba(11,11,15,.4)) !important}
+
+.gw-orgtabs-top{position:absolute;top:0;left:0;z-index:5;width:auto}
